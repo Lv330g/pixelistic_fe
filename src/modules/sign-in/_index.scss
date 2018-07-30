@@ -1,0 +1,28 @@
+.sign-in {
+  margin-top: 40px !important;
+
+  .signin-container,
+  .signup-container_link {
+    background-color: #fff;
+    border: 1px solid #E6E6E6;
+  }
+
+  .signup-container_link {
+    margin: 10px auto 40px;
+    padding: 20px 0 !important;
+  }
+
+  h1 {
+    text-align: center;
+    margin: 0;
+    padding: 30px 0 20px 0;
+  }
+
+  .submit-btn {
+    margin: 20px auto 30px;
+  }
+
+  .signin-icon {
+    margin-right: 10px;
+  }
+}

@@ -1,0 +1,21 @@
+@import './styles/normalize.css';
+@import './styles/variables';
+@import './styles/fonts';
+
+body {
+  background-color: #FAFAFA;
+  font-family: 'Roboto', sans-serif;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+// prevent default yellow input background in Chrome
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
+@import './modules/index';
+@import './shared/components/index';
