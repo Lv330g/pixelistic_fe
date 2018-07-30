@@ -1,13 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Routes from './router';
 
-import { Grid } from '@material-ui/core';
 import './index.css';
 
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import Routes from './router';
+import reducer from './reducers/index';
+
+const store = createStore(reducer, applyMiddleware(thunk));
+
+
 ReactDOM.render((
-  <Grid container alignItems={"center"} justify={"center"} direction={"column"}>
+  <Provider store={store}>
     { Routes }
-  </Grid>
+  </Provider>
 ), document.getElementById('root'));
