@@ -1,0 +1,26 @@
+.feed-aside {
+  border: 1px solid red;
+  height: 90vh;
+  position: fixed;
+  right: 0px;
+  top: 40px;
+
+  .grid-inside {
+    border: 1px dashed blue;
+  }
+
+  .user-info {
+    border: 1px solid darkmagenta;
+    height: 13vh;
+  }
+
+  .chat {
+    border: 1px solid green;
+    height: 40vh;
+  }
+
+  .footer {
+    border: 1px solid darkmagenta;
+    height: 20vh;
+  }
+}

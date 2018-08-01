@@ -41,10 +41,21 @@
   }
 
   .submit-btn {
-    margin: 30px auto 50px;
+    margin: 10px auto 20px;
   }
 
   .add-icon {
     margin-right: 10px;
   }
+
+  .msg {
+    margin: 0;
+    text-align: center;
+    color: limegreen;
+    height: 20px;
+  }
+  .err-msg{
+    color: #f34b4b;
+  }
+  
 }

@@ -1,6 +1,7 @@
 @import './styles/normalize.css';
 @import './styles/variables';
 @import './styles/fonts';
+@import './styles/inputs';
 
 body {
   background-color: #FAFAFA;
@@ -10,11 +11,6 @@ body {
 a {
   cursor: pointer;
   text-decoration: none;
-}
-
-// prevent default yellow input background in Chrome
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 30px white inset;
 }
 
 @import './modules/index';

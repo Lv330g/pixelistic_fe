@@ -1,0 +1,47 @@
+.post-footer {
+  
+  svg {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+  
+  .comment-icon {
+    margin-left: 20px;
+  }
+
+  .likes-amount {
+    font-weight: 500;
+  }
+
+  .likes-panel p{
+    text-align: middle;
+    vertical-align: middle;
+  }
+
+  .load-comments {
+    cursor: pointer;
+    margin: 0 0 9px;
+  }
+
+  .comment {
+    margin: 0 0 7px 0;
+  }
+
+  .author-name {
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 600;
+  }
+
+  .author-comment {
+    margin-left: 15px;
+  }
+
+  .date {
+    margin: 10px 0;
+  }
+
+  .text-field {
+    padding: 10px 0;
+  }
+}
