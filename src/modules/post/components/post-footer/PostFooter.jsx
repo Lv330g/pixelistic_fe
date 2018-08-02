@@ -72,6 +72,7 @@ export default class PostFooter extends Component {
 
         <Grid container direction="row" alignItems="center" justify="flex-end" item xs={6}>
           <Like 
+            className="likeComp"
             liked={this.state.liked}
             handleLike={this.handleLike}
           />

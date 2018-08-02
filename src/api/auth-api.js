@@ -7,10 +7,28 @@ export const authApi = {
             httpServise.post(`${host}:${port}/login`, {email: email, password: password}).then(
                 res => {
                     if (res.data.user) {
-                        window.localStorage.setItem('authToken', res.data.user._id);
+                        window.localStorage.setItem('authHeaders', JSON.stringify({ 'accessToken': res.data.accessToken}));
                         resolve(res.data.user);
                     } else reject({status: 401});
                 }, err => reject(err)
+            );
+        });
+    },
+
+    checkUser: () => {
+        return new Promise((resolve, reject) => {
+            httpServise.get(`${host}:${port}/validate-token`).then(
+                res => {
+                    if (res.data.user) {
+                        resolve(res.data.user);
+                    } else {
+                        window.localStorage.removeItem('authHeaders');
+                        reject({status: 401});
+                    }
+                }, err => {
+                    window.localStorage.removeItem('authHeaders');
+                    reject(err);
+                }
             );
         });
     },
@@ -19,18 +37,19 @@ export const authApi = {
         return new Promise ((resolve, reject) => {
             httpServise.get(`${host}:${port}/logout`, null).then(
                 res => {
-                    window.localStorage.removeItem('authToken');
+                    window.localStorage.removeItem('authHeaders');
                     resolve(res);
                 },
-                err => reject(err)
+                err => {
+                    window.localStorage.removeItem('authHeaders');
+                    reject(err)
+                }
             )
         })
     },
 
     signUp: (nickname, email, password, passwordConf) => {
-        let newUser = {
-nickname, email, password, passwordConf
-};
+        let newUser = { nickname, email, password, passwordConf };
         return new Promise ((resolve, reject) => {
             httpServise.post(`${host}:${port}/register`, newUser).then(
                 res => {
@@ -41,12 +60,12 @@ nickname, email, password, passwordConf
             )
         })
     },
+
     verifyEmail: (hash) => {
         return new Promise ((resolve, reject) => {
             httpServise.get(`${host}:${port}/verify/${hash}`).then(
                 res => {
                     if (res.data.user) {
-                        window.localStorage.setItem('authToken', res.data.user._id);
                         resolve(res.data.user);
                     } else reject({status: 401});
                 }, err => reject(err)
