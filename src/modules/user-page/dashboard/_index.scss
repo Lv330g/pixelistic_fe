@@ -1,0 +1,48 @@
+.user-dashboard{
+    margin-top: 70px;
+
+    .user-nickname{
+        font-weight: 200;
+        font-size: 32px;
+        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    }
+    .all-infa{
+        padding: 30px 0;
+    }
+    div span{
+        font-weight: 600;
+    }
+    .followers {
+        padding: 0 20px;
+    }
+     .user-avatar{
+        width: 150px !important;
+        height: 150px !important;
+    }
+    .user-name{
+        font-weight: 600;
+    }
+    .location{
+         padding: 10px 0;
+        font-size: 14px;
+    }
+    .link{
+        color: #003569;
+        font-weight: 650;
+    }
+    .link:active{
+        color: #C4CCD5;
+    }
+    .MuiButton-fab-116 {
+        width: 0;
+        height: 0;
+    }
+    .edit-button{
+        margin-left: 20px;
+        padding-bottom: 10px;
+    }
+    .edit-button:hover{
+        color: #003569;
+    }
+
+}

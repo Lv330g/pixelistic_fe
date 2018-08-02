@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { Grid, Typography, FormControl, Input, Button, InputLabel } from '@material-ui/core';
@@ -7,12 +7,19 @@ import { connect } from 'react-redux';
 import { authSignIn } from './../../actions/auth';
 import { Redirect } from 'react-router';
 
-export class SignIn extends Component {
-  constructor (props){
+import { FormError } from '../../shared/components/form-error/FormError';
+import InputEmail from '../../shared/components/input-email/InputEmail';
+
+export class SignIn extends React.Component {
+  constructor (props) {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      formErrors: {password: '', email: ''},
+      passwordValid: false,
+      emailValid: false,
+      formValid: false
     }
   }
 
@@ -28,19 +35,26 @@ export class SignIn extends Component {
               <Grid item xs={8} container alignItems={"center"} justify={"flex-start"} direction={"column"}>
                 <h1>Pixel</h1>
 
-                <form onSubmit={this.handleSubmit}> 
-                  <FormControl margin={"normal"} fullWidth>
-                    <InputLabel htmlFor="inp-email">Email</InputLabel>
-                    <Input id="inp-email" autoFocus type={"email"} required name="email" onChange={this.handeInput}/>
-                  </FormControl>
-                  <FormControl margin={"normal"} fullWidth>
-                    <InputLabel htmlFor="inp-password">Password</InputLabel>
-                    <Input id="inp-password" type={"password"} required name="password" onChange={this.handeInput}/>
-                  </FormControl>
+              <form>
+                <InputEmail onValidate = {this.onValidate}
+                onChange = {this.onChange} />
+                <FormError formErrors={this.state.formErrors.email}/>
+                <FormControl margin={"normal"} fullWidth>
+                  <InputLabel htmlFor="inp-password">Password</InputLabel>
+                  <Input
+                  id="inp-password"
+                  type="password"
+                  name="password"
+                  value={this.state.passsword}
+                  onChange={this.onChange}
+                  onBlur={this.onBlur}
+                  required />
+                  <FormError formErrors={this.state.formErrors.password}/>
+                </FormControl>
 
                   <p className="err-msg">{this.props.errMsg}</p>
 
-                  <Button className="submit-btn" type={"submit"} color={"primary"} variant={"contained"} fullWidth>
+                  <Button className="submit-btn" type={"submit"} color={"primary"} variant={"contained"} fullWidth disabled={!this.validateForm()}>
                     <AccountCircle className="signin-icon" />
                     Log In
                   </Button>
@@ -63,10 +77,47 @@ export class SignIn extends Component {
         </Grid>
       )
     }
+  };
+
+  onChange = (e) => {
+   this.setState({[e.target.name]: e.target.value});
   }
-  
-  handeInput = (e) => {
-        this.setState({[e.target.name]: e.target.value});
+
+  onBlur = (e) => {
+    this.validateField(e.target.name);
+    this.validateButtonState();
+   }
+
+  validateField = (fieldName) => {
+    let fieldValidationErrors = this.state.formErrors;
+    let passwordValid = this.state.passwordValid;
+    switch(fieldName) {
+      case 'password':
+        passwordValid = this.state.password.length >= 6;
+        fieldValidationErrors.password = passwordValid ? '': 'Password must be at least 6 characters long';
+        break;
+      default:
+        break;
+    }
+    this.setState({formErrors: fieldValidationErrors,
+                    passwordValid: passwordValid
+                  });
+  }
+
+  validateButtonState = () => {
+    this.setState({
+                    formValid: this.validateForm()});
+  }
+
+  validateForm = () => {
+    return this.state.password.length > 0 &&  this.state.passwordValid && this.state.emailValid;
+  }
+
+  onValidate = (isValid, valueLength) => {
+      let fieldValidationErrors = this.state.formErrors;
+      fieldValidationErrors.email = isValid ? '' : ' Email is invalid';
+    this.setState( {emailValid: isValid, formErrors: fieldValidationErrors} );
+    this.validateButtonState();
   }
 
   handleSubmit = (e) => {
@@ -85,3 +136,4 @@ export default connect(
     }
   )
 )(SignIn)
+
