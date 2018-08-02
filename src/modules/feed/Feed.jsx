@@ -1,6 +1,7 @@
 import React from 'react';
 
 import FeedLine from '../feed-line/FeedLine';
+import Header from '../../shared/components/header/Header'
 
 import { Grid } from '@material-ui/core';
 
@@ -10,6 +11,7 @@ const Feed = () => {
     {/* Feedline */} {/* UserInfo    */}
     {/* Feedline */} {/* MiniChat(?) */}
     {/* Feedline */} {/* Footer      */}
+    <Header />
     <FeedLine />
   </Grid>
 };
