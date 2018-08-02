@@ -19,74 +19,78 @@ export class SignIn extends React.Component {
       formErrors: {password: '', email: ''},
       passwordValid: false,
       emailValid: false,
-      formValid: false
+      formValid: false,
+      accessToken: false
     }
   }
 
+  componentWillMount(){
+    let accessToken = window.localStorage.getItem('authHeaders')  ? 
+      JSON.parse(window.localStorage.getItem('authHeaders'))['accessToken'] : null;
+    this.setState({ accessToken });
+  }
+
   render() {
-    if (this.props.user || window.localStorage.getItem('authToken')) {
+    if (this.props.isAuthorized || this.state.accessToken) {
       return <Redirect to='/'/>;
     }
-    else{
-      return(
-        <Grid container alignItems={"center"} justify={"center"} direction={"column"}>
-          <Grid className="sign-in" item xs={5} container alignItems={"center"} justify={"center"} direction={"column"}>
-            <Grid className="signin-container" container justify={"center"}>
-              <Grid item xs={8} container alignItems={"center"} justify={"flex-start"} direction={"column"}>
-                <h1>Pixel</h1>
+    return(
+      <Grid container alignItems={"center"} justify={"center"} direction={"column"}>
+        <Grid className="sign-in" item xs={5} container alignItems={"center"} justify={"center"} direction={"column"}>
+          <Grid className="signin-container" container justify={"center"}>
+            <Grid item xs={8} container alignItems={"center"} justify={"flex-start"} direction={"column"}>
+              <h1>Pixel</h1>
 
-              <form>
-                <InputEmail onValidate = {this.onValidate}
-                onChange = {this.onChange} />
-                <FormError formErrors={this.state.formErrors.email}/>
-                <FormControl margin={"normal"} fullWidth>
-                  <InputLabel htmlFor="inp-password">Password</InputLabel>
-                  <Input
-                  id="inp-password"
-                  type="password"
-                  name="password"
-                  value={this.state.passsword}
-                  onChange={this.onChange}
-                  onBlur={this.onBlur}
-                  required />
-                  <FormError formErrors={this.state.formErrors.password}/>
-                </FormControl>
+            <form onSubmit={this.handleSubmit}> 
+              <InputEmail onValidate = {this.onValidate}
+              onChange = {this.onChange} />
+              <FormError formErrors={this.state.formErrors.email}/>
+              <FormControl margin={"normal"} fullWidth>
+                <InputLabel htmlFor="inp-password">Password</InputLabel>
+                <Input
+                id="inp-password"
+                type="password"
+                name="password"
+                value={this.state.passsword}
+                onChange={this.onChangePassword}
+                required />
+                <FormError formErrors={this.state.formErrors.password}/>
+              </FormControl>
 
-                  <p className="err-msg">{this.props.errMsg}</p>
+                <Button className="submit-btn" type={"submit"} color={"primary"} variant={"contained"} fullWidth disabled={!this.validateForm()}>
+                  <AccountCircle className="signin-icon" />
+                  Log In
+                </Button>
+            </form>
 
-                  <Button className="submit-btn" type={"submit"} color={"primary"} variant={"contained"} fullWidth disabled={!this.validateForm()}>
-                    <AccountCircle className="signin-icon" />
-                    Log In
-                  </Button>
-                </form>
-
-                <p>
-                  <Link className="reset_link" to="">Forgot password?</Link>
-                </p>
-              </Grid>
-            </Grid>
-
-            {/* Sign up link */}
-            <Grid className="signup-container_link" item xs={12} container justify={"center"}>
-              <Typography>
-                Don't have an account?
-                <Link to="/sign-up"> Sign up</Link>
-              </Typography>
-            </Grid>
+            <p>
+              <Link className="reset_link" to="">Forgot password?</Link>
+            </p>
           </Grid>
         </Grid>
-      )
-    }
-  };
+
+        {/* Sign up link */}
+        <Grid className="signup-container_link" item xs={12} container justify={"center"}>
+          <Typography>
+            Don't have an account?
+            <Link to="/sign-up"> Sign up</Link>
+          </Typography>
+        </Grid>
+      </Grid>
+    </Grid>
+    )
+  
+  }
 
   onChange = (e) => {
    this.setState({[e.target.name]: e.target.value});
   }
 
-  onBlur = (e) => {
-    this.validateField(e.target.name);
-    this.validateButtonState();
-   }
+  onChangePassword = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({[name]: value}, () => {this.validateField(name, value)});
+  }
 
   validateField = (fieldName) => {
     let fieldValidationErrors = this.state.formErrors;
@@ -105,18 +109,17 @@ export class SignIn extends React.Component {
   }
 
   validateButtonState = () => {
-    this.setState({
-                    formValid: this.validateForm()});
+    this.setState({ formValid: this.validateForm() });
   }
 
   validateForm = () => {
     return this.state.password.length > 0 &&  this.state.passwordValid && this.state.emailValid;
   }
 
-  onValidate = (isValid, valueLength) => {
+  onValidate = (isValid, value) => {
       let fieldValidationErrors = this.state.formErrors;
       fieldValidationErrors.email = isValid ? '' : ' Email is invalid';
-    this.setState( {emailValid: isValid, formErrors: fieldValidationErrors} );
+    this.setState( {emailValid: isValid, formErrors: fieldValidationErrors, email: value} );
     this.validateButtonState();
   }
 
@@ -128,8 +131,7 @@ export class SignIn extends React.Component {
 
 export default connect(
   state => ({
-    user: state.auth.user,
-    errMsg: state.auth.errorMessage
+    isAuthorized: state.auth.isAuthorized,
   }),
   dispatch => ({
     authSignIn: (email, password) => dispatch(authSignIn(email, password))

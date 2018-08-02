@@ -1,5 +1,5 @@
 import React from "react";
-import enzyme, { shallow } from "enzyme";
+import enzyme, { shallow, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import PostFooter from "./PostFooter";
 
@@ -26,16 +26,16 @@ test("PostFooter rendering", () => {
   expect(component.find(".text-field")).toHaveLength(1);
 });
 
-test("PostFooter add like", () => {
-  let component = shallow(<PostFooter {...props} />);
-  expect(component.instance().state.likesAmount).toEqual(10);
-  component.find(".like-btn").simulate("click");
-  expect(component.instance().state.likesAmount).toEqual(11);
-});
-
 test("PostFooter show more comments", () => {
   let component = shallow(<PostFooter {...props} />);
   expect(component.instance().state.moreComments).toEqual(false);
   component.find(".load-comments").simulate("click");
   expect(component.instance().state.moreComments).toEqual(true);
 });
+
+test("PostFooter add like", () => {
+  let component = mount(<PostFooter {...props} />);
+  expect(component.instance().state.likesAmount).toEqual(10);
+  component.find(".likeComp").simulate("click");
+  expect(component.instance().state.likesAmount).toEqual(11);
+})

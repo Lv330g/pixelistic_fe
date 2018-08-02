@@ -12,14 +12,16 @@ let props = {
   onSignIn: jest.fn()
 };
 
+beforeAll(() => {
+  global.localStorage = {
+     getItem(){}
+  };
+});
+
 test("SignIn rendering", () => {
   let component = shallow(<SignIn {...props} />);
   expect(component.find(".sign-in")).toHaveLength(1);
   expect(component.find(".signin-container")).toHaveLength(1);
   expect(component.find(".submit-btn")).toHaveLength(1);
   expect(component.find('Link [to="/sign-up"]')).toHaveLength(1);
-});
-
-//
-// there will be validation tests
-//
+})

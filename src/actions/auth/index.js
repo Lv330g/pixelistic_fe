@@ -10,6 +10,16 @@ export const authSignIn = (email, password) => {
     }
 }
 
+export const authValidate = () => {
+    return dispatch => {
+        authApi.checkUser().then(user => {
+            dispatch({ type: 'SIGN_IN_SUCCESS', payload: user });
+        }, err => {     
+            dispatch({ type: 'SIGN_IN_ERROR', payload: err })
+        });
+    }
+}
+
 export const authSignUp = (nickname, email, password, passwordConf) => {
     return dispatch => {
         return authApi.signUp(nickname, email, password, passwordConf).then(confMsg => {
@@ -22,7 +32,7 @@ export const authSignUp = (nickname, email, password, passwordConf) => {
 
 export const authSignOut = () => {
     return dispatch => {
-        authApi.signOut().then(() => dispatch({ type: 'SIGN_OUT'}));
+       return authApi.signOut().then(() => dispatch({ type: 'SIGN_OUT'}));
     }
 }
 

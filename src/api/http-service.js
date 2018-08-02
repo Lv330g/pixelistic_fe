@@ -5,6 +5,7 @@ const httpServise = {
         return new Promise((resolve, reject) => {
             axios(url, {
                 method: 'GET',
+                headers: getHeaders(),
                 params: params
             }).then(res => {
                 resolve(res);
@@ -17,6 +18,7 @@ const httpServise = {
         return new Promise((resolve, reject) => {
             axios(url, {
                 method: 'POST',
+                headers: getHeaders(),
                 data: params
             }).then(res => {
                 resolve(res);
@@ -29,6 +31,7 @@ const httpServise = {
         return new Promise((resolve, reject) => {
             axios(url, {
                 method: 'PUT',
+                headers: getHeaders(),
                 data: params
             }).then(res => {
                 resolve(res);
@@ -41,6 +44,7 @@ const httpServise = {
         return new Promise((resolve, reject) => {
             axios(url, {
                 method: 'DELETE',
+                headers: getHeaders(),
                 data: params
             }).then(res => {
                 resolve(res);
@@ -51,4 +55,11 @@ const httpServise = {
     }
 };
 
+function getHeaders() {
+    let headers = {'Client-Device': 'web', 'Content-Type': 'application/json'};
+
+    let userToken = window.localStorage.getItem('authHeaders');
+    if (userToken) headers['Authorization'] = JSON.parse(userToken) ? `Bearer ${JSON.parse(userToken)['accessToken']}` : '';
+    return headers;
+}
 export default httpServise;
