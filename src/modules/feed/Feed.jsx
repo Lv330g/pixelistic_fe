@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
-
-import FeedLine from '../feed-line/FeedLine';
-import Header from '../../shared/components/header/Header'
-
-import { Grid } from '@material-ui/core';
-
 import { connect } from 'react-redux';
 import { authValidate } from './../../actions/auth'
 import { Redirect } from 'react-router';
 
+import FeedLine from '../feed-line/FeedLine';
+import Header from '../../shared/components/header/Header';
+import FeedAside from '../feed-aside/FeedAside';
 
-class Feed extends Component {
+import { Grid } from '@material-ui/core';
+
+export class Feed extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -28,29 +27,31 @@ class Feed extends Component {
   }
 
   render(){
-
     if (!this.state.accessToken && !this.props.isAuthorized) {
       return <Redirect to='/sign-in'/>;
-    }
-
-    return (
-      <Grid container direction={"column"} alignItems={"flex-start"} item xs={12}>
-        <Header/>
-      <FeedLine />
+    } else if (this.props.isAuthorized) {
+      return <Grid container direction={"column"} alignItems={"flex-start"} item xs={12}>
+        <Header />
+        <FeedLine 
+          nickname={this.props.user.nickname}   
+        />
+        <FeedAside 
+          nickname={this.props.user.nickname}
+        />
       </Grid>
-    )
+    } else {
+      return <div></div>
+    }
   }
-  
-};
+}
 
 export default connect(
   state => ({
     user: state.auth.user,
-    errMsg: state.auth.errorMessage
+    isAuthorized: state.auth.isAuthorized
   }),
   dispatch => ({
     authValidate: (email, password) => dispatch(authValidate(email, password))
-    }
-  )
-)(Feed)
+  })
+)(Feed);
 

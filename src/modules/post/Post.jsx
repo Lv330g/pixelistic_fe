@@ -19,6 +19,7 @@ const Post = (props) => {
 
     <PostFooter
       post={props.post}
+      nickname={props.nickname}
     />
   </Grid>
 };

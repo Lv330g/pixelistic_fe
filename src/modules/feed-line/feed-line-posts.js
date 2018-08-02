@@ -2,7 +2,7 @@ export const posts = [{
     _id: 1,
     liked: false,
     likesAmount: 10,
-    authorImg: 'https://www.bolde.com/wp-content/uploads/2018/05/timothy-paul-smith-256424-unsplash-400x400.jpg',
+    authorImg: 'https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png',
     authorName: 'Max Yavir',
     authorComment: 'I`ve made this',
     authorGeo: "Moscow",
@@ -39,7 +39,7 @@ export const posts = [{
     _id: 2,
     liked: false,
     likesAmount: 99,
-    authorImg: 'https://www.bolde.com/wp-content/uploads/2018/05/timothy-paul-smith-256424-unsplash-400x400.jpg',
+    authorImg: 'https://image.flaticon.com/icons/svg/145/145867.svg',
     authorName: 'Andrew Korin',
     authorComment: 'I\'m happy to leave this commentary',
     authorGeo: "Milan",
@@ -56,6 +56,10 @@ export const posts = [{
         author: "Ivan",
         comment: "hello, nice to see u here, John"
       },
+      {
+        author: "Ivan",
+        comment: "omg"
+      }
     ],
     date: '10 hours ago',
     moreComments: false
@@ -64,11 +68,11 @@ export const posts = [{
     _id: 3,
     liked: false,
     likesAmount: 15,
-    authorImg: 'https://www.bolde.com/wp-content/uploads/2018/05/timothy-paul-smith-256424-unsplash-400x400.jpg',
-    authorName: 'Jack Johns',
+    authorImg: 'https://image.flaticon.com/icons/svg/145/145859.svg',
+    authorName: 'Vitaliy Dvoryan',
     authorComment: 'My first photo',
     authorGeo: "Lviv",
-    postImage: "https://images.pexels.com/photos/236047/pexels-photo-236047.jpeg?auto=compress&cs=tinysrgb&h=350",
+    postImage: "https://images.pexels.com/photos/378570/pexels-photo-378570.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
     comments: [{
         author: "John",
         comment: "Cool"
@@ -76,10 +80,6 @@ export const posts = [{
       {
         author: "Max",
         comment: "I want photo with you"
-      },
-      {
-        author: "Steve",
-        comment: "I`m crzy"
       },
     ],
     date: '2 days ago',

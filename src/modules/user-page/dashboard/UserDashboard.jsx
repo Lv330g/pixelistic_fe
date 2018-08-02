@@ -31,7 +31,7 @@ export default class UserDashboard extends React.Component {
                         <div className="user-name">
                               Tamara Kovalchuk
                               {this.props.owner === 'userId' ?
-                                <Button className="edit-button" variant="fab" aria-label="Edit">
+                                <Button className="edit-button" aria-label="Edit">
                                   <Icon>edit_icon</Icon>
                                 </Button>
                                 :''}

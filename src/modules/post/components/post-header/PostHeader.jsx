@@ -2,13 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
-import { Grid } from '@material-ui/core';
+import { Grid, Avatar } from '@material-ui/core';
 
 const PostHeader = (props) => {
   return <Grid item xs={11} container className="post-header">
-    <div className="user-avatar">
-      <img src={props.authorImg} alt="user avatar" />
-    </div>
+    <Avatar 
+      className="user-avatar" 
+      src={props.authorImg} 
+      alt={"user avatar"}
+    />
 
     <div>
       <div className="user-nickname">

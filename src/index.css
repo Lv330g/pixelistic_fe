@@ -37,6 +37,8 @@ a {
     text-align: center;
     margin: 0;
     padding: 30px 0 20px 0; }
+  .sign-in .form {
+    width: 100%; }
   .sign-in .submit-btn {
     margin: 10px auto 30px; }
   .sign-in .signin-icon {
@@ -124,13 +126,7 @@ a {
 .post-header {
   padding: 10px 0; }
   .post-header .user-avatar {
-    width: 30px;
-    height: 30px;
     margin-right: 20px; }
-    .post-header .user-avatar img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%; }
   .post-header .user-nickname {
     font-weight: bold; }
   .post-header .user-geolocation {
@@ -151,26 +147,58 @@ a {
   .post .post-image {
     width: 100%; }
 
+.feed-line {
+  margin-top: 45px !important; }
+
 .feed-aside {
-  border: 1px solid red;
-  height: 90vh;
+  height: 85vh;
   position: fixed;
   right: 0px;
   margin-top: 85px !important; }
-  .feed-aside .grid-inside {
-    border: 1px dashed blue; }
   .feed-aside .user-info {
-    border: 1px solid darkmagenta;
-    height: 13vh; }
-  .feed-aside .chat {
-    border: 1px solid green;
-    height: 40vh; }
+    height: 10vh; }
+  .feed-aside .user-avatar {
+    width: 50px;
+    height: 50px; }
+  .feed-aside .user-nickname {
+    margin: 0 0 0 15px;
+    font-size: 25px; }
   .feed-aside .footer {
-    border: 1px solid darkmagenta;
-    height: 20vh; }
+    height: 5vh; }
 
-.feed-line {
-  margin-top: 45px !important; }
+.chat {
+  height: 65vh; }
+  .chat .chat-header {
+    margin: 5px auto;
+    font-size: 18px; }
+  .chat .msgs-wrapper {
+    width: 100%;
+    height: 45vh;
+    border: 1px solid #AEAEAE;
+    border-radius: 2%;
+    overflow-y: auto;
+    overflow-x: hidden; }
+  .chat .message {
+    width: 100%;
+    margin: 5px;
+    font-size: 14px; }
+    .chat .message a {
+      color: #000; }
+  .chat .typing-logs {
+    width: 100%;
+    height: 4vh;
+    border-top: 1px solid #AEAEAE;
+    line-height: 4vh;
+    vertical-align: middle; }
+  .chat .typing-text {
+    margin: 0 5px; }
+  .chat .text-field_label {
+    width: 100%;
+    cursor: pointer; }
+  .chat .text-field {
+    width: 100%;
+    border: 1px solid #AEAEAE;
+    padding: 10px 0 10px 5px; }
 
 .verify-page {
   width: 50%;
@@ -186,7 +214,7 @@ a {
     height: 50px; }
 
 .user-dashboard {
-  margin-top: 70px; }
+  margin-top: 80px; }
   .user-dashboard .user-nickname {
     font-weight: 200;
     font-size: 32px;
@@ -214,8 +242,11 @@ a {
     width: 0;
     height: 0; }
   .user-dashboard .edit-button {
+    height: 50px;
+    width: 50px;
     margin-left: 20px;
-    padding-bottom: 10px; }
+    padding-bottom: 10px;
+    border-radius: 50%; }
   .user-dashboard .edit-button:hover {
     color: #003569; }
 
@@ -233,7 +264,8 @@ a {
   border-radius: 0 0 5px 5px;
   -webkit-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.1); }
+  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.1);
+  z-index: 999; }
   .header .logo {
     background-image: url("./media//logo.png");
     background-repeat: no-repeat;

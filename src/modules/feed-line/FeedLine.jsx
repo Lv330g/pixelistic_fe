@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Post from '../post/Post';
-import staticData from '../../const/post-config';
+import { postsOnPage } from '../../const/post-config';
 import { posts } from './feed-line-posts';
 
 import { Grid } from '@material-ui/core';
@@ -20,11 +20,12 @@ export default class FeedLine extends Component {
 
   render() {
     let allPosts = this.state.posts
-      .filter((item, i) => i >= this.state.posts.length - staticData.postsAmount)
+      .filter((item, i) => i >= this.state.posts.length - postsOnPage)
       .map(item => {
         return <Post
           key={item._id}
           post={item}
+          nickname={this.props.nickname}
         />
       });
 

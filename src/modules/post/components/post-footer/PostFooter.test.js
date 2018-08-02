@@ -36,6 +36,6 @@ test("PostFooter show more comments", () => {
 test("PostFooter add like", () => {
   let component = mount(<PostFooter {...props} />);
   expect(component.instance().state.likesAmount).toEqual(10);
-  component.find(".likeComp").simulate("click");
+  component.find(".like-comp").simulate("click");
   expect(component.instance().state.likesAmount).toEqual(11);
 })
