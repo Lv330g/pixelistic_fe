@@ -1,5 +1,5 @@
 .user-dashboard{
-    margin-top: 70px;
+    margin-top: 80px;
 
     .user-nickname{
         font-weight: 200;
@@ -38,8 +38,11 @@
         height: 0;
     }
     .edit-button{
+        height: 50px;
+        width: 50px;
         margin-left: 20px;
         padding-bottom: 10px;
+        border-radius: 50%;
     }
     .edit-button:hover{
         color: #003569;

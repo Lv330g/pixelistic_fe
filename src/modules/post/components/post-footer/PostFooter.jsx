@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Like from '../like/Like';
-import staticData from '../../../../const/post-config';
+import { initCmntsAmount, expandCmntsAmount } from '../../../../const/post-config';
 
 import { Grid, Divider, TextField } from '@material-ui/core';
 import { CommentOutlined } from '@material-ui/icons';
@@ -36,14 +36,14 @@ export default class PostFooter extends Component {
       authorName: post.authorName,
       authorComment: post.authorComment,
       date: post.date,
-      commentsAmount: staticData.initCmntsAmount
+      commentsAmount: initCmntsAmount
     });
   }
   
   render() {
     let comments = this.state.comments;
 
-    const quantity = comments.length <= staticData.expandCmntsAmount ? `all ${comments.length}` : 'last'; 
+    const quantity = comments.length <= expandCmntsAmount ? `all ${comments.length}` : 'last'; 
 
     let load = <p className="light-grey load-comments" onClick={this.expandComments}>
       Load {quantity} comments
@@ -63,23 +63,18 @@ export default class PostFooter extends Component {
       });
 
     return <Grid className="post-footer" item xs={11} container direction={"column"}>
-      <Grid container direction={"row"} className="likes-panel" item xs={12}>
-        <Grid container direction="column" justify="flex-start" item xs={6}>
-          <p className="likes-amount">
-            {this.state.likesAmount} likes
-          </p>
-        </Grid>
-
-        <Grid container direction="row" alignItems="center" justify="flex-end" item xs={6}>
-          <Like 
-            className="likeComp"
-            liked={this.state.liked}
-            handleLike={this.handleLike}
-          />
-          <label htmlFor={`txt-${this.state._id}`}>
-            <CommentOutlined className="comment-icon"/>
-          </label>
-        </Grid>   
+      <Grid className="likes-panel" container alignItems={"center"} item xs={12}>
+        <p className="likes-amount">
+          {this.state.likesAmount} likes
+        </p>
+        <Like
+          className="like-comp"
+          liked={this.state.liked}
+          handleLike={this.handleLike}
+        />
+        <label htmlFor={`txt-${this.state._id}`}>
+          <CommentOutlined className="comment-icon"/>
+        </label>
       </Grid>
     
       <p className="comment author">
@@ -91,7 +86,7 @@ export default class PostFooter extends Component {
         </span>
       </p>
 
-      {this.state.moreComments ? false : load}
+      {this.state.moreComments || (comments.length <= initCmntsAmount) ? false :  load}
 
       {mappedComments}
 
@@ -102,7 +97,7 @@ export default class PostFooter extends Component {
       <Divider />
       
       <TextField 
-        id= {`txt-${this.state._id}`}
+        id={`txt-${this.state._id}`}
         ref={this.textInput}
         className="input-override text-field"
         multiline={true}
@@ -115,7 +110,7 @@ export default class PostFooter extends Component {
   expandComments = () => {
     this.setState({
       moreComments: !this.state.moreComments,
-      commentsAmount: staticData.expandCmntsAmount
+      commentsAmount: expandCmntsAmount
     });
   }
 
@@ -131,11 +126,14 @@ export default class PostFooter extends Component {
   }
 
   handleInput = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (e.key === "Enter") {
       e.preventDefault();
+    }
+
+    if (e.key === "Enter" && !e.shiftKey && e.target.value !== '') {
       const val = e.target.value;
       const comment = {
-        author: "John Doe",
+        author: this.props.nickname,
         comment: val
       }
       e.target.value = "";

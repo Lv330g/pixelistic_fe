@@ -1,7 +1,3 @@
-const staticData = {
-  initCmntsAmount: 3,
-  expandCmntsAmount: 10,
-  postsAmount: 3
-}
-
-export default staticData;
+export const initCmntsAmount = 3;
+export const expandCmntsAmount = 10;
+export const postsOnPage = 7;
