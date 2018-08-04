@@ -6,15 +6,16 @@ import { Redirect } from 'react-router';
 import FeedLine from '../feed-line/FeedLine';
 import Header from '../../shared/components/header/Header';
 import FeedAside from '../feed-aside/FeedAside';
-
-import { Grid } from '@material-ui/core';
+import UpstairsBtn from '../../shared/components/upstairs-btn/UpstairsBtn';
 
 export class Feed extends Component {
   constructor(props){
     super(props)
     this.state = {
-      accessToken:false
+      accessToken: false
     }
+
+    this.FeedRef = React.createRef();
   }
 
   componentWillMount(){
@@ -30,15 +31,19 @@ export class Feed extends Component {
     if (!this.state.accessToken && !this.props.isAuthorized) {
       return <Redirect to='/sign-in'/>;
     } else if (this.props.isAuthorized) {
-      return <Grid container direction={"column"} alignItems={"flex-start"} item xs={12}>
+      return <div 
+        className="feed" 
+        ref={this.FeedRef}
+      > 
         <Header />
         <FeedLine 
-          nickname={this.props.user.nickname}   
+          nickname={this.props.user.nickname} 
         />
         <FeedAside 
           nickname={this.props.user.nickname}
         />
-      </Grid>
+        <UpstairsBtn />
+      </div>
     } else {
       return <div></div>
     }

@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 
 import PostFooter from '../post/components/post-footer/PostFooter';
 import PostHeader from '../post/components/post-header/PostHeader';
-import { Grid } from '@material-ui/core'
 
-const Post = (props) => {
-  return <Grid item xs={10} alignItems={"center"} direction={"column"} container className="post">
+const Post = React.forwardRef((props, ref) => {
+  return <div ref={ref} className="post">
     <PostHeader
       authorName={props.post.authorName}
       authorGeo={props.post.authorGeo}
@@ -21,8 +20,8 @@ const Post = (props) => {
       post={props.post}
       nickname={props.nickname}
     />
-  </Grid>
-};
+  </div>
+});
 
 Post.propTypes = {
   post: PropTypes.object.isRequired

@@ -1,41 +1,33 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import openSocket from 'socket.io-client';
-import { port, host } from "../../const/node-server-config";
+import ChatWindow from './components/chat-window/ChatWindow';
+import { socketConnect } from 'socket.io-react';
 
 import { Grid, TextField } from '@material-ui/core';
 
-export default class Chat extends Component {
+export class Chat extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       messages: [],
-      socket: openSocket(`${host}:${port}`)
     }
   }
 
   componentDidMount() {
-    this.state.socket.emit('needMessages');
+    this.props.socket.emit('needMessages');
 
-    this.state.socket.on('gettingMessages', (result) => {
-      this.setState({messages: result.reverse()});
+    this.props.socket.on('gettingMessages', (result) => {
+      this.setState({messages: result});
     });
   }
 
   render() {
-    const mappedMessages = this.state.messages.map((item) => {
-      return <p key={item._id} className="message light-grey">
-        <Link to=''>{item.author}:</Link> {item.msg}
-      </p>
-    });
-
     return <Grid container className="chat" direction={"column"} alignItems={"center"} justify={"space-between"}>
       <h2 className="chat-header">Pixel Chat</h2>
 
-      <div className="msgs-wrapper">
-        {mappedMessages}
-      </div>
+      <ChatWindow 
+        messages={this.state.messages}
+      />
 
       <label htmlFor="chat_input" className="text-field_label">
         <TextField 
@@ -63,7 +55,9 @@ export default class Chat extends Component {
       }
       e.target.value = "";
 
-      this.state.socket.emit('message sent', message);
+      this.props.socket.emit('message sent', message);
     }
   }
 };
+
+export default socketConnect(Chat);
