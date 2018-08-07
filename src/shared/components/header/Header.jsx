@@ -62,9 +62,14 @@ export class Header extends React.Component {
                           <MenuList>
                             <Link to="/profile">
                               <MenuItem onClick={this.handleClose}>
-                                  Profile
+                                Profile
                               </MenuItem>
-                            </Link>  
+                            </Link>
+                            <Link to="/">
+                              <MenuItem onClick={this.handleClose}>
+                                Feed line
+                              </MenuItem>
+                            </Link>
                             <MenuItem onClick={this.handleSignOut}>Logout</MenuItem>
                           </MenuList>
                       </ClickAwayListener>

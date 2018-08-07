@@ -6,37 +6,6 @@
     font-size: 18px;
   }
 
-  .msgs-wrapper {
-    width: 100%;
-    height: 45vh;
-    border: 1px solid $light-grey;
-    border-radius: 2%;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-
-  .message {
-    width: 100%;
-    margin: 5px;
-    font-size: 14px;
-
-    a {
-      color: #000;
-    }
-  }
-
-  .typing-logs {
-    width: 100%;
-    height: 4vh;
-    border-top: 1px solid $light-grey;
-    line-height: 4vh;
-    vertical-align: middle;
-  }
-
-  .typing-text {
-    margin: 0 5px;
-  }
-
   .text-field_label {
     width: 100%;
     cursor: pointer;
@@ -45,6 +14,7 @@
   .text-field {
     width: 100%;
     border: 1px solid $light-grey;
+    box-sizing: border-box; 
     padding: 10px 0 10px 5px;
   }
 }

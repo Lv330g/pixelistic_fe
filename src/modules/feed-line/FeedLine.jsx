@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { postsOnPage, startPage, bottomOffset } from '../../const/post-config';
+import { hardcodedPosts } from './feed-line-posts';
 
 import Post from '../post/Post';
-import { postsOnPage } from '../../const/post-config';
-import { posts } from './feed-line-posts';
 
 import { Grid } from '@material-ui/core';
 
@@ -11,26 +11,78 @@ export default class FeedLine extends Component {
     super(props);
     this.state = {
       posts: [],
+      per: null,
+      page: null,
+      totalPages: null,
+      scrolling: false,
     }
+
+    this.lastPostRef = React.createRef();
+  }
+
+  componentWillMount() {
+    this.setState({ 
+      per: postsOnPage,
+      page: startPage,
+      totalPages: Math.ceil(hardcodedPosts.length / postsOnPage)
+     });
+
+    window.addEventListener('scroll', this.scrollListener);
   }
 
   componentDidMount() {
-    this.setState({ posts: posts });
+    this.loadPosts();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.scrollListener);
   }
 
   render() {
-    let allPosts = this.state.posts
-      .filter((item, i) => i >= this.state.posts.length - postsOnPage)
-      .map(item => {
-        return <Post
-          key={item._id}
-          post={item}
-          nickname={this.props.nickname}
-        />
-      });
+    let allPosts = this.state.posts.map((item, i, arr) => {
+      return <Post
+        key={item._id}
+        post={item}
+        nickname={this.props.nickname}
+        ref={el => this.lastPostRef = el}
+      />
+    });
 
     return <Grid container direction={"column"} alignItems={"flex-end"} item xs={8} className="feed-line">
       {allPosts}
     </Grid>
   }
-}
+
+  handleScroll = () => {
+    const { scrolling, totalPages, page} = this.state;
+    if (scrolling) return;
+    if (totalPages < page) return;
+    const lastPost = this.lastPostRef;
+    const lastPostOffset = lastPost.offsetTop + lastPost.clientHeight;
+    const pageOffset = window.pageYOffset + window.innerHeight;
+    if (pageOffset > lastPostOffset - bottomOffset) {
+      this.loadMore()
+    }
+  }
+
+  loadPosts = () => {
+    const { per, page } = this.state;
+    const postsToShow = hardcodedPosts.filter((item, i) => i < page * per);
+
+    this.setState({
+      posts: [...postsToShow],
+      scrolling: false
+    });
+  }
+
+  loadMore = () => {
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+      scrolling: true,
+    }), this.loadPosts);
+  }
+
+  scrollListener = e => {
+    this.handleScroll(e)
+  }
+};

@@ -10,8 +10,8 @@ import UserPage from './modules/user-page/UserPage';
 const Routes = (
   <BrowserRouter basename="/">
     <Switch>
-      <Route exact path='/profile' component={UserPage} />
       <Route exact path='/' component={Feed} />
+      <Route exact path='/profile' component={UserPage} />
       <Route exact path='/sign-in' component={SignIn} />
       <Route exact path='/sign-up' component={SignUp} />
       <Route path='/verify' component={EmailVerify} />
