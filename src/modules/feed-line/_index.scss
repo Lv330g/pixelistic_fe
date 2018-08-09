@@ -1,3 +1,7 @@
 .feed-line{
-    margin-top: 45px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 67%;
+    margin-top: 45px;
 }

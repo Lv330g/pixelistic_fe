@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { authSignUp } from './../../actions/auth'
 import { Redirect } from 'react-router';
-import { Grid, Typography, FormControl, Input, Button, InputLabel } from '@material-ui/core';
-import { PersonAdd } from '@material-ui/icons';
+import { connect } from 'react-redux';
+import { authSignUp, authSignInSocial } from './../../actions/auth';
+
 import { FormError } from '../../shared/components/form-error/FormError';
-import  InputEmail  from '../../shared/components/input-email/InputEmail';
+import InputEmail  from '../../shared/components/input-email/InputEmail';
+import FbAuth from '../../shared/components/fb-auth/FbAuth';
+import GoogleAuth from '../../shared/components/google-auth/GoogleAuth';
+
+import { Grid, FormControl, Typography, Input, Button, InputLabel } from '@material-ui/core';
+import { PersonAdd } from '@material-ui/icons';
 
 export class SignUp extends Component {
   constructor(props){
@@ -35,86 +39,86 @@ export class SignUp extends Component {
     if (this.props.isAuthorized || this.state.accessToken) {
       return <Redirect to='/' />;
     }
+
     if(!this.state.accessToken && !this.props.isAuthorized){
-      return(
-        <Grid container alignItems="center" justify="center" direction="column">
-          <Grid className="sign-up" item xs={5} container alignItems="center" justify="center" direction="column">
-            <Grid className="signup-container" container justify="center">
-              <Grid item xs={8} container justify="flex-start" direction="column">
-                <h1>Pixel</h1>
-                <p className="intro-text light-grey">
-                  Sign up to see photos from your friends
-                </p>
-                <Button className="fb-btn" type="button" color="primary" variant="contained" fullWidth>
-                  <svg className="fb-icon" viewBox="0 0 24 24">
-                    <path fill="#fff" d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z"/>
-                  </svg>
-                  Log in with Facebook
+      return <Grid container alignItems="center" justify="center" direction="column">
+        <Grid className="sign-up" item xs={5} container alignItems="center" justify="center" direction="column">
+          <Grid className="signup-container" container justify="center">
+            <Grid item xs={8} container justify="flex-start" direction="column">
+              <h1>Pixel</h1>
+              <p className="intro-text light-grey">
+                Sign up to see photos from your friends
+              </p>
+              <form onSubmit={this.onSubmit}>
+                <FormControl margin="normal" fullWidth>
+                  <InputLabel htmlFor="inp-nickname">Nickname</InputLabel>
+                  <Input required 
+                    id="inp-nickname" 
+                    type="text"
+                    name="nickname" 
+                    onChange={this.onChange} 
+                    onBlur={this.onBlur}
+                  />
+                  <FormError formErrors={this.state.formErrors.nickname}/>
+                </FormControl>
+                  <InputEmail
+                    onChange={this.onChange} 
+                    onValidate={this.onValidate} 
+                  /> 
+                  { this.state.emailValid ? '' : <div className="form-error">Email is invalid</div> }
+                <FormControl margin="normal" fullWidth>
+                  <InputLabel htmlFor="inp-password">Password</InputLabel>
+                  <Input required 
+                    id="inp-password" 
+                    type="password"
+                    name="password" 
+                    onChange={this.onChangePassword}
+                    onBlur={this.onBlur}
+                  />
+                  <FormError formErrors={this.state.formErrors.password}/>
+                </FormControl>
+                <FormControl margin="normal" fullWidth>
+                  <InputLabel htmlFor="inp-confirm">Confirm Password</InputLabel>
+                  <Input required 
+                    id="inp-confirm" 
+                    type="password"
+                    name="passwordConf" 
+                    onChange={this.onChangePasswordConf}
+                  />
+                  <FormError formErrors={this.state.formErrors.passwordConf}/>
+                </FormControl>
+                <p className={this.props.errMsg ? 'err-msg msg' : 'msg'}>{this.props.errMsg || this.props.confMsg}</p>
+                <Button 
+                  className="submit-btn" 
+                  type="submit"
+                  color="primary"
+                  variant="contained" 
+                  fullWidth
+                  disabled={this.props.confMsg ? 'true' : !this.buttonEnabled()}
+                >
+                  <PersonAdd className="add-icon"/>
+                  Sign Up
                 </Button>
-                <p className="divider light-grey">OR</p>
-                <form onSubmit={this.onSubmit}>
-                  <FormControl margin="normal" fullWidth>
-                    <InputLabel htmlFor="inp-nickname">Nickname</InputLabel>
-                    <Input required 
-                      id="inp-nickname" 
-                      type="text"
-                      name="nickname" 
-                      onChange={this.onChange} 
-                      onBlur={this.onBlur}
-                    />
-                    <FormError formErrors={this.state.formErrors.nickname}/>
-                  </FormControl>
-                    <InputEmail
-                      onChange={this.onChange} 
-                      onValidate={this.onValidate} 
-                    /> 
-                    { this.state.emailValid ? '' : <div className="form-error">Email is invalid</div> }
-                  <FormControl margin="normal" fullWidth>
-                    <InputLabel htmlFor="inp-password">Password</InputLabel>
-                    <Input required 
-                      id="inp-password" 
-                      type="password"
-                      name="password" 
-                      onChange={this.onChangePassword}
-                      onBlur={this.onBlur}
-                    />
-                    <FormError formErrors={this.state.formErrors.password}/>
-                  </FormControl>
-                  <FormControl margin="normal" fullWidth>
-                    <InputLabel htmlFor="inp-confirm">Confirm Password</InputLabel>
-                    <Input required 
-                      id="inp-confirm" 
-                      type="password"
-                      name="passwordConf" 
-                      onChange={this.onChangePasswordConf}
-                    />
-                    <FormError formErrors={this.state.formErrors.passwordConf}/>
-                  </FormControl>
-                  {console.log(this.props.confMsg)}
-                  <p className={this.props.errMsg ? 'err-msg msg' : 'msg'}>{this.props.errMsg || this.props.confMsg}</p>
-                  <Button 
-                    className="submit-btn" 
-                    type="submit"
-                    color="primary"
-                    variant="contained" 
-                    fullWidth
-                    disabled={this.props.confMsg ? 'true' : !this.buttonEnabled()}
-                  >
-                    <PersonAdd className="add-icon"/>
-                    Sign Up
-                  </Button>
-                </form>
-              </Grid>
-            </Grid>
-            <Grid className="login-container_link" item xs={12} container justify="center">
-              <Typography>
-                Have an account?
-                <Link to="/sign-in"> Log in</Link>
-              </Typography>
+              </form>
+
+              <p className="divider light-grey">OR</p>
+
+              <GoogleAuth 
+                handleGoogle={this.handleSocial}
+              />
+              <FbAuth 
+                handleFb={this.handleSocial}
+              />
             </Grid>
           </Grid>
-        </Grid> 
-      );
+          <Grid className="login-container_link" item xs={12} container justify="center">
+            <Typography>
+              Have an account?
+              <Link to="/sign-in"> Log in</Link>
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
     }
   };
 
@@ -185,6 +189,10 @@ export class SignUp extends Component {
     let { nickname, email, password, passwordConf } = this.state;
     this.props.authSignUp(nickname, email, password, passwordConf);
   }
+
+  handleSocial = (user) => {
+    this.props.authSignInSocial(user);
+  }
 };
 
 export default connect(
@@ -194,8 +202,8 @@ export default connect(
     confMsg: state.auth.confMsg
   }),
   dispatch => ({
-    authSignUp: (nickname, email, password, passwordConf) => dispatch(authSignUp(nickname, email, password, passwordConf))
-    }
-  )
-)(SignUp)
+    authSignUp: (nickname, email, password, passwordConf) => dispatch(authSignUp(nickname, email, password, passwordConf)),
+    authSignInSocial: (user) => dispatch(authSignInSocial(user))
+  })
+)(SignUp);
 

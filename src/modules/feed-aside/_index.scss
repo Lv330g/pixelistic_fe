@@ -1,8 +1,11 @@
 .feed-aside {
+  display: flex;
+  justify-content: center;
+  width: 33%;
   height: 85vh;
   position: fixed;
   right: 0px;
-  margin-top: 85px !important;
+  margin-top: 85px;
 
   .user-info {
     height: 10vh;

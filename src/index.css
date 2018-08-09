@@ -25,14 +25,22 @@ a {
   text-decoration: none; }
 
 .sign-in {
-  margin-top: 40px !important; }
+  margin-top: 40px;
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
   .sign-in .signin-container,
   .sign-in .signup-container_link {
     background-color: #fff;
     border: 1px solid #E6E6E6; }
   .sign-in .signup-container_link {
+    display: flex;
+    justify-content: center;
+    width: 100%;
     margin: 10px auto 40px;
-    padding: 20px 0 !important; }
+    padding: 20px 0; }
   .sign-in h1 {
     text-align: center;
     margin: 0;
@@ -40,7 +48,7 @@ a {
   .sign-in .form {
     width: 100%; }
   .sign-in .submit-btn {
-    margin: 10px auto 30px; }
+    margin: 10px auto 15px; }
   .sign-in .signin-icon {
     margin-right: 10px; }
   .sign-in .err-msg {
@@ -50,14 +58,22 @@ a {
     height: 20px; }
 
 .sign-up {
-  margin-top: 40px !important; }
+  margin-top: 40px;
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
   .sign-up .signup-container,
   .sign-up .login-container_link {
     background-color: #fff;
     border: 1px solid #E6E6E6; }
   .sign-up .login-container_link {
+    display: flex;
+    justify-content: center;
+    width: 100%;
     margin: 10px auto 40px;
-    padding: 20px 0 !important; }
+    padding: 20px 0; }
   .sign-up h1 {
     text-align: center;
     margin: 0;
@@ -65,17 +81,12 @@ a {
   .sign-up .intro-text {
     font-size: 16px;
     font-weight: 500;
-    text-align: center; }
-  .sign-up .fb-btn {
-    background-color: #4267B2;
-    margin: 10px 0 15px; }
-  .sign-up .fb-icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px; }
+    text-align: center;
+    margin-bottom: 0; }
   .sign-up .divider {
     text-align: center;
-    font-weight: 500; }
+    font-weight: 500;
+    margin: 0 0 20px 0; }
   .sign-up .submit-btn {
     margin: 10px auto 20px; }
   .sign-up .add-icon {
@@ -99,24 +110,31 @@ a {
     left: 20px; }
 
 .feed-line {
-  margin-top: 45px !important; }
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 67%;
+  margin-top: 45px; }
 
 .post {
   background-color: white;
-  border: solid 1px #AEAEAE;
-  margin-top: 40px !important;
-  width: 85%;
+  border: solid 2px #AEAEAE;
+  margin-top: 40px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  flex-direction: column; }
+  width: 85%; }
   .post .post-image {
     width: 100%; }
 
 .feed-aside {
+  display: flex;
+  justify-content: center;
+  width: 33%;
   height: 85vh;
   position: fixed;
   right: 0px;
-  margin-top: 85px !important; }
+  margin-top: 85px; }
   .feed-aside .user-info {
     height: 10vh; }
   .feed-aside .user-avatar {
@@ -128,33 +146,76 @@ a {
   .feed-aside .footer {
     height: 5vh; }
 
-.chat {
-  height: 65vh; }
-  .chat .chat-header {
-    margin: 5px auto;
-    font-size: 18px; }
-  .chat .text-field_label {
-    width: 100%;
-    cursor: pointer; }
-  .chat .text-field {
-    width: 100%;
-    border: 1px solid #AEAEAE;
-    box-sizing: border-box;
-    padding: 10px 0 10px 5px; }
-
-.chat-window {
+.friend-list {
   width: 100%;
-  height: 45vh;
-  border: 1px solid #AEAEAE;
-  border-radius: 2%; }
-  .chat-window .message {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 5px 0 5px 5px;
-    margin: 0;
-    font-size: 14px; }
-  .chat-window .link {
-    color: #000; }
+  height: 60vh;
+  box-sizing: border-box;
+  border: 2px solid #AEAEAE;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+  .friend-list .bottom-nav {
+    background-color: #E0E0E0; }
+
+.friend-item .exp-summary {
+  padding: 0 15px; }
+
+.friend-item .chip {
+  width: 100%;
+  color: #fff;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 16px; }
+
+.friend-item .chip-offline,
+.friend-item .chip-offline:hover,
+.friend-item .chip-offline:focus {
+  background-color: #9E9E9E; }
+
+.friend-item .chip-online,
+.friend-item .chip-online:hover,
+.friend-item .chip-online:focus {
+  background-color: #03A9F4; }
+
+.friend-item .avatar {
+  background-color: #4DD0E1;
+  font-weight: bold;
+  width: 32px;
+  height: 32px; }
+
+.friend-item .nickname {
+  margin: 0 0 0 15px; }
+
+.friend-item .badge {
+  margin: 0 10px 0 auto; }
+  .friend-item .badge path:first-child {
+    fill: #0277BD; }
+
+.friend-item .exp-details {
+  display: flex;
+  align-items: center; }
+
+.friend-item .btn {
+  height: 35px;
+  padding: 0 5px;
+  background-color: #4DD0E1; }
+
+.friend-item .msgs-btn {
+  margin-left: 15px; }
+
+.friend-item .link {
+  display: flex;
+  align-items: center;
+  height: 35px;
+  color: #fff; }
+  .friend-item .link svg {
+    margin-left: 15px;
+    color: #0277BD; }
+
+.friend-item .favorite {
+  margin-left: 40px; }
 
 .verify-page {
   width: 50%;
@@ -278,7 +339,7 @@ a {
   color: red;
   font-size: 12px;
   padding-top: 5px;
-  width: 170px; }
+  width: 100%; }
 
 .header {
   height: 60px !important;
@@ -318,18 +379,14 @@ a {
 
 .post-footer svg {
   width: 30px;
-  height: 30px;
-  cursor: pointer; }
-
-.post-footer .comment-icon {
-  margin-left: 20px; }
+  height: 30px; }
 
 .post-footer .likes-amount {
   font-weight: 500; }
 
-.post-footer .likes-panel p {
-  text-align: middle;
-  vertical-align: middle; }
+.post-footer .likes-panel {
+  display: flex;
+  align-items: center; }
 
 .post-footer .load-comments {
   cursor: pointer;
@@ -363,9 +420,37 @@ a {
     line-height: 15px;
     font-size: 12px; }
 
+#passport-btn {
+  margin-bottom: 15px;
+  padding: 0; }
+  #passport-btn .facebook-icon,
+  #passport-btn .google-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px; }
+  #passport-btn .facebook-icon {
+    background: url("./media//fb-icon.svg") no-repeat 0 0; }
+  #passport-btn .google-icon {
+    background: url("./media//google-icon.svg") no-repeat 0 0; }
+  #passport-btn a {
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+  #passport-btn span {
+    height: 35px; }
+
+#passport-btn.facebook-btn {
+  background-color: #4267B2; }
+  #passport-btn.facebook-btn:hover {
+    background-color: #264074; }
+
+#passport-btn.google-btn {
+  background-color: #DD4D42; }
+  #passport-btn.google-btn:hover {
+    background-color: #a13830; }
+
 .like {
   margin-left: auto; }
-  .like .face-icon {
-    fill: green; }
-  .like .thumb-up-icon {
-    fill: blue; }

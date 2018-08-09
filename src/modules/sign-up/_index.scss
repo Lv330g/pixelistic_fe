@@ -1,5 +1,10 @@
 .sign-up {
-  margin-top: 40px !important;
+  margin-top: 40px;
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   .signup-container,
   .login-container_link {
@@ -8,8 +13,11 @@
   }
 
   .login-container_link {
+    display: flex;
+    justify-content: center;
+    width: 100%;
     margin: 10px auto 40px;
-    padding: 20px 0 !important;
+    padding: 20px 0;
   }
 
   h1 {
@@ -22,22 +30,13 @@
     font-size: 16px;
     font-weight: 500;
     text-align: center;
-  }
-
-  .fb-btn {
-    background-color: #4267B2;
-    margin: 10px 0 15px;
-  }
-
-  .fb-icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
+    margin-bottom: 0;
   }
 
   .divider {
     text-align: center;
     font-weight: 500;
+    margin: 0 0 20px 0;
   }
 
   .submit-btn {

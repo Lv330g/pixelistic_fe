@@ -1,15 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-
-import { Grid, Typography, FormControl, Input, Button, InputLabel } from '@material-ui/core';
-import { AccountCircle } from '@material-ui/icons';
-import { connect } from 'react-redux';
-import { authSignIn } from './../../actions/auth';
 import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { authSignIn, authSignInSocial } from './../../actions/auth';
 
 import { FormError } from '../../shared/components/form-error/FormError';
 import InputEmail from '../../shared/components/input-email/InputEmail';
 import LoadingSpinner from '../../shared/components/loading-spinner/LoadingSpinner';
+import FbAuth from '../../shared/components/fb-auth/FbAuth';
+import GoogleAuth from '../../shared/components/google-auth/GoogleAuth';
+
+import { Grid, Typography, FormControl, Input, Button, InputLabel } from '@material-ui/core';
+import { AccountCircle } from '@material-ui/icons';
 
 export class SignIn extends React.Component {
   constructor(props) {
@@ -38,54 +40,65 @@ export class SignIn extends React.Component {
     }
 
     if(!this.state.accessToken && !this.props.isAuthorized){
-      return (
-        <Grid container alignItems={"center"} justify={"center"} direction={"column"}>
-          <Grid className="sign-in" item xs={5} container alignItems={"center"} justify={"center"} direction={"column"}>
-            <Grid className="signin-container" container justify={"center"}>
-              <Grid item xs={8} container alignItems={"center"} justify={"flex-start"} direction={"column"}>
-                <h1>Pixel</h1>
-  
-                <form onSubmit={this.handleSubmit} className="form">
-                  <InputEmail onValidate={this.onValidate}
-                    onChange={this.onChange} />
-                  <FormError formErrors={this.state.formErrors.email} />
-                  <FormControl margin={"normal"} fullWidth>
-                    <InputLabel htmlFor="inp-password">Password</InputLabel>
-                    <Input
-                      id="inp-password"
-                      type="password"
-                      name="password"
-                      value={this.state.passsword}
-                      onChange={this.onChangePassword}
-                      required />
-                    <FormError formErrors={this.state.formErrors.password} />
-                  </FormControl>
-                  <p className={this.props.errMsg ? 'err-msg msg' : 'msg'}>
-                    {this.props.errMsg}
-                  </p>
-                  <Button className="submit-btn" type={"submit"} color={"primary"} variant={"contained"} fullWidth disabled={!this.validateForm()}>
-                    <AccountCircle className="signin-icon" />
-                    Log In
-                  </Button>
-                </form>
-  
-                <p>
-                  <Link className="reset_link" to="">Forgot password?</Link>
+      return <Grid container alignItems={"center"} justify={"center"} direction={"column"}>
+        <div className="sign-in">
+          <Grid className="signin-container" container justify={"center"}>
+            <Grid item xs={8} container alignItems={"center"} justify={"flex-start"} direction={"column"}>
+              <h1>Pixel</h1>
+
+              <form onSubmit={this.handleSubmit} className="form">
+                <InputEmail 
+                  onValidate={this.onValidate}
+                  onChange={this.onChange} 
+                />
+                <FormError formErrors={this.state.formErrors.email} />
+
+                <FormControl margin={"normal"} fullWidth>
+                  <InputLabel htmlFor="inp-password">Password</InputLabel>
+                  <Input
+                    id="inp-password"
+                    type="password"
+                    name="password"
+                    value={this.state.passsword}
+                    onChange={this.onChangePassword}
+                    required />
+                </FormControl>
+                <FormError formErrors={this.state.formErrors.password} />
+
+                <p className={this.props.errMsg ? 'err-msg msg' : 'msg'}>
+                  {this.props.errMsg}
                 </p>
-              </Grid>
-            </Grid>
-  
-            {/* Sign up link */}
-            <Grid className="signup-container_link" item xs={12} container justify={"center"}>
-              <Typography>
-                Don't have an account?
-              <Link to="/sign-up"> Sign up</Link>
-              </Typography>
+
+                <Button className="submit-btn" type={"submit"} color={"primary"} variant={"contained"} fullWidth disabled={!this.validateForm()}>
+                  <AccountCircle className="signin-icon" />
+                  Log In
+                </Button>
+              </form>
+
+              <GoogleAuth 
+                handleGoogle={this.handleSocial}
+              />
+              <FbAuth 
+                handleFb={this.handleSocial}
+              />
+
+              <p>
+                <Link className="reset_link" to="">Forgot password?</Link>
+              </p>
             </Grid>
           </Grid>
-        </Grid>
-      )
+
+          {/* Sign up link */}
+          <div className="signup-container_link">
+            <Typography>
+              Don't have an account?
+            <Link to="/sign-up"> Sign up</Link>
+            </Typography>
+          </div>
+        </div>
+      </Grid>
     }
+
     return <LoadingSpinner/>
   }
 
@@ -135,6 +148,10 @@ export class SignIn extends React.Component {
     e.preventDefault();
     this.props.authSignIn(this.state.email, this.state.password);
   }
+
+  handleSocial = (user) => {
+    this.props.authSignInSocial(user);
+  }
 };
 
 export default connect(
@@ -143,8 +160,8 @@ export default connect(
     errMsg: state.auth.errorMessage,
   }),
   dispatch => ({
-    authSignIn: (email, password) => dispatch(authSignIn(email, password))
-  }
-  )
-)(SignIn)
+    authSignIn: (email, password) => dispatch(authSignIn(email, password)),
+    authSignInSocial: (user) => dispatch(authSignInSocial(user))
+  })
+)(SignIn);
 
