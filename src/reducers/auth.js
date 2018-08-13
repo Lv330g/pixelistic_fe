@@ -10,6 +10,7 @@ export default function (state = initialState, action) {
     switch (action.type) {
         case 'SIGN_IN_SUCCESS':
         return {
+            ...state,
             error: false,
             errorMessage: null,
             user: action.payload,
@@ -18,6 +19,7 @@ export default function (state = initialState, action) {
         };
         case 'VERIFY_SUCCESS':
         return {
+            ...state,
             error: false,
             errorMessage: null,
             user: action.payload,
@@ -27,6 +29,7 @@ export default function (state = initialState, action) {
         
         case 'EMAIL_SENDED':
         return {
+            ...state,
             error: false,
             errorMessage: null,
             user: null,
@@ -46,6 +49,7 @@ export default function (state = initialState, action) {
         case 'SIGN_IN_ERROR':
         case 'REGISTER_ERROR':
         return {
+            ...state,
             error: true,
             errorMessage: action.payload.response.data.error,
             user: null,
@@ -54,6 +58,7 @@ export default function (state = initialState, action) {
         };
         case 'SIGN_OUT':
         return {
+            ...state,
             error: false,
             errorMessage:null,
             user: null,

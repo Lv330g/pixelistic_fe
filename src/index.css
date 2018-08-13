@@ -3,6 +3,9 @@
 .light-grey {
   color: #AEAEAE; }
 
+.change-photo, .user-nickname, .nickname {
+  font-family: "Segoe UI", Helvetica, Arial, sans-serif; }
+
 input:-webkit-autofill, input:-webkit-autofill:active, input:-webkit-autofill:focus, input:-webkit-autofill:hover {
   transition: all 5000s ease-in-out 0s;
   transition-property: background-color;
@@ -229,11 +232,10 @@ a {
     height: 50px; }
 
 .user-dashboard {
-  margin-top: 80px; }
+  margin-top: 100px; }
   .user-dashboard .user-nickname {
     font-weight: 200;
-    font-size: 32px;
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+    font-size: 32px; }
   .user-dashboard .all-infa {
     padding: 30px 0; }
   .user-dashboard div span {
@@ -241,8 +243,8 @@ a {
   .user-dashboard .followers {
     padding: 0 20px; }
   .user-dashboard .user-avatar {
-    width: 150px !important;
-    height: 150px !important; }
+    width: 150px;
+    height: 150px; }
   .user-dashboard .user-name {
     font-weight: 600; }
   .user-dashboard .location {
@@ -253,15 +255,8 @@ a {
     font-weight: 650; }
   .user-dashboard .link:active {
     color: #C4CCD5; }
-  .user-dashboard .MuiButton-fab-116 {
-    width: 0;
-    height: 0; }
-  .user-dashboard .edit-button {
-    height: 50px;
-    width: 50px;
-    margin-left: 20px;
-    padding-bottom: 10px;
-    border-radius: 50%; }
+  .user-dashboard .button-edit {
+    margin-left: 10px; }
   .user-dashboard .edit-button:hover {
     color: #003569; }
 
@@ -335,11 +330,52 @@ a {
     background-color: rgba(0, 0, 0, 0.5);
     opacity: 1; }
 
+.user-dashboard {
+  margin-top: 100px; }
+  .user-dashboard .user-nickname {
+    font-weight: 200;
+    font-size: 32px; }
+  .user-dashboard .all-infa {
+    padding: 30px 0; }
+  .user-dashboard div span {
+    font-weight: 600; }
+  .user-dashboard .followers {
+    padding: 0 20px; }
+  .user-dashboard .user-avatar {
+    width: 150px;
+    height: 150px; }
+  .user-dashboard .user-name {
+    font-weight: 600; }
+  .user-dashboard .location {
+    padding: 10px 0;
+    font-size: 14px; }
+  .user-dashboard .link {
+    color: #003569;
+    font-weight: 650; }
+  .user-dashboard .link:active {
+    color: #C4CCD5; }
+  .user-dashboard .button-edit {
+    margin-left: 10px; }
+  .user-dashboard .edit-button:hover {
+    color: #003569; }
+
+.edit-profile {
+  margin-top: 100px; }
+  .edit-profile .nickname {
+    font-weight: 200;
+    font-size: 24px; }
+  .edit-profile .change-photo {
+    color: #3897f0;
+    font-weight: 500; }
+  .edit-profile .change-photo:active {
+    color: #C4CCD5; }
+
 .form-error {
   color: red;
   font-size: 12px;
   padding-top: 5px;
-  width: 100%; }
+  width: 100%;
+  height: 20px; }
 
 .header {
   height: 60px !important;

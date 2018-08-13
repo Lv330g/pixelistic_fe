@@ -3,15 +3,31 @@ import { Grid,  Input, Popper, Button, Paper, Grow, ClickAwayListener, MenuList,
 import { Extension } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
+import { authSignOut } from '../../../actions/auth';
+import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
+
 export class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
+      accessToken: false
     };
   }
+
+  componentWillMount(){
+    let accessToken = window.localStorage.getItem('authHeaders')  ? 
+      JSON.parse(window.localStorage.getItem('authHeaders'))['accessToken'] : null;
+    this.setState({ accessToken });
+  }
+
   render() {
     const { open } = this.state;
+
+    if(!this.state.accessToken){
+      return <Redirect to='/profile'/>
+    }
 
     return (
       <Grid container alignItems={"center"} justify={"center"} direction={"column"}>
@@ -44,16 +60,16 @@ export class Header extends React.Component {
                     <Paper>
                       <ClickAwayListener onClickAway={this.handleClose}>
                           <MenuList>
-                            <Link to="/profile">
-                              <MenuItem >
-                                  Profile
+                            <Link to={"/profile/"+this.props.user.nickname}>
+                              <MenuItem>
+                                Profile
                               </MenuItem>
                             </Link>
                             <Link to="/">
                               <MenuItem onClick={this.handleClose}>
                                 Feed line
                               </MenuItem>
-                            </Link> 
+                            </Link>
                             <MenuItem onClick={this.props.onSignOut}>Logout</MenuItem>
                           </MenuList>
                       </ClickAwayListener>
@@ -76,5 +92,16 @@ export class Header extends React.Component {
     }
     this.setState({ open: false });
   };
+
 };
-export default Header;
+
+
+export default connect(
+  state => ({
+    user: state.auth.user
+  }),
+  dispatch => ({
+    authSignOut: ( ) => dispatch(authSignOut( ))
+    }
+  )
+)(Header)
