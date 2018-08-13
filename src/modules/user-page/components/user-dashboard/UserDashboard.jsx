@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Avatar, Button } from '@material-ui/core';
+import { Grid, Avatar } from '@material-ui/core';
 import DashboardBtn from '../dashboard-btn/DashboardBtn';
 import { updateAvatarUrlPath } from './../../../../shared/utils/avatarUtil';
 

@@ -83,7 +83,7 @@ export class SignIn extends React.Component {
               />
 
               <p>
-                <Link className="reset_link" to="">Forgot password?</Link>
+                <Link className="reset_link" to="/forgot">Forgot password?</Link>
               </p>
             </Grid>
           </Grid>

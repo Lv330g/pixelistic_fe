@@ -55,3 +55,43 @@ export const authVerifyEmail = (hash) => {
         });
     }
 }
+
+export const authForgotEmail = (email) => {
+    return dispatch => {
+        return authApi.forgotEmail(email).then(text => {
+            dispatch({ type: 'EMAIL_EXIST', payload: text });
+        }, err => {    
+            dispatch({ type: 'EMAIL_DOESNOT_EXIST', payload: err })
+        });
+    }
+}
+
+export const authForgotTokenCheck = (email) => {
+    return dispatch => {
+        return authApi.forgotEmail(email).then(text => {
+            dispatch({ type: 'EMAIL_EXIST', payload: text });
+        }, err => {    
+            dispatch({ type: 'EMAIL_DOESNOT_EXIST', payload: err })
+        });
+    }
+}
+
+export const authVerifyPasswordReset = (reset) => {
+    return dispatch => {
+        return authApi.VerifyPasswordReset(reset).then(text => {
+            dispatch({ type: 'RESET_TOKEN_CORRECT', payload: text });
+        }, err => {    
+            dispatch({ type: 'RESET_TOKEN_INCORRECT', payload: err })
+        });
+    }
+}
+
+export const authChangePassword = (password, passwordConf, resetToken) => {
+    return dispatch => {
+        return authApi.ChangePassword(password, passwordConf, resetToken).then(text => {
+            dispatch({ type: 'PASSWORD_CHANGE_SUCCESS', payload: text });
+        }, err => {    
+            dispatch({ type: 'PASSWORD_DONT_CHANGE', payload: err })
+        });
+    }
+}

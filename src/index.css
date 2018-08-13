@@ -106,6 +106,13 @@ a {
   .sign-up .err-msg {
     color: #f34b4b; }
 
+.msg {
+  color: green;
+  text-align: center; }
+
+.forgot-form {
+  width: 100%; }
+
 .main-layout .content {
   margin-top: 80px; }
 
@@ -803,6 +810,8 @@ a {
       font-style: normal;
       border-left: 2px solid;
       padding-left: 15px; }
+  .header .logo-link, .header .logo-link:active {
+    color: black; }
   .header .extension-icon {
     font-size: 36px; }
 
