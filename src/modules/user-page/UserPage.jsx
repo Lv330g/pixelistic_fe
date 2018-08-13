@@ -1,54 +1,59 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { authValidate } from './../../actions/auth';
 import { getProfile } from './../../actions/profile';
+import { postOwnPosts } from './../../actions/post';
 
 import UserDashboard from './components/dashboard/UserDashboard';
 import UserPosts from './components/user-posts/UserPosts';
-import Header from '../../shared/components/header/Header';
+import LoadingSpinner from '../../shared/components/loading-spinner/LoadingSpinner';
 
 export class UserPage extends React.Component {
     constructor(props) {
        super(props)
        this.state = {
-           accessToken: false
+         ownPage: false
        }
    }
-    componentWillMount() {
-       let accessToken = window.localStorage.getItem('authHeaders') ?
-           JSON.parse(window.localStorage.getItem('authHeaders'))['accessToken'] : null;
-        this.setState({ accessToken });
-   }
-    componentDidMount() {
-       this.props.authValidate();
-       this.props.getProfile(this.props.match.params.nickname);
-     }
-    render() {
-        if (this.props.isAuthorized) {
-            return (
-                <div  >
-                    <Header />
-                    <UserDashboard 
-                    user={this.props.user} 
-                    userprofile={this.props.userprofile}  
-                    owner={'userId'} />
-                </div>
-            );
-        }
-        else {
-            return <div></div>
-        }
+
+  componentWillMount (){
+    const ownPage = this.props.match.params.nickname === this.props.user.nickname;
+    if(ownPage){
+      if(!this.props.ownPosts.length){
+        this.props.postOwnPosts(this.props.user);
+      }
     }
+    
+    this.setState({ ownPage });
+  }
+
+  componentDidMount() {
+    this.props.getProfile(this.props.match.params.nickname);
+  }
+  render() {
+    if(this.props.userprofile){
+      return <div>
+          <UserDashboard 
+            user={this.props.user} 
+            userprofile={this.props.userprofile}  
+            owner={'userId'}
+          />
+          <UserPosts 
+            posts={ this.state.ownPage ? this.props.ownPosts : this.props.userprofile.posts} 
+            ownPage={this.state.ownPage}
+          />
+      </div>
+    }
+    return <LoadingSpinner/>
+  }
 }
 export default connect(
     state => ({
-      user: state.auth.user,
       userprofile: state.profile.userprofile,
-      isAuthorized: state.auth.isAuthorized
+      ownPosts: state.post.ownPosts
     }),
     dispatch => ({
-      authValidate: () => dispatch(authValidate()),
-      getProfile: (nickname) => dispatch(getProfile(nickname))
+      getProfile: (nickname) => dispatch(getProfile(nickname)),
+      postOwnPosts: (user) => dispatch(postOwnPosts(user))
     })
   )(UserPage);
  

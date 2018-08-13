@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { authValidate } from './../../actions/auth';
 import { Redirect } from 'react-router';
 import { updateProfile, getProfileForEdit } from './../../actions/profile';
 import { Grid, Avatar, FormControl, Input, InputLabel, Button } from '@material-ui/core';
@@ -13,14 +12,8 @@ import { Link } from 'react-router-dom';
             nickname: '',
             website: '',
             userBio: '',
-            accessToken: false,
             saveDone: false
         }
-    }
-     componentWillMount() {
-        let accessToken = window.localStorage.getItem('authHeaders') ?
-            JSON.parse(window.localStorage.getItem('authHeaders'))['accessToken'] : null;
-        this.setState({ accessToken });
     }
      initializeValues = (profile) => {
         if (profile && profile.nickname) {
@@ -32,7 +25,6 @@ import { Link } from 'react-router-dom';
     }
      componentDidMount() {
         this.props.getProfileForEdit(this.props.match.params.nickname, this.initializeValues);
-        this.props.authValidate();
     }
      onSubmit = (e) => {
         e.preventDefault();
@@ -52,7 +44,7 @@ import { Link } from 'react-router-dom';
         if (this.state.saveDone) {
             return <Redirect to={'/profile/' + this.props.userprofile.nickname} />
         }
-        if (this.props.isAuthorized && this.props.userprofile && this.props.user && this.props.userprofile.nickname === this.props.user.nickname) {
+        if (this.props.userprofile && this.props.user && this.props.userprofile.nickname === this.props.user.nickname) {
             return (
                 <Grid className="edit-profile" container alignItems={"center"} justify={"center"} direction={"column"}>
                     <Grid container spacing={16} alignItems={"center"} justify={"center"} direction={"row"}>
@@ -131,12 +123,9 @@ import { Link } from 'react-router-dom';
 }
  export default connect(
     state => ({
-      user: state.auth.user,
       userprofile: state.profile.userprofile,
-      isAuthorized: state.auth.isAuthorized
     }),
     dispatch => ({
-        authValidate: () => dispatch(authValidate()),
         getProfileForEdit: (nickname, callback) => dispatch(getProfileForEdit(nickname, callback)),
         updateProfile: (nickname, userName, newNickname, website, userBio) =>
             dispatch(updateProfile(nickname, userName, newNickname, website, userBio))

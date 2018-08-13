@@ -25,7 +25,7 @@ export const authValidate = () => {
         authApi.checkUser().then(user => {
             dispatch({ type: 'SIGN_IN_SUCCESS', payload: user });
         }, err => {     
-            dispatch({ type: 'SIGN_IN_ERROR', payload: err })
+            dispatch({ type: 'VALIDATE_ERROR', payload: err })
         });
     }
 }

@@ -6,7 +6,7 @@ export const hardcodedPosts = [{
     authorName: 'Max Yavir',
     authorComment: 'I`ve made this',
     authorGeo: "Moscow",
-    postImage: "https://d3vlf99qeg6bpx.cloudfront.net/content/uploads/2018/05/18173600/PA.36418403.jpg",
+    postImage: "https://images.pexels.com/photos/210628/pexels-photo-210628.jpeg?cs=srgb&dl=landscape-fashion-person-210628.jpg&fm=jpg",
     comments: [{
         author: "Ihor",
         comment: "how r u, mate?"
@@ -43,7 +43,7 @@ export const hardcodedPosts = [{
     authorName: 'Andrew Korin',
     authorComment: 'I\'m happy to leave this commentary',
     authorGeo: "Milan",
-    postImage: "https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?auto=compress&cs=tinysrgb&h=350",
+    postImage: "http://localhost:3000/images/1533846173272/1533846173272.png",
     comments: [{
         author: "Ihor",
         comment: "how r u, mate?"
