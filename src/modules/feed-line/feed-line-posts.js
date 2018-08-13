@@ -43,7 +43,7 @@ export const hardcodedPosts = [{
     authorName: 'Andrew Korin',
     authorComment: 'I\'m happy to leave this commentary',
     authorGeo: "Milan",
-    postImage: "http://localhost:3000/images/1533846173272/1533846173272.png",
+    postImage: "https://images.pexels.com/photos/169647/pexels-photo-169647.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
     comments: [{
         author: "Ihor",
         comment: "how r u, mate?"

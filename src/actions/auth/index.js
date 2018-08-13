@@ -14,7 +14,7 @@ export const authSignInSocial = (user) => {
     return dispatch => {
         return authApi.signInSocial(user).then(user => {
             dispatch({ type: 'SIGN_IN_SUCCESS', payload: user });
-        }, err => {    
+        }, err => {
             dispatch({ type: 'SIGN_IN_ERROR', payload: err })
         });
     }

@@ -12,10 +12,13 @@
   }
 
   .empty-photo{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 50%;
-    margin: auto;
     height: 400px;
-    margin-top: 50px;
+    margin-top: 20px;
     background-color: transparent;
     border: 2px dashed $photo-upload-panel;
     display: flex;
@@ -116,7 +119,6 @@
       
       .canvas {
         display: block;
-        vertical-align: bottom;
         max-width: 100%;
         min-width: 250px;
         max-height: 500px;

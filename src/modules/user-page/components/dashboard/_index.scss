@@ -14,7 +14,12 @@
     .followers {
         padding: 0 20px;
     }
-     .user-avatar{
+
+    .avatar-container {
+        margin-right: 80px;
+    }
+
+    .user-avatar {
         width: 150px;
         height: 150px;
     }
@@ -32,11 +37,4 @@
     .link:active{
         color: #C4CCD5;
     }
-    .button-edit{
-        margin-left: 10px;
-    }
-    .edit-button:hover{
-        color: #003569;
-    }
-
 }
