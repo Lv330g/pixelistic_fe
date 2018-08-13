@@ -15,6 +15,19 @@ export const authApi = {
         });
     },
 
+    signInSocial: (user) => {
+        return new Promise((resolve, reject) => {
+            httpServise.post(`${host}:${port}/login/social`, {user}).then(
+                res => {
+                    if (res.data.user) {
+                        window.localStorage.setItem('authHeaders', JSON.stringify({ 'accessToken': res.data.accessToken}));
+                        resolve(res.data.user);
+                    } else reject({status: 401});
+                }, err => reject(err)
+            );
+        });
+    },
+
     checkUser: () => {
         return new Promise((resolve, reject) => {
             httpServise.get(`${host}:${port}/validate-token`).then(

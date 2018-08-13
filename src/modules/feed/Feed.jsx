@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { authValidate, authSignOut } from './../../actions/auth'
 import { Redirect } from 'react-router';
+import ScrollToTop from 'react-scroll-up';
 
 import FeedLine from '../feed-line/FeedLine';
 import Header from '../../shared/components/header/Header';
@@ -23,7 +24,7 @@ export class Feed extends Component {
     let accessToken = window.localStorage.getItem('authHeaders')  ? 
       JSON.parse(window.localStorage.getItem('authHeaders'))['accessToken'] : null;
 
-      this.setState({ accessToken });
+    this.setState({ accessToken });
   }
 
   render(){
@@ -46,9 +47,11 @@ export class Feed extends Component {
           nickname={this.props.user.nickname} 
         />
         <FeedAside 
-          nickname={this.props.user.nickname}
+          user={this.props.user}
         />
-        <UpstairsBtn />
+        <ScrollToTop showUnder={160}>
+          <UpstairsBtn />
+        </ScrollToTop>
       </div>
     }
 
@@ -59,7 +62,7 @@ export class Feed extends Component {
     this.props.authSignOut();
     this.setState({ accessToken: false });
   }
-}
+};
 
 export default connect(
   state => ({
@@ -70,5 +73,5 @@ export default connect(
     authValidate: (email, password) => dispatch(authValidate(email, password)),
     authSignOut: () => dispatch(authSignOut())
   })
-)(Feed)
+)(Feed);
 

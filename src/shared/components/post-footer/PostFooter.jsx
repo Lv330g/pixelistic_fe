@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Like from '../like/Like';
 import { initCmntsAmount, expandCmntsAmount } from '../../../const/post-config';
 
-import { Grid, Divider, TextField } from '@material-ui/core';
-import { CommentOutlined } from '@material-ui/icons';
+import Like from '../like/Like';
+
+import { Grid, Divider, TextField, Checkbox } from '@material-ui/core';
+import { CommentOutlined, DeleteOutlined } from '@material-ui/icons';
 
 
 export default class PostFooter extends Component {
@@ -15,13 +16,16 @@ export default class PostFooter extends Component {
       comments: [],
       liked: false,
       moreComments: false,
-      likesAmount: 0,
+      likesAmount: null,
       _id: '',
       authorName: '',
       authorComment: '',
       date: '',
-      commentsAmount: 0
+      commentsAmount: null,
+      commentCheckbox: false
     };
+
+    this.textfieldRef = React.createRef();
   }
 
   componentDidMount() {
@@ -72,9 +76,19 @@ export default class PostFooter extends Component {
           liked={this.state.liked}
           handleLike={this.handleLike}
         />
-        <label htmlFor={`txt-${this.state._id}`}>
-          <CommentOutlined className="comment-icon"/>
-        </label>
+        <Checkbox
+          checked={this.state.commentCheckbox}
+          onChange={this.focusTextfield}
+          color={"primary"}
+          icon={<CommentOutlined />}
+          checkedIcon={<CommentOutlined />}
+        />
+        <Checkbox
+          checked={"true"}
+          color={"secondary"}
+          icon={<DeleteOutlined />}
+          checkedIcon={<DeleteOutlined />}
+        />
       </Grid>
     
       <p className="comment author">
@@ -97,12 +111,13 @@ export default class PostFooter extends Component {
       <Divider />
       
       <TextField 
-        id={`txt-${this.state._id}`}
-        ref={this.textInput}
+        inputRef={this.textfieldRef}
         className="input-override text-field"
         multiline={true}
         placeholder={"Type your comment..."}
-        onKeyPress={this.handleInput}
+        onKeyPress={this.handleTextfieldInput}
+        onBlur={this.handleTextfieldBlur}
+        onFocus={this.handleTextfieldFocus}
       />
     </Grid>
   }
@@ -125,7 +140,7 @@ export default class PostFooter extends Component {
     });
   }
 
-  handleInput = (e) => {
+  handleTextfieldInput = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
     }
@@ -144,6 +159,25 @@ export default class PostFooter extends Component {
         };
       });
     }
+  }
+
+  focusTextfield = () => {
+    this.textfieldRef.current.focus();
+    this.setState({
+      commentCheckbox: true
+    });
+  }
+
+  handleTextfieldBlur = () => {
+    this.setState({
+      commentCheckbox: false
+    });
+  }
+
+  handleTextfieldFocus = () => {
+    this.setState({
+      commentCheckbox: true
+    });
   }
 };
 

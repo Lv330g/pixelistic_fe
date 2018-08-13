@@ -1,12 +1,22 @@
 import React from 'react';
 
-import { SentimentSatisfiedAlt, ThumbUpAltOutlined } from '@material-ui/icons';
+import { Checkbox } from '@material-ui/core';
+import { FavoriteBorder, Favorite } from '@material-ui/icons';
 
 
 const Like = (props) => {
-  return <div className="like" onClick={props.handleLike}>
-    {props.liked ? <SentimentSatisfiedAlt className="face-icon"/> 
-    : <ThumbUpAltOutlined  className="thumb-up-icon"/>} 
+  const { liked, handleLike, parentId } = props;
+  const handleChange = (e, checked) => {
+    handleLike(checked, parentId);
+  }
+
+  return <div className="like">
+    <Checkbox
+      checked={liked}
+      icon={<FavoriteBorder />} 
+      checkedIcon={<Favorite />}
+      onChange={handleChange}
+    />
   </div>
 };
 

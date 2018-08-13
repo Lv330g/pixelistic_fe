@@ -4,8 +4,6 @@ import { hardcodedPosts } from './feed-line-posts';
 
 import Post from '../post/Post';
 
-import { Grid } from '@material-ui/core';
-
 export default class FeedLine extends Component {
   constructor(props) {
     super(props);
@@ -48,9 +46,9 @@ export default class FeedLine extends Component {
       />
     });
 
-    return <Grid container direction={"column"} alignItems={"flex-end"} item xs={8} className="feed-line">
+    return <div className="feed-line">
       {allPosts}
-    </Grid>
+    </div>
   }
 
   handleScroll = () => {
