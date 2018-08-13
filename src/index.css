@@ -111,9 +111,6 @@ a {
   color: green;
   text-align: center; }
 
-.forgot-form {
-  width: 100%; }
-
 .main-layout .content {
   margin-top: 80px; }
 
@@ -424,6 +421,28 @@ a {
     color: #C4CCD5; }
   .edit-profile .form {
     width: 800px; }
+
+.header .notifications-icon {
+  font-size: 36px; }
+
+.header .notifWidth {
+  min-width: 340px; }
+
+.header .notif-item-container {
+  display: flex;
+  flex-direction: row;
+  padding: 7px 20px;
+  background-color: #f1efef;
+  align-items: center; }
+
+.header .notif-sub-container, .header .notif-sub-container-2 {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  align-items: center; }
+
+.header .notif-sub-container-2 {
+  margin-left: auto; }
 
 .photo-upload {
   text-align: center;

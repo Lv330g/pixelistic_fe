@@ -121,7 +121,10 @@ export default function (state = initialState, action) {
         ...state,
         error: false,
         errorMessage: '',
-        currentSessionPosts: state.currentSessionPosts.filter( item => item._id !== action.payload ),
+        currentSessionPosts: state.currentSessionPosts.map( item => { 
+         if(item._id === action.payload) item.deleted = true;
+         return item;
+        }),
         isLoading: false
       }
 
