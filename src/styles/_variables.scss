@@ -1,5 +1,7 @@
 $light-grey: #AEAEAE;
 $light-cyan: #4DD0E1;
 $dark-blue: #0277BD;
+$font-arial: "Segoe UI", Helvetica, Arial, sans-serif;
 
 .light-grey { color: $light-grey };
+.change-photo, .user-nickname, .nickname { font-family: $font-arial};
