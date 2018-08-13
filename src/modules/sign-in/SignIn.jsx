@@ -9,6 +9,7 @@ import { Redirect } from 'react-router';
 
 import { FormError } from '../../shared/components/form-error/FormError';
 import InputEmail from '../../shared/components/input-email/InputEmail';
+import LoadingSpinner from '../../shared/components/loading-spinner/LoadingSpinner';
 
 export class SignIn extends React.Component {
   constructor(props) {
@@ -27,6 +28,7 @@ export class SignIn extends React.Component {
   componentWillMount() {
     let accessToken = window.localStorage.getItem('authHeaders') ?
       JSON.parse(window.localStorage.getItem('authHeaders'))['accessToken'] : null;
+     
     this.setState({ accessToken });
   }
 
@@ -34,55 +36,57 @@ export class SignIn extends React.Component {
     if (this.props.isAuthorized || this.state.accessToken) {
       return <Redirect to='/' />;
     }
-    return (
-      <Grid container alignItems={"center"} justify={"center"} direction={"column"}>
-        <Grid className="sign-in" item xs={5} container alignItems={"center"} justify={"center"} direction={"column"}>
-          <Grid className="signin-container" container justify={"center"}>
-            <Grid item xs={8} container alignItems={"center"} justify={"flex-start"} direction={"column"}>
-              <h1>Pixel</h1>
 
-              <form onSubmit={this.handleSubmit} className="form">
-                <InputEmail onValidate={this.onValidate}
-                  onChange={this.onChange} />
-                <FormError formErrors={this.state.formErrors.email} />
-                <FormControl margin={"normal"} fullWidth>
-                  <InputLabel htmlFor="inp-password">Password</InputLabel>
-                  <Input
-                    id="inp-password"
-                    type="password"
-                    name="password"
-                    value={this.state.passsword}
-                    onChange={this.onChangePassword}
-                    required />
-                  <FormError formErrors={this.state.formErrors.password} />
-                </FormControl>
-                <p className={this.props.errMsg ? 'err-msg msg' : 'msg'}>
-                  {console.log(this.props.errMsg)}
-                  {this.props.errMsg}
+    if(!this.state.accessToken && !this.props.isAuthorized){
+      return (
+        <Grid container alignItems={"center"} justify={"center"} direction={"column"}>
+          <Grid className="sign-in" item xs={5} container alignItems={"center"} justify={"center"} direction={"column"}>
+            <Grid className="signin-container" container justify={"center"}>
+              <Grid item xs={8} container alignItems={"center"} justify={"flex-start"} direction={"column"}>
+                <h1>Pixel</h1>
+  
+                <form onSubmit={this.handleSubmit} className="form">
+                  <InputEmail onValidate={this.onValidate}
+                    onChange={this.onChange} />
+                  <FormError formErrors={this.state.formErrors.email} />
+                  <FormControl margin={"normal"} fullWidth>
+                    <InputLabel htmlFor="inp-password">Password</InputLabel>
+                    <Input
+                      id="inp-password"
+                      type="password"
+                      name="password"
+                      value={this.state.passsword}
+                      onChange={this.onChangePassword}
+                      required />
+                    <FormError formErrors={this.state.formErrors.password} />
+                  </FormControl>
+                  <p className={this.props.errMsg ? 'err-msg msg' : 'msg'}>
+                    {this.props.errMsg}
+                  </p>
+                  <Button className="submit-btn" type={"submit"} color={"primary"} variant={"contained"} fullWidth disabled={!this.validateForm()}>
+                    <AccountCircle className="signin-icon" />
+                    Log In
+                  </Button>
+                </form>
+  
+                <p>
+                  <Link className="reset_link" to="">Forgot password?</Link>
                 </p>
-                <Button className="submit-btn" type={"submit"} color={"primary"} variant={"contained"} fullWidth disabled={!this.validateForm()}>
-                  <AccountCircle className="signin-icon" />
-                  Log In
-                </Button>
-              </form>
-
-              <p>
-                <Link className="reset_link" to="">Forgot password?</Link>
-              </p>
+              </Grid>
+            </Grid>
+  
+            {/* Sign up link */}
+            <Grid className="signup-container_link" item xs={12} container justify={"center"}>
+              <Typography>
+                Don't have an account?
+              <Link to="/sign-up"> Sign up</Link>
+              </Typography>
             </Grid>
           </Grid>
-
-          {/* Sign up link */}
-          <Grid className="signup-container_link" item xs={12} container justify={"center"}>
-            <Typography>
-              Don't have an account?
-            <Link to="/sign-up"> Sign up</Link>
-            </Typography>
-          </Grid>
         </Grid>
-      </Grid>
-    )
-
+      )
+    }
+    return <LoadingSpinner/>
   }
 
   onChange = (e) => {

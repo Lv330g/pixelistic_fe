@@ -40,9 +40,9 @@ export const authApi = {
                     window.localStorage.removeItem('authHeaders');
                     resolve(res);
                 },
-                err => {
+                ( ) => {
                     window.localStorage.removeItem('authHeaders');
-                    reject(err)
+                    resolve( );
                 }
             )
         })

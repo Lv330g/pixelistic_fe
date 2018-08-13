@@ -112,6 +112,210 @@ a {
   .post .post-image {
     width: 100%; }
 
+.feed-aside {
+  height: 85vh;
+  position: fixed;
+  right: 0px;
+  margin-top: 85px !important; }
+  .feed-aside .user-info {
+    height: 10vh; }
+  .feed-aside .user-avatar {
+    width: 50px;
+    height: 50px; }
+  .feed-aside .user-nickname {
+    margin: 0 0 0 15px;
+    font-size: 25px; }
+  .feed-aside .footer {
+    height: 5vh; }
+
+.chat {
+  height: 65vh; }
+  .chat .chat-header {
+    margin: 5px auto;
+    font-size: 18px; }
+  .chat .text-field_label {
+    width: 100%;
+    cursor: pointer; }
+  .chat .text-field {
+    width: 100%;
+    border: 1px solid #AEAEAE;
+    box-sizing: border-box;
+    padding: 10px 0 10px 5px; }
+
+.chat-window {
+  width: 100%;
+  height: 45vh;
+  border: 1px solid #AEAEAE;
+  border-radius: 2%; }
+  .chat-window .message {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 5px 0 5px 5px;
+    margin: 0;
+    font-size: 14px; }
+  .chat-window .link {
+    color: #000; }
+
+.verify-page {
+  width: 50%;
+  margin: auto;
+  text-align: center;
+  font-family: 'Raleway', sans-serif; }
+  .verify-page .error {
+    color: #ff5c5c; }
+  .verify-page .err-icon {
+    width: 50px;
+    height: 50px; }
+
+.user-dashboard {
+  margin-top: 80px; }
+  .user-dashboard .user-nickname {
+    font-weight: 200;
+    font-size: 32px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .user-dashboard .all-infa {
+    padding: 30px 0; }
+  .user-dashboard div span {
+    font-weight: 600; }
+  .user-dashboard .followers {
+    padding: 0 20px; }
+  .user-dashboard .user-avatar {
+    width: 150px !important;
+    height: 150px !important; }
+  .user-dashboard .user-name {
+    font-weight: 600; }
+  .user-dashboard .location {
+    padding: 10px 0;
+    font-size: 14px; }
+  .user-dashboard .link {
+    color: #003569;
+    font-weight: 650; }
+  .user-dashboard .link:active {
+    color: #C4CCD5; }
+  .user-dashboard .MuiButton-fab-116 {
+    width: 0;
+    height: 0; }
+  .user-dashboard .edit-button {
+    height: 50px;
+    width: 50px;
+    margin-left: 20px;
+    padding-bottom: 10px;
+    border-radius: 50%; }
+  .user-dashboard .edit-button:hover {
+    color: #003569; }
+
+.user-posts {
+  margin-top: 50px; }
+
+.post-page {
+  position: fixed;
+  outline: 0;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 10000000000000; }
+  .post-page .icon {
+    width: 50px;
+    height: 50px; }
+  .post-page .nav-btn {
+    top: 30%;
+    position: fixed; }
+  .post-page .nav-btn-left {
+    left: 10px; }
+  .post-page .nav-btn-right {
+    right: 10px; }
+  .post-page .post-info {
+    background-color: white;
+    overflow-y: auto;
+    display: inline-block;
+    padding-left: 10px; }
+  .post-page .top {
+    margin-top: 50px; }
+  .post-page img {
+    max-width: 100%;
+    max-height: 800px;
+    object-fit: contain;
+    display: block;
+    box-sizing: border-box; }
+
+.user-image {
+  width: 33.3%;
+  height: 300px;
+  box-sizing: border-box;
+  padding: 10px; }
+  .user-image .photo-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%; }
+    .user-image .photo-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; }
+  .user-image .photo-info {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: white;
+    opacity: 0;
+    cursor: pointer; }
+    .user-image .photo-info em {
+      font-style: normal;
+      margin-right: 20px;
+      margin-left: 5px; }
+    .user-image .photo-info em:last-child {
+      margin-right: 0; }
+    .user-image .photo-info em:first-child {
+      margin-left: 0; }
+  .user-image .photo-info:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 1; }
+
+.form-error {
+  color: red;
+  font-size: 12px;
+  padding-top: 5px;
+  width: 170px; }
+
+.header {
+  height: 60px !important;
+  position: fixed;
+  background-color: #f7f7f7;
+  margin-top: 30px !important;
+  border-radius: 0 0 5px 5px;
+  -webkit-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.1);
+  z-index: 999; }
+  .header .logo {
+    background-image: url("./media//logo.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 26px;
+    padding-left: 40px;
+    padding-top: 3px;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 20px;
+    letter-spacing: 3px; }
+    .header .logo .logo-ident {
+      font-weight: normal;
+      font-style: normal;
+      border-left: 2px solid;
+      padding-left: 15px; }
+  .header .extension-icon {
+    font-size: 36px; }
+
+.loading-spinner {
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+  margin-top: 100px; }
+  .loading-spinner .spinner {
+    color: #acbdac; }
+
 .post-footer svg {
   width: 30px;
   height: 30px;
@@ -165,132 +369,3 @@ a {
     fill: green; }
   .like .thumb-up-icon {
     fill: blue; }
-
-.feed-aside {
-  height: 85vh;
-  position: fixed;
-  right: 0px;
-  margin-top: 85px !important; }
-  .feed-aside .user-info {
-    height: 10vh; }
-  .feed-aside .user-avatar {
-    width: 50px;
-    height: 50px; }
-  .feed-aside .user-nickname {
-    margin: 0 0 0 15px;
-    font-size: 25px; }
-  .feed-aside .footer {
-    height: 5vh; }
-
-.chat {
-  height: 65vh; }
-  .chat .chat-header {
-    margin: 5px auto;
-    font-size: 18px; }
-  .chat .text-field_label {
-    width: 100%;
-    cursor: pointer; }
-  .chat .text-field {
-    width: 100%;
-    border: 1px solid #AEAEAE;
-    box-sizing: border-box;
-    padding: 10px 0 10px 5px; }
-
-.chat-window {
-  width: 100%;
-  height: 45vh;
-  border: 1px solid #AEAEAE;
-  border-radius: 2%; }
-  .chat-window .message {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 5px 0 5px 5px;
-    margin: 0;
-    font-size: 14px; }
-  .chat-window .link {
-    color: #000; }
-
-.verify-page {
-  width: 50%;
-  margin: auto;
-  text-align: center;
-  font-family: 'Raleway', sans-serif; }
-  .verify-page .spinner {
-    color: #acbdac; }
-  .verify-page .error {
-    color: #ff5c5c; }
-  .verify-page .err-icon {
-    width: 50px;
-    height: 50px; }
-
-.user-dashboard {
-  margin-top: 80px; }
-  .user-dashboard .user-nickname {
-    font-weight: 200;
-    font-size: 32px;
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
-  .user-dashboard .all-infa {
-    padding: 30px 0; }
-  .user-dashboard div span {
-    font-weight: 600; }
-  .user-dashboard .followers {
-    padding: 0 20px; }
-  .user-dashboard .user-avatar {
-    width: 150px !important;
-    height: 150px !important; }
-  .user-dashboard .user-name {
-    font-weight: 600; }
-  .user-dashboard .location {
-    padding: 10px 0;
-    font-size: 14px; }
-  .user-dashboard .link {
-    color: #003569;
-    font-weight: 650; }
-  .user-dashboard .link:active {
-    color: #C4CCD5; }
-  .user-dashboard .MuiButton-fab-116 {
-    width: 0;
-    height: 0; }
-  .user-dashboard .edit-button {
-    height: 50px;
-    width: 50px;
-    margin-left: 20px;
-    padding-bottom: 10px;
-    border-radius: 50%; }
-  .user-dashboard .edit-button:hover {
-    color: #003569; }
-
-.form-error {
-  color: red;
-  font-size: 12px;
-  padding-top: 5px;
-  width: 170px; }
-
-.header {
-  height: 60px !important;
-  position: fixed;
-  background-color: #f7f7f7;
-  margin-top: 30px !important;
-  border-radius: 0 0 5px 5px;
-  -webkit-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.1);
-  z-index: 999; }
-  .header .logo {
-    background-image: url("./media//logo.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    height: 26px;
-    padding-left: 40px;
-    padding-top: 3px;
-    font-style: italic;
-    font-weight: bold;
-    font-size: 20px;
-    letter-spacing: 3px; }
-    .header .logo .logo-ident {
-      font-weight: normal;
-      font-style: normal;
-      border-left: 2px solid;
-      padding-left: 15px; }
-  .header .extension-icon {
-    font-size: 36px; }

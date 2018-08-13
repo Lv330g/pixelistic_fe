@@ -5,13 +5,15 @@
 
 @import './feed-line/index';
 @import './post/index';
-@import './post/components/post-footer/index';
-@import './post/components/post-header/index';
-@import './post/components/like/index';
+
 
 @import './feed-aside/index';
 @import './chat/index';
 @import './chat/components/chat-window/index';
 
 @import './email-verify/index';
-@import './user-page/dashboard/index';
+
+@import './user-page/components/dashboard/index';
+@import './user-page/components/user-posts/index';
+@import './user-page/components/post-page/index';
+@import './user-page/components/user-image/index';

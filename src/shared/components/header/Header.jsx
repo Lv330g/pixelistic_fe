@@ -3,31 +3,15 @@ import { Grid,  Input, Popper, Button, Paper, Grow, ClickAwayListener, MenuList,
 import { Extension } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
-import { authSignOut } from '../../../actions/auth';
-import { Redirect } from 'react-router';
-import { connect } from 'react-redux';
-
 export class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
-      accessToken: false
     };
   }
-
-  componentWillMount(){
-    let accessToken = window.localStorage.getItem('authHeaders')  ? 
-      JSON.parse(window.localStorage.getItem('authHeaders'))['accessToken'] : null;
-    this.setState({ accessToken });
-  }
-
   render() {
     const { open } = this.state;
-
-    if(!this.state.accessToken){
-      return <Redirect to='/sign-in'/>
-    }
 
     return (
       <Grid container alignItems={"center"} justify={"center"} direction={"column"}>
@@ -61,16 +45,16 @@ export class Header extends React.Component {
                       <ClickAwayListener onClickAway={this.handleClose}>
                           <MenuList>
                             <Link to="/profile">
-                              <MenuItem onClick={this.handleClose}>
-                                Profile
+                              <MenuItem >
+                                  Profile
                               </MenuItem>
                             </Link>
                             <Link to="/">
                               <MenuItem onClick={this.handleClose}>
                                 Feed line
                               </MenuItem>
-                            </Link>
-                            <MenuItem onClick={this.handleSignOut}>Logout</MenuItem>
+                            </Link> 
+                            <MenuItem onClick={this.props.onSignOut}>Logout</MenuItem>
                           </MenuList>
                       </ClickAwayListener>
                     </Paper>
@@ -92,21 +76,5 @@ export class Header extends React.Component {
     }
     this.setState({ open: false });
   };
-  handleSignOut = () => {
-    console.log("SDASD");
-    this.props.authSignOut();
-  }
 };
-
-
-export default connect(
-  state => ({
-    user: state.auth.user
-  }),
-  dispatch => ({
-    authSignOut: ( ) => dispatch(authSignOut( ))
-    }
-  )
-)(Header)
-
-
+export default Header;

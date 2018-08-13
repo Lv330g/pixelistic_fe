@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Like from '../like/Like';
-import { initCmntsAmount, expandCmntsAmount } from '../../../../const/post-config';
+import { initCmntsAmount, expandCmntsAmount } from '../../../const/post-config';
 
 import { Grid, Divider, TextField } from '@material-ui/core';
 import { CommentOutlined } from '@material-ui/icons';

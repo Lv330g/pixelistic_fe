@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import PostFooter from '../post/components/post-footer/PostFooter';
-import PostHeader from '../post/components/post-header/PostHeader';
+import PostFooter from '../../shared/components/post-footer/PostFooter';
+import PostHeader from '../../shared/components/post-header/PostHeader';
 
 const Post = React.forwardRef((props, ref) => {
   return <div ref={ref} className="post">

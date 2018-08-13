@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 
-import UserDashboard from './dashboard/UserDashboard';
+import UserDashboard from './components/dashboard/UserDashboard';
+import UserPosts from './components/user-posts/UserPosts';
 import Header from '../../shared/components/header/Header';
 
 class UserPage extends React.Component {
@@ -9,6 +10,7 @@ class UserPage extends React.Component {
         <Fragment>
             <Header />
             <UserDashboard owner={'userId'}/>
+            <UserPosts/>
         </Fragment>
     );
     }
