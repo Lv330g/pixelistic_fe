@@ -1,8 +1,11 @@
 import React , { Component } from 'react';
 import { Grid, IconButton} from '@material-ui/core';
 import { KeyboardArrowRight, KeyboardArrowLeft } from '@material-ui/icons';
-import PostFooter from '../../../../shared/components/post-footer/PostFooter';
+
 import PostHeader from '../../../../shared/components/post-header/PostHeader';
+import PostFooter from '../../../../shared/components/post-footer/PostFooter';
+import { host, port } from '../../../../const/node-server-config';
+import { posts } from '../user-posts/user-posts'; 
 
 
 export class PostPage extends Component {
@@ -35,21 +38,25 @@ export class PostPage extends Component {
               <KeyboardArrowLeft className="icon"/>
             </IconButton> : null}
         </Grid>
-    
-        <Grid className="top" container item direction="column" xs={6} onClick={this.noClose}>
-            <img alt="user-img" src={this.props.post.postImage} ref={this.postImg} onClick={this.navigateNext}/>
-        </Grid>
-        
-        <Grid className="top" container item direction="column" xs={4} onClick={this.noClose}>
-          <div className="post-info " ref={this.postInfo}>
-            <PostHeader  
-              authorName={this.props.post.authorName}
-              authorGeo={this.props.post.authorGeo}
-              authorImg={this.props.post.authorImg} 
-            />             
-            <PostFooter post ={this.props.post}/>
-          </div>
-        </Grid>
+
+        <Grid className="post-cont" direction="row" container alignItems="center" justify="center">
+              
+          <Grid className="top photo-cont" item onClick={this.noClose}> 
+              <img alt="user-img" src={`${host}:${port}/${this.props.post.image}`} ref={this.postImg} onClick={this.navigateNext}/>
+          </Grid>
+          
+          <Grid className="top" item onClick={this.noClose}>
+          <div className="post-info " ref={this.postInfo}> 
+              <PostHeader  
+                authorName={this.props.post.author.nickname}
+                authorGeo={this.props.post.geolocation}
+                authorImg={this.props.post.author.avatar} 
+              />   
+              <PostFooter post={posts[0]}/>
+            </div>
+         </Grid>
+
+         </Grid>
            
         <Grid container item direction="column" xs={1} justify="center" alignItems="center" >
           {this.props.rightButton ?  

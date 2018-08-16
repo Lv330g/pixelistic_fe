@@ -60,7 +60,7 @@ export class Header extends React.Component {
                     <Paper>
                       <ClickAwayListener onClickAway={this.handleClose}>
                           <MenuList>
-                            <Link to={"/profile/"+this.props.user.nickname}>
+                            <Link to={`/profile/${this.props.user.nickname}`}>
                               <MenuItem>
                                 Profile
                               </MenuItem>
@@ -69,6 +69,9 @@ export class Header extends React.Component {
                               <MenuItem onClick={this.handleClose}>
                                 Feed line
                               </MenuItem>
+                            </Link>
+                            <Link to="/upload">
+                              <MenuItem onClick={this.handleClose}> Upload </MenuItem>
                             </Link>
                             <MenuItem onClick={this.props.onSignOut}>Logout</MenuItem>
                           </MenuList>

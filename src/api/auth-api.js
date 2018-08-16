@@ -62,7 +62,7 @@ export const authApi = {
     },
 
     signUp: (nickname, email, password, passwordConf) => {
-        let newUser = { nickname, email, password, passwordConf };
+        const newUser = { nickname, email, password, passwordConf };
         return new Promise ((resolve, reject) => {
             httpServise.post(`${host}:${port}/register`, newUser).then(
                 res => {

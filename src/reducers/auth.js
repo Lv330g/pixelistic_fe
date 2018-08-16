@@ -56,6 +56,15 @@ export default function (state = initialState, action) {
             confMsg: null,
             isAuthorized: false
         };
+        case 'VALIDATE_ERROR':
+        return {
+          ...state,
+          error: true,
+          errorMessage: 'session timeout',
+          user: null,
+          confMsg: null,
+          isAuthorized: false
+      };
         case 'SIGN_OUT':
         return {
             ...state,

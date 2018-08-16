@@ -1,6 +1,8 @@
 @import './sign-in/index';
 @import './sign-up/index';
 
+
+@import './main-layout/index';
 @import './feed/index';
 
 @import './feed-line/index';
@@ -15,6 +17,10 @@
 @import './user-page/components/dashboard/index';
 @import './user-page/components/user-posts/index';
 @import './user-page/components/post-page/index';
-@import './user-page/components/user-image/index';
+@import './user-page/components/minimized-post/index';
 @import './user-page/components/dashboard/index';
 @import './edit-profile/index';
+
+@import './upload-photo/index';
+@import './upload-photo/components/save-post/index';
+@import './upload-photo/components/location-autocomplete/index';
