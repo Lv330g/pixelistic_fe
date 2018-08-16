@@ -52,7 +52,20 @@ const httpServise = {
                 reject(err);
             });
         });
-    }
+    },
+    patch: (url, params) => {
+      return new Promise((resolve, reject) => {
+          axios(url, {
+              method: 'PATCH',
+              headers: getHeaders(),
+              data: params
+          }).then(res => {
+              resolve(res);
+          }, err => {
+              reject(err);
+          });
+      });
+  }
 };
 
 function getHeaders() {

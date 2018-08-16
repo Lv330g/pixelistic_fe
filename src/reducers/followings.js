@@ -2,10 +2,19 @@ const initialState = {
   error: false,
   errorMessage: null,
   users: [],
+  loading: false,
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
+
+      case 'LOADING':{
+        return{
+          ...state,
+          loading: true
+        }
+      }
+
       case 'FOLLOW_SUCCESS':
       return {
         ...state,
@@ -64,19 +73,25 @@ export default function (state = initialState, action) {
       case 'LOAD_CURRENT_FOLLOWINGS':
       return {
         ...state,
-        users: (() => {
-          return action.payload.followingsInfo.map((item, i) => {
-            item.status = action.payload.followings[i].status;
-            item.avatar = action.payload.followings[i].avatar;
-            item.nickname = action.payload.followings[i].nickname;
-            item.fullName = action.payload.followings[i].userName;
-            item.website = action.payload.followings[i].website;
-            item.bio = action.payload.followings[i].userBio;
-            item.posts = action.payload.followings[i].posts;
-            item.followingInfoId = item._id;
-            item.following = true;
-            return item;
-          });
+        users:(() => {
+          const { payload } = action;
+          if (payload) {
+            return payload.followingsInfo.map((item, i) => {
+              const { followings } = payload;
+              item.status = followings[i].status;
+              item.avatar = followings[i].avatar;
+              item.nickname = followings[i].nickname;
+              item.fullName = followings[i].userName;
+              item.website = followings[i].website;
+              item.bio = followings[i].userBio;
+              item.posts = followings[i].posts;
+              item.followingInfoId = item._id;
+              item._id = followings[i]._id;
+              item.following = true;
+              return item;
+            });
+          }
+          return state.users;
         })()
       };
 
@@ -89,6 +104,7 @@ export default function (state = initialState, action) {
         error: false,
         errorMessage: null,
         users: [...state.users, action.payload],
+        loading: false
       };
 
       case 'STATUS_CONNECTION_CHANGE':

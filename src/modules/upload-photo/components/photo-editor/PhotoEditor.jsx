@@ -98,7 +98,7 @@ export default class PhotoEditor extends React.Component {
     return (
       <div className="wrap">
         <Brush className="myBtn" ref={(el) => {this._modalBtn = el}}/>
-        <div className="myModal" ref={(el) => {this._modal = el}}>
+        <div className="modal" ref={(el) => {this._modal = el}}>
           <div className="modal-content">
             <div className="modal-header">
               <span className="close" ref={(el) => {this._close = el}}>&times;</span>

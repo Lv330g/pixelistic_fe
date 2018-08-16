@@ -7,8 +7,8 @@ $font-arial: "Segoe UI", Helvetica, Arial, sans-serif;
 
 .light-grey { color: $light-grey };
 .change-photo, .user-nickname, .nickname { font-family: $font-arial};
-.bg-green { background-color: $photo-upload-panel !important; }
-
+.btn-upload.bg-green { background-color: $photo-upload-panel; }
+.btn-upload.bg-green:hover  { background-color: $photo-upload-panel; opacity: 0.7; }
 
 
 

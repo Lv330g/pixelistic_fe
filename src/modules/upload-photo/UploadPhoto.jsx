@@ -75,7 +75,7 @@ export class UploadPhoto extends Component{
           </div>
         </div>   
 
-        <Button className="next-btn bg-green" onClick={this.openSaveModal} variant="contained" color="primary">Next</Button>  
+        <Button className="next-btn btn-upload bg-green" onClick={this.openSaveModal} variant="contained" color="primary">Next</Button>  
 
         {this.state.saveOpen ? 
         <SavePost 

@@ -6,7 +6,7 @@ import { Grid, Avatar } from '@material-ui/core';
 
 const PostHeader = (props) => {
   return <Grid item xs={11} container className="post-header">
-    <Link to=''>
+    <Link to={`/profile/${props.authorName}`}>
       <Avatar 
         className="user-avatar" 
         src={props.authorImg} 
@@ -16,7 +16,7 @@ const PostHeader = (props) => {
 
     <div>
       <div className="user-nickname">
-        <Link className="link" to=''>{props.authorName}</Link>
+        <Link className="link" to={`/profile/${props.authorName}`} >{props.authorName}</Link>
       </div>
 
       <div className="user-geolocation">

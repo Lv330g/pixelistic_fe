@@ -1,23 +1,15 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { loadCurrentFollowings, handleFavorite } from '../../../../actions/followings';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 import LabelBottomNav from '../label-bottom-nav/LabelBottomNav';
 import FollowingItem from '../following-item/FollowingItem';
 
-export class FollowingsList extends Component {
+export default class FollowingsList extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       mappedFollowings: false
-    }
-  }
-
-  componentDidMount(){
-    if(!this.props.users.length){
-      this.props.loadCurrentFollowings(this.props.user);
     }
   }
 
@@ -47,26 +39,22 @@ export class FollowingsList extends Component {
   }
 
   sortByFavorites = () => {
-    const filteredFollowings = this.props.users.filter(item => item.following === true)
-    .filter(item => item.favorite)
+    const filteredFollowings = this.props.followings.filter(item => item.favorite)
     this.mapFollowings(filteredFollowings);
   }
 
   sortByReceived = () => {
-    const filteredFollowings = this.props.users.filter(item => item.following === true)
-    .filter(item => item.newMessages > 0);
+    const filteredFollowings = this.props.followings.filter(item => item.newMessages > 0);
     this.mapFollowings(filteredFollowings);
   }
 
   sortByOnline = () => {
-    const filteredFollowings = this.props.users.filter(item => item.following === true)
-    .filter(item => item.status === 'online');
+    const filteredFollowings = this.props.followings.filter(item => item.status === 'online');
     this.mapFollowings(filteredFollowings);
   }
 
   sortByABC = () => {
-    const filteredFollowings = this.props.users.filter(item => item.following === true)
-    .sort((a, b) => a.nickname > b.nickname);
+    const filteredFollowings = this.props.followings.sort((a, b) => a.nickname > b.nickname);
     return this.mapFollowings(filteredFollowings);
   }
 
@@ -78,13 +66,11 @@ export class FollowingsList extends Component {
         handleFavorite={this.handleFavorite}
       />
     });
-
     this.setState({mappedFollowings})
   }
 
   renderFirstTime = () => {
-    return this.props.users.filter(item => item.following === true)
-      .sort((a, b) => a.nickname > b.nickname)
+    return this.props.followings.sort((a, b) => a.nickname > b.nickname)
       .map((item, i) => {
         return <FollowingItem 
           following={item}
@@ -99,13 +85,3 @@ export class FollowingsList extends Component {
     this.props.handleFavorite(data);
   }
 };
-
-export default connect(
-  state => ({
-    users: state.followings.users,
-  }),
-  dispatch => ({
-    loadCurrentFollowings: (user) => dispatch(loadCurrentFollowings(user)),
-    handleFavorite: (user) => dispatch(handleFavorite(user)),
-  })
-)(FollowingsList);

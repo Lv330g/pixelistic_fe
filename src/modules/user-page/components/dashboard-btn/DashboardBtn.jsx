@@ -5,9 +5,9 @@ import { Button } from '@material-ui/core';
 import { PersonAdd, RemoveCircleOutline } from '@material-ui/icons';
 
 export default class DashboardBtn extends Component {
+
   render() {
     const { current, profileUser } = this.props;
-
     if(profileUser._id === current._id) {
       return <Button variant="outlined" id="dashboard-btn">
         <Link
@@ -47,14 +47,12 @@ export default class DashboardBtn extends Component {
   };
 
   handleUnfollow = () => {
-    const following = this.props.users.filter(item => {
-      return item.followingId === this.props.profileUser._id
-    });
     const data = {
       current: this.props.current._id, 
-      following: this.props.profileUser._id,
-      followingInfoId: following[0].followingInfoId
+      followingId: this.props.profileUser.followingId,
+      followingInfoId: this.props.profileUser.followingInfoId
     };
+
     this.props.unfollow(data);
   }
 };

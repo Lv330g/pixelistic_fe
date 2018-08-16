@@ -7,6 +7,7 @@ import { Grid, Divider, Avatar } from '@material-ui/core';
 
 const FeedAside = (props) => {
   const { user } = props;
+  const followings = props.users.filter(item => item.following === true);
 
   return <div className="feed-aside">
     <Grid className="grid-inside" item xs={11} container direction={"column"} justify={"space-between"}>
@@ -29,6 +30,8 @@ const FeedAside = (props) => {
 
       <FollowingsList 
         user={user}
+        followings={followings}
+        handleFavorite={props.handleFavorite}
       />
 
       <Divider />

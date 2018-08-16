@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 import { initCmntsAmount, expandCmntsAmount } from '../../../const/post-config';
 
 import Like from '../like/Like';
+import CustomTime from '../custom-time/CustomTime';
+import { postLikeChange, postCommentAdd } from '../../../actions/post';
 
-import { Grid, Divider, TextField, Checkbox } from '@material-ui/core';
+import { Grid, Divider, TextField, Checkbox, IconButton } from '@material-ui/core';
 import { CommentOutlined, DeleteOutlined } from '@material-ui/icons';
 
 
-export default class PostFooter extends Component {
+export class PostFooter extends Component {
   constructor(props) {
     super(props);
 
@@ -28,25 +33,28 @@ export default class PostFooter extends Component {
     this.textfieldRef = React.createRef();
   }
 
-  componentDidMount() {
-    const post = this.props.post;
-    
+  componentDidMount(){
     this.setState({
-      comments: post.comments,
-      liked: post.liked,
-      moreComments: post.moreComments,
-      likesAmount: post.likesAmount,
-      _id: post._id,
-      authorName: post.authorName,
-      authorComment: post.authorComment,
-      date: post.date,
       commentsAmount: initCmntsAmount
-    });
+    })
+  }
+
+  static getDerivedStateFromProps(nextProps, state) {
+    state.comments = nextProps.comments;
+    state.liked = nextProps.liked;
+    state.moreComments = false;
+    state.likesAmount = nextProps.likesAmount;
+    state.postId = nextProps.postId;
+    state.authorName = nextProps.authorName;
+    state.authorId = nextProps.authorId;
+    state.authorComment = nextProps.authorComment;
+    state.date = nextProps.date;
+    
+    return state;
   }
   
   render() {
     let comments = this.state.comments;
-
     const quantity = comments.length <= expandCmntsAmount ? `all ${comments.length}` : 'last'; 
 
     let load = <p className="light-grey load-comments" onClick={this.expandComments}>
@@ -57,9 +65,11 @@ export default class PostFooter extends Component {
       .filter((item, i) => i >= (comments.length - this.state.commentsAmount))
       .map((item, i) => {
         return <p className="comment" key={i}>
+        <Link to={`/profile/${item.author}`}>
           <span className="author-name">
             {item.author}
           </span>
+        </Link>
           <span className="author-comment">
             {item.comment}
           </span>
@@ -67,6 +77,7 @@ export default class PostFooter extends Component {
       });
 
     return <Grid className="post-footer" item xs={11} container direction={"column"}>
+      
       <Grid className="likes-panel" container alignItems={"center"} item xs={12}>
         <p className="likes-amount">
           {this.state.likesAmount} likes
@@ -83,18 +94,22 @@ export default class PostFooter extends Component {
           icon={<CommentOutlined />}
           checkedIcon={<CommentOutlined />}
         />
-        <Checkbox
-          checked={"true"}
-          color={"secondary"}
-          icon={<DeleteOutlined />}
-          checkedIcon={<DeleteOutlined />}
-        />
+
+        {this.props.userId === this.state.authorId ?
+          <IconButton color="secondary">
+            <DeleteOutlined />
+          </IconButton> 
+          : null
+         }
+
       </Grid>
     
       <p className="comment author">
-        <span className="author-name">
-          {this.state.authorName}
-        </span>
+        <Link to={`/profile/${this.state.authorName}`}>
+          <span className="author-name">
+            {this.state.authorName}
+          </span>
+        </Link>
         <span className="author-comment">
           {this.state.authorComment}
         </span>
@@ -104,9 +119,8 @@ export default class PostFooter extends Component {
 
       {mappedComments}
 
-      <p className="light-grey date">
-        {this.state.date}
-      </p>
+    
+      <CustomTime timestamp={this.state.date}/>
 
       <Divider />
       
@@ -132,7 +146,8 @@ export default class PostFooter extends Component {
   handleLike = () => {
     this.setState((prev) => {
       const quantity = prev.liked ? prev.likesAmount - 1 : prev.likesAmount + 1;
-
+      const type = prev.liked ? 'unlike' : 'like';
+      this.props.postLikeChange(this.props.postId, this.props.userId, type); 
       return {
         likesAmount: quantity,
         liked: !this.state.liked,
@@ -151,6 +166,8 @@ export default class PostFooter extends Component {
         author: this.props.nickname,
         comment: val
       }
+
+      this.props.postCommentAdd(this.props.postId, this.props.nickname, val);
       e.target.value = "";
       
       this.setState((prev) => {
@@ -182,5 +199,20 @@ export default class PostFooter extends Component {
 };
 
 PostFooter.propTypes = {
-  post: PropTypes.object.isRequired
+  comments: PropTypes.array.isRequired,
+  liked: PropTypes.bool.isRequired,
+  likesAmount: PropTypes.number.isRequired,
+  postId: PropTypes.string.isRequired,
+  authorName: PropTypes.string.isRequired,
+  authorComment: PropTypes.string.isRequired,
+  date: PropTypes.number.isRequired,
+  userId: PropTypes.string.isRequired
 };
+
+export default connect(
+  null,
+  dispatch => ({
+    postLikeChange: (postId, userId, type) => dispatch(postLikeChange(postId, userId, type)),
+    postCommentAdd: (postId, userId, text) => dispatch(postCommentAdd(postId, userId, text))
+  })
+)(PostFooter);

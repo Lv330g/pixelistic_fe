@@ -7,7 +7,7 @@ import { Grid, Avatar } from '@material-ui/core';
 
 export default class UserDashboard extends React.Component {
   render() {
-    if (this.props.userprofile) {
+    if (this.props.userprofile._id) {
       return (
         <Grid className="user-dashboard" container alignItems={"center"} justify={"center"} direction={"row"}>
           <Grid item container className="avatar-container" xs={2} alignItems={"center"} justify={"center"} direction={"column"}>

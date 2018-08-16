@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Input } from "@material-ui/core";
 import { Scrollbars } from 'react-custom-scrollbars';
-
+import { Link } from 'react-router-dom';
 import httpServise from "../../../../../api/http-service";
 import { host, port } from "../../../../../const/node-server-config";
 
@@ -29,10 +29,10 @@ export class Search extends Component {
               <Input placeholder="Search" onChange={this.onChange} />
               <Scrollbars autoHeight>
               {this.state.users.map( (item, id) => (
-              <a href={`/profile/${item.nickname}`} className="item" ref={(el) => {this._item = el}} key = {id}>
+              <Link to={`/profile/${item.nickname}`} className="item" ref={(el) => {this._item = el}} key = {id}>
                 <img src={`${item.avatar}`} className="avatar" alt="avatar"/> 
                 <span className="nickname" ref={(el) => {this._nickname = el}}>{item.nickname}</span>
-              </a>
+              </Link>
               ))}
               </Scrollbars>
             </div>

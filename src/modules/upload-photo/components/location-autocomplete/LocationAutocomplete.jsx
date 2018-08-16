@@ -19,7 +19,7 @@ export class LocationAutocomplete extends Component{
     if(this.state.features.length){
       variants = this.state.features.map( (item, i) => {
       return <div 
-        className= {`search ${i === this.state.currentIndex ? 'selected' : ''}`}
+        className= {`search-loc ${i === this.state.currentIndex ? 'selected' : ''}`}
         key={i} id={i}
         onClick={this.selectPlace}
         onMouseEnter = {this.changeIndex}> 

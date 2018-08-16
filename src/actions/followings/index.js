@@ -30,6 +30,8 @@ export const unfollow = (data) => {
   }
 };
 
+
+
 export const loadCurrentFollowings = (user) => {
   return { type: 'LOAD_CURRENT_FOLLOWINGS', payload: user};
 };

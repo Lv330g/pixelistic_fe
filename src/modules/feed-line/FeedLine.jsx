@@ -4,7 +4,7 @@ import { hardcodedPosts } from './feed-line-posts';
 
 import Post from '../post/Post';
 
-export default class FeedLine extends Component {
+export class FeedLine extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +18,7 @@ export default class FeedLine extends Component {
     this.lastPostRef = React.createRef();
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({ 
       per: postsOnPage,
       page: startPage,
@@ -28,12 +28,17 @@ export default class FeedLine extends Component {
     window.addEventListener('scroll', this.scrollListener);
   }
 
-  componentDidMount() {
-    this.loadPosts();
-  }
-
   componentWillUnmount() {
     window.removeEventListener('scroll', this.scrollListener);
+  }
+
+  static getDerivedStateFromProps (nextProps, state) {
+
+    let feedlinePosts = nextProps.posts.filter( item => item.type === 'feed');
+    const postsToShow = feedlinePosts.filter((item, i) => i < state.page * state.per);
+    state.posts =  [...postsToShow];
+    state.scrolling = false;
+    return state;
   }
 
   render() {
@@ -42,6 +47,7 @@ export default class FeedLine extends Component {
         key={item._id}
         post={item}
         nickname={this.props.nickname}
+        userId={this.props.user._id}
         ref={el => this.lastPostRef = el}
       />
     });
@@ -63,9 +69,11 @@ export default class FeedLine extends Component {
     }
   }
 
-  loadPosts = () => {
+  loadPosts = async () => {
+    let feedlinePosts = this.props.posts.filter( item => item.type === 'feed');
+    
     const { per, page } = this.state;
-    const postsToShow = hardcodedPosts.filter((item, i) => i < page * per);
+    const postsToShow = feedlinePosts.filter((item, i) => i < page * per);
 
     this.setState({
       posts: [...postsToShow],
@@ -83,4 +91,10 @@ export default class FeedLine extends Component {
   scrollListener = e => {
     this.handleScroll(e)
   }
+
+  likeHandler = () => {
+    this.loadPosts();
+  }
 };
+
+export default FeedLine;

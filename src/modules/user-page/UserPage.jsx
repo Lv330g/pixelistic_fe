@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getProfile } from './../../actions/profile';
-import { postOwnPosts } from './../../actions/post';
 import { follow, unfollow } from './../../actions/followings';
+import { postAddPostsToSession } from './../../actions/post';
 
 import UserDashboard from './components/dashboard/UserDashboard';
 import UserPosts from './components/user-posts/UserPosts';
@@ -12,36 +12,37 @@ export class UserPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      ownPage: false,
       userLoaded: false,
-      profileUser: null
+      profileUser: null,
+      path:'',
+      posts: []
     }
   }
 
+
   componentDidMount(){
-    const profileNickname = this.props.match.params.nickname;
-    const ownPage = profileNickname === this.props.user.nickname;
-    this.props.getProfile(profileNickname);
+    this.getNewProfile();
+  }
 
-    if(ownPage){
-      if(!this.props.ownPosts.length){
-        this.props.postOwnPosts(this.props.user);
-      }
-    }
-
-    this.setState({ ownPage });
+  componentDidUpdate(){
+    this.getNewProfile();
   }
 
   static getDerivedStateFromProps(next, state) {
-    state.userLoaded = false;
     const profileNickname = next.match.params.nickname;
-    const profileUser = next.users.filter(item => {
-      return item.nickname === profileNickname;
-    });
-    if (profileUser[0]) {
-      state.profileUser = profileUser[0];
-      state.userLoaded = true;
+
+    if(state.path !== next.match.params.nickname){
+      const profileUser = next.users.find(item =>item.nickname === profileNickname);
+      if (profileUser) {  
+        next.postAddPostsToSession(profileUser.posts);
+        state.profileUser = profileUser;
+        state.userLoaded = true;
+        state.path = next.match.params.nickname;
+      }
     }
+
+    let posts = next.posts.filter((item) => item.author.nickname === profileNickname);
+    state.posts = posts;
     return state;
   }
 
@@ -56,26 +57,39 @@ export class UserPage extends React.Component {
             unfollow={this.props.unfollow}
             users={this.props.users}
           />
+
+
+
           <UserPosts 
-            posts={ this.state.ownPage ? this.props.ownPosts : this.state.profileUser.posts} 
-            ownPage={this.state.ownPage}
+            posts={this.state.posts} 
+            userId = {this.props.user._id}
+            userNickname = {this.props.user.nickname}
           />
       </div>
     }
 
     return <LoadingSpinner/>
   }
+
+  getNewProfile = () =>{
+    const profileNickname = this.props.match.params.nickname;
+    let inUsers =  this.props.users.some(item => item.nickname === profileNickname);
+
+    if(!inUsers && ! this.props.loading) {
+      this.props.getProfile(profileNickname);
+    }
+  }
+
 };
 
 export default connect(
   state => ({
-    users: state.followings.users,
-    ownPosts: state.post.ownPosts
+    ownPosts: state.post.ownPosts,
   }),
   dispatch => ({
     getProfile: (nickname) => dispatch(getProfile(nickname)),
-    postOwnPosts: (user) => dispatch(postOwnPosts(user)),
     follow: (data) => dispatch(follow(data)),
     unfollow: (data) => dispatch(unfollow(data)),
+    postAddPostsToSession: (posts) => dispatch(postAddPostsToSession(posts))
   })
 )(UserPage);
