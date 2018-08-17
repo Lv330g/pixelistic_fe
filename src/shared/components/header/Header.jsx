@@ -1,11 +1,12 @@
 import React from 'react';
-import { Grid,  Input, Popper, Button, Paper, Grow, ClickAwayListener, MenuList, MenuItem } from '@material-ui/core';
+import { Grid, Popper, Button, Paper, Grow, ClickAwayListener, MenuList, MenuItem } from '@material-ui/core';
 import { Extension } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
 import { authSignOut } from '../../../actions/auth';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
+import { Search } from './components/search/Search';
 
 export class Header extends React.Component {
   constructor(props) {
@@ -36,7 +37,7 @@ export class Header extends React.Component {
               <Grid className="logo" item xs={2}><span className="logo-ident">Pixel</span></Grid>
               <Grid item xs={2}></ Grid>
               <Grid item xs={2}>
-                <Input placeholder="Search" />
+                <Search />
               </Grid>
               <Grid item xs={4} ></Grid>
               <Grid item xs={1}>
