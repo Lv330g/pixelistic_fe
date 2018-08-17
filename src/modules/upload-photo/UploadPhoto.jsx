@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
-import { AddAPhoto, Close, Brush } from '@material-ui/icons';
+import { AddAPhoto, Close } from '@material-ui/icons';
 
 import SavePost from './components/save-post/SavePost';
+import PhotoEditor from './components/photo-editor/PhotoEditor'
 
 export class UploadPhoto extends Component{
   constructor(props){
@@ -52,7 +53,12 @@ export class UploadPhoto extends Component{
               </div>
               <label htmlFor="file-input"><AddAPhoto/></label> 
               <input className="file-input" name="file-input" id="file-input" accept="image/*" type="file" onChange={this.fileChangedHandler}/>
-              <label > <Brush/> </label>
+              <label > 
+                <PhotoEditor 
+                  photo={this.state.photo} 
+                  returnPhoto = {this.getModifiedImage}
+                /> 
+              </label>
             </div>
 
             <div>
@@ -124,9 +130,21 @@ export class UploadPhoto extends Component{
   closeSaveModal = () => {
     this.setState({ saveOpen: false });
   }
+
+  getModifiedImage = (val) => {
+      const canvas =  this.canvasRef.current;
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      
+      img.onload = () => {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        this.setState({ photoIsDisplayed: true });
+      }
+      img.src = val;
+      this.setState({ photo: val});
+  }
 }
 
 export default UploadPhoto;
-
-
-

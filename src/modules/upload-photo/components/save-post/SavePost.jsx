@@ -27,7 +27,6 @@ export class SavePost extends Component{
   }
 
   render(){
-    console.log(this.props.ownPosts.length);
     return <div className="save-post"> 
       <ClickAwayListener onClickAway={this.props.onCloseSaveModal}>
         <div className="post-info">
