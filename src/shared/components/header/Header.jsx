@@ -72,9 +72,13 @@ export class Header extends React.Component {
                               </MenuItem>
                             </Link>
                             <Link to="/upload">
-                              <MenuItem onClick={this.handleClose}> Upload </MenuItem>
+                              <MenuItem onClick={this.handleClose}>
+                                Upload
+                              </MenuItem>
                             </Link>
-                            <MenuItem onClick={this.props.onSignOut}>Logout</MenuItem>
+                            <MenuItem onClick={this.props.onSignOut}>
+                              Sign Out
+                            </MenuItem>
                           </MenuList>
                       </ClickAwayListener>
                     </Paper>
@@ -90,6 +94,7 @@ export class Header extends React.Component {
   handleToggle = () => {
     this.setState(prevState => ({ open: !prevState.open }));
   };
+
   handleClose = event => {
     if (this.anchorEl.contains(event.target)) {
       return;
@@ -105,7 +110,6 @@ export default connect(
     user: state.auth.user
   }),
   dispatch => ({
-    authSignOut: ( ) => dispatch(authSignOut( ))
-    }
-  )
-)(Header)
+    authSignOut: () => dispatch(authSignOut()),
+  })
+)(Header);

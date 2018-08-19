@@ -13,7 +13,7 @@ const PassportBtn = (props) => {
     onClick={props.onClick}
     >
       <div className={`${props.name}-icon`}></div>
-      Log in with {props.name}
+      Sign in with {props.name}
   </Button>
 }
 

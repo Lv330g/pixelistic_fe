@@ -17,6 +17,7 @@ export default function (state = initialState, action) {
             confMsg: null,
             isAuthorized: true
         };
+
         case 'VERIFY_SUCCESS':
         return {
             ...state,
@@ -56,6 +57,7 @@ export default function (state = initialState, action) {
             confMsg: null,
             isAuthorized: false
         };
+
         case 'VALIDATE_ERROR':
         return {
           ...state,
@@ -64,7 +66,8 @@ export default function (state = initialState, action) {
           user: null,
           confMsg: null,
           isAuthorized: false
-      };
+        };
+
         case 'SIGN_OUT':
         return {
             ...state,

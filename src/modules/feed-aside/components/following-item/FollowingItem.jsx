@@ -17,28 +17,15 @@ import {
   Person
 } from '@material-ui/icons';
 
-const FriendItem = (props) => {
+const FollowingItem = (props) => {
   const { 
-    nickname, 
-    status, 
-    newMessages, 
-    avatar, 
-    favorite, 
-    _id
-  } = props.friend;
-
-  let chipAvatar;
-  if (avatar) {
-    chipAvatar = <Avatar
-      src={avatar} 
-      alt={"avatar"}
-      className="avatar"
-    />
-  } else {
-    chipAvatar = <Avatar className="avatar">
-      {nickname[0].toUpperCase()}
-    </Avatar>;
-  }
+    nickname,
+    status,
+    newMessages,
+    avatar,
+    favorite,
+    followingInfoId
+  } = props.following;
 
   let badge;
   if (newMessages > 0) {
@@ -51,10 +38,17 @@ const FriendItem = (props) => {
     </Badge>;
   }
 
-  return <ExpansionPanel className="friend-item">
+  return <ExpansionPanel className="following-item">
     <ExpansionPanelSummary className="exp-summary" expandIcon={<ExpandMore />}>
-      <div className={`chip chip-${status}`}>
-        {chipAvatar}
+      <div className="chip">
+        <Avatar
+          src={avatar} 
+          alt={"avatar"}
+          className="avatar"
+        />
+        <div 
+          className={`status status-${status}`} 
+        />
         <p className={"nickname"}>
           {nickname}
         </p>
@@ -64,7 +58,7 @@ const FriendItem = (props) => {
 
     <ExpansionPanelDetails className="exp-details">
       <Button variant={"contained"} size="small" className="btn">
-        <Link to="" className="link">
+        <Link to={`/profile/${nickname}`} className="link">
           Profile
           <Person />
         </Link>
@@ -78,11 +72,11 @@ const FriendItem = (props) => {
       <Like
         className="favorite"
         liked={favorite}
-        parentId={_id}
+        parentId={followingInfoId}
         handleLike={props.handleFavorite}
       />
     </ExpansionPanelDetails>
   </ExpansionPanel>
 };
 
-export default FriendItem;
+export default FollowingItem;

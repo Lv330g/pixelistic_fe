@@ -1,4 +1,4 @@
-.friend-item {
+.following-item {
   .exp-summary {
     padding: 0 15px;
   }
@@ -11,17 +11,6 @@
     align-items: center;
     cursor: pointer;
     border-radius: 16px;
-  }
-
-  .chip-offline,
-  .chip-offline:hover,
-  .chip-offline:focus{
-    background-color: #9E9E9E;
-  }
-
-  .chip-online,
-  .chip-online:hover,
-  .chip-online:focus {
     background-color: #03A9F4;
   }
 
@@ -30,10 +19,26 @@
     font-weight: bold;
     width: 32px;
     height: 32px;
+    margin-right: 15px;
   }
 
   .nickname {
-    margin: 0 0 0 15px;
+    margin: 0;
+  }
+
+  .status {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .status-online {
+    background-color: rgb(111, 243, 111);
+  }
+
+  .status-offline {
+    background-color: $light-grey;
   }
 
   .badge {

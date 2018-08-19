@@ -9,16 +9,18 @@ import { profileAPI } from '../../api/profile-api';
             dispatch({ type: 'USER_PROFILE_ERROR', payload: err })
         });
     }
-}
+};
+
 export const getProfile = (nickname) => {
     return dispatch => {
-        return profileAPI.getProfile(nickname).then(userprofile => {
-            dispatch({ type: 'USER_PROFILE_FOUND', payload: userprofile });
+        return profileAPI.getProfile(nickname).then(payload => {
+            dispatch({ type: 'GET_PROFILE_SUCCESS', payload});
         }, err => {    
-            dispatch({ type: 'USER_PROFILE_ERROR', payload: err })
+            dispatch({ type: 'GET_PROFILE_ERROR', payload: err })
         });
     }
-}
+};
+
 export const updateProfile = (nickname, userName, newNickname, website, userBio) => {
     return dispatch => {
         return profileAPI.updateProfile(nickname, userName, newNickname, website, userBio).then(userprofile => {
@@ -27,4 +29,4 @@ export const updateProfile = (nickname, userName, newNickname, website, userBio)
             dispatch({ type: 'USER_PROFILE_ERROR', payload: err })
         });
     }
-}
+};
