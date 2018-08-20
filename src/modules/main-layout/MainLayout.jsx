@@ -7,8 +7,8 @@ import { Redirect } from 'react-router';
 import { Route } from 'react-router-dom';
 import io from "socket.io-client";
 import { port, host } from "../../const/node-server-config";
-
 import Header from '../../shared/components/header/Header';
+import DashboardHeader from '../admin-dashboard/components/DasnboardHeader';
 import LoadingSpinner from '../../shared/components/loading-spinner/LoadingSpinner';
 
 export class MainLayout extends Component {
@@ -63,9 +63,10 @@ export class MainLayout extends Component {
   
 
     if (this.state.accessToken && this.props.isAuthorized) {
+      //this.loadInitialPosts();
       return <Route {...rest} render={matchProps => (
         <div className="main-layout">
-          <Header onSignOut={this.signOut} user={this.props.user}/>
+          {this.props.path === '/dashboard' ? <DashboardHeader onSignOut={this.signOut}/> : <Header onSignOut={this.signOut}/>}
           <div className="content">
             <Component 
               {...matchProps} 

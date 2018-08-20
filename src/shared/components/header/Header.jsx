@@ -80,9 +80,15 @@ export class Header extends React.Component {
                                 Upload
                               </MenuItem>
                             </Link>
+                            { this.props.user.isAdmin ? 
+                            <Link to={"/dashboard"}>
+                              <MenuItem onClick={this.handleClose}>
+                                Dashboard
+                              </MenuItem>
+                            </Link> : '' }   
                             <MenuItem onClick={this.props.onSignOut}>
                               Sign Out
-                            </MenuItem>
+                            </MenuItem>                        
                           </MenuList>
                       </ClickAwayListener>
                     </Paper>
