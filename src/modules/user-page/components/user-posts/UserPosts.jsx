@@ -22,18 +22,18 @@ export class UserPosts extends Component {
     }
   } 
 
-componentWillMount () {
-    this.setState({ rowSize, posts: this.props.posts});   
-  }
-
   componentDidUpdate() {
     if (this.state.postOpenIndex > -1){
       disableBodyScroll();
     } else {
       enableBodyScroll();
     };
+  }
 
-    
+  static getDerivedStateFromProps (nextProps, state) {
+    state.posts = nextProps.posts;
+    state.rowSize = rowSize;
+    return  state;
   }
 
   componentWillUnmount() {
@@ -49,6 +49,8 @@ componentWillMount () {
 
           {this.state.postOpenIndex > -1 ? <PostPage 
             post = { this.state.posts[this.state.postOpenIndex] }
+            userId = {this.props.userId}
+            userNickname= {this.props.userNickname}
             onChangePost = {this.changeCurrentPost}
             onClosePostPage = {this.closePostPage}
             leftButton = { this.state.postOpenIndex === 0 ? false : true }
@@ -84,9 +86,9 @@ componentWillMount () {
           let rowItem = <MinimizedPost
             key = {posts[curPost]._id}
             id = {posts[curPost]._id}
-            img = {`${host}:${port}/${posts[curPost++].image}`}
-            likes = {0}
-            comments = {0}
+            img = {`${host}:${port}/${posts[curPost].image}`}
+            likes = {posts[curPost].likes.length}
+            comments = {posts[curPost++].comments.length}
             onOpenPost = {this.openPostPage}
           />   
           row = [ ...row, rowItem ];
@@ -106,8 +108,7 @@ componentWillMount () {
     setTimeout( () => {
       let index = this.state.posts.findIndex(item => item._id === id);
       this.setState({postOpenIndex: index > -1 ? index : null });  
-    }, 10);
-     
+    }, 10);    
   }
 
   closePostPage = () => {

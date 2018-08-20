@@ -8,7 +8,6 @@ import { postAddPost } from '../../../../actions/post';
 import LocationAutocomplete from '../location-autocomplete/LocationAutocomplete';
 import LoadingSpinner from '../../../../shared/components/loading-spinner/LoadingSpinner'; 
 
-import { postOwnPosts } from '../../../../actions/post';
 
 
 export class SavePost extends Component{
@@ -19,11 +18,6 @@ export class SavePost extends Component{
       customGeolocation: '',
       savingStarted: false
     }
-  }
-
-  async componentWillMount () {
-    if(!this.props.ownPosts.length)
-      await this.props.postOwnPosts(this.props.user);  
   }
 
   render(){
@@ -42,14 +36,14 @@ export class SavePost extends Component{
           { this.checkSavingProcess() }
           
           {this.state.savingStarted ? null : 
-            <Button onClick={this.uploadPost} className="save-btn bg-green" color="primary" variant="contained" disabled={this.state.isSaving}>Save</Button>
+            <Button onClick={this.uploadPost} className="save-btn btn-upload bg-green" color="primary" variant="contained" disabled={this.state.isSaving}>Save</Button>
           }
         </div>
       </ClickAwayListener>
     </div>
   }
 
-  uploadPost = async (e) => { 
+  uploadPost = (e) => { 
     
     this.setState({ savingStarted: true });
     
@@ -89,11 +83,9 @@ export class SavePost extends Component{
 export default connect(
   state => ({
     successMessage: state.post.successMessage,
-    ownPosts: state.post.ownPosts,
     isSaving: state.post.isSaving
   }),
   dispatch => ({
-    postOwnPosts: (user) => dispatch(postOwnPosts(user)),
     postAddPost: (image, description, geolocation, author) => dispatch(postAddPost(image, description, geolocation, author))
-    })
+  })
 )(SavePost)

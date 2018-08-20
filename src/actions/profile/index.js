@@ -13,6 +13,7 @@ import { profileAPI } from '../../api/profile-api';
 
 export const getProfile = (nickname) => {
     return dispatch => {
+      dispatch({type:'LOADING'});
         return profileAPI.getProfile(nickname).then(payload => {
             dispatch({ type: 'GET_PROFILE_SUCCESS', payload});
         }, err => {    

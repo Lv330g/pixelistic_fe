@@ -11,8 +11,6 @@ import UploadPhoto from './modules/upload-photo/UploadPhoto';
 import MainLayout from './modules/main-layout/MainLayout';
 import AuthLayout from './modules/auth-layout/AuthLayout';
 
-
-
 const Routes = (
   <BrowserRouter basename="/">
     <Switch>
@@ -24,7 +22,6 @@ const Routes = (
       <MainLayout exact path='/edit-profile/:nickname' component={EditProfile} />
       <MainLayout exact path='/profile/:nickname'  component={UserPage} />
       <MainLayout exact path='/upload' component={UploadPhoto}/>
-      
       <Redirect path="*" to="/sign-in" />
 
     </Switch>

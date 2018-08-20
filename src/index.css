@@ -6,8 +6,12 @@
 .change-photo, .user-nickname, .nickname {
   font-family: "Segoe UI", Helvetica, Arial, sans-serif; }
 
-.bg-green {
-  background-color: #5cb85c !important; }
+.btn-upload.bg-green {
+  background-color: #5cb85c; }
+
+.btn-upload.bg-green:hover {
+  background-color: #5cb85c;
+  opacity: 0.7; }
 
 input:-webkit-autofill, input:-webkit-autofill:active, input:-webkit-autofill:focus, input:-webkit-autofill:hover {
   transition: all 5000s ease-in-out 0s;
@@ -521,13 +525,14 @@ a {
   z-index: 1;
   width: 100%; }
 
-.location-autocomplete .search {
+.location-autocomplete .search-loc {
   background-color: white;
   padding: 5px;
   border: 1px #a0c4ff solid;
   border-bottom: none;
   width: 100%;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  display: block; }
 
 .location-autocomplete .selected {
   background-color: #a0c4ff;

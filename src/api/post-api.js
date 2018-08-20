@@ -14,4 +14,28 @@ export const postApi = {
           );
       });
     },
+
+    likePost: (postId, userId, type) => {
+      return new Promise((resolve, reject) => {
+        httpServise.patch(`${host}:${port}/${type}-post`, { postId, userId }).then(
+            res => {
+                if (res.data.newLikes) {
+                  resolve(res.data.newLikes);
+                } else reject({status: 401});
+            }, err => reject(err)
+        );
+    });
+    },
+
+    commentPost: (postId, userNickname, comment) => {
+      return new Promise((resolve, reject) => {
+        httpServise.patch(`${host}:${port}/comment-post`, { postId, userNickname, comment }).then(
+            res => {
+                if (res.data.newComments) {
+                  resolve(res.data.newComments);
+                } else reject({status: 401});
+            }, err => reject(err)
+        );
+    });
+    }
 }

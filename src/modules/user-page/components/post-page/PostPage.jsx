@@ -5,7 +5,7 @@ import { KeyboardArrowRight, KeyboardArrowLeft } from '@material-ui/icons';
 import PostHeader from '../../../../shared/components/post-header/PostHeader';
 import PostFooter from '../../../../shared/components/post-footer/PostFooter';
 import { host, port } from '../../../../const/node-server-config';
-import { posts } from '../user-posts/user-posts'; 
+
 
 
 export class PostPage extends Component {
@@ -52,7 +52,20 @@ export class PostPage extends Component {
                 authorGeo={this.props.post.geolocation}
                 authorImg={this.props.post.author.avatar} 
               />   
-              <PostFooter post={posts[0]}/>
+              {console.log(this.props.userId)}
+              <PostFooter
+                comments={this.props.post.comments}
+                liked={this.props.post.likes.indexOf(this.props.userId) > -1}
+                likesAmount={this.props.post.likes.length}
+                postId={this.props.post._id}
+                authorName={this.props.post.author.nickname}
+                authorId={this.props.post.author._id}
+                authorComment={this.props.post.description}
+                date = {this.props.post.timestamp}
+                nickname={this.props.userNickname}
+                userId={this.props.userId}
+
+              />
             </div>
          </Grid>
 
