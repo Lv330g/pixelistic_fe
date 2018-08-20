@@ -1,14 +1,36 @@
 .edit-profile{
     margin-top: 100px;
-        .nickname{
-            font-weight: 200;
-            font-size: 24px; 
-        }
-        .change-photo{
-            color: #3897f0;
-            font-weight: 500;
-        }
-        .change-photo:active{
-            color: #C4CCD5;
-        }
+    .file-input{
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+      }
+      .avatar-nickname{
+          width: 1366px;
+      }
+    .nickname{
+        font-weight: 200;
+        font-size: 24px;
+        font-family: $font-arial;
+    }
+    .user-avatar{
+        width: 100px;
+        height: 100px;
+    }
+    .change-photo{
+        color: #3897f0;
+        font-weight: 500;
+        padding-top: 5px;
+        font-family: $font-arial;
+    }
+    .change-photo:active{
+        color: #C4CCD5;
+    }
+    .form{
+        width: 800px;
+    }
+        
 }

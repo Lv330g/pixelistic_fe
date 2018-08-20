@@ -69,7 +69,6 @@ export default function (state = initialState, action) {
       const indexLikes = state.currentSessionPosts.findIndex( (item) => item._id === action.payload._id);
       let newLikedPosts  = [ ...state.currentSessionPosts ];
       newLikedPosts[indexLikes].likes =  action.payload.likes;
-      console.log(newLikedPosts);
       return {
         ...state,
         error: false,

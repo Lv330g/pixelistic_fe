@@ -4,7 +4,8 @@ import { getProfile } from './../../actions/profile';
 import { follow, unfollow } from './../../actions/followings';
 import { postAddPostsToSession } from './../../actions/post';
 
-import UserDashboard from './components/dashboard/UserDashboard';
+
+import UserDashboard from './components/user-dashboard/UserDashboard';
 import UserPosts from './components/user-posts/UserPosts';
 import LoadingSpinner from '../../shared/components/loading-spinner/LoadingSpinner';
 
@@ -48,17 +49,15 @@ export class UserPage extends React.Component {
 
   render() {
     if (this.state.userLoaded) {
+
       return <div>
           <UserDashboard 
             user={this.props.user} 
             userprofile={this.state.profileUser}  
-            owner={'userId'}
             follow={this.props.follow}
             unfollow={this.props.unfollow}
             users={this.props.users}
           />
-
-
 
           <UserPosts 
             posts={this.state.posts} 
@@ -83,9 +82,7 @@ export class UserPage extends React.Component {
 };
 
 export default connect(
-  state => ({
-    ownPosts: state.post.ownPosts,
-  }),
+  null,
   dispatch => ({
     getProfile: (nickname) => dispatch(getProfile(nickname)),
     follow: (data) => dispatch(follow(data)),

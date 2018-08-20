@@ -1,6 +1,7 @@
 import httpServise from './http-service';
-import { host , port } from '../const/node-server-config';
- export const profileAPI = {
+import { host, port } from '../const/node-server-config';
+
+export const profileAPI = {
     getProfile: (nickname) => {
         return new Promise ((resolve, reject) => {
             httpServise.get(`${host}:${port}/profile/get-profile/${nickname}`).then(
@@ -13,12 +14,14 @@ import { host , port } from '../const/node-server-config';
         })
     },
 
-    updateProfile: (nickname, userName, newNickname, website, userBio) => {
-        let updatedProfile = { userName, nickname, website, userBio };
-        return new Promise ((resolve, reject) => {
-            httpServise.post(`${host}:${port}/profile/${nickname}`, updatedProfile).then(
+    updateProfile: (_id, fullName, nickname, website, bio, avatar) => {
+        let updatedProfile = { fullName, nickname, website, bio, avatar };
+        return new Promise((resolve, reject) => {
+            httpServise.post(`${host}:${port}/profile/${_id}`, updatedProfile).then(
                 res => {
-                        resolve(res);
+                    if (res.data.payload) {
+                        resolve(res.data.payload);
+                    } else reject({status: 404, error: 'No profile data returned on save'});
                 }, err => reject(err)
             )
         })

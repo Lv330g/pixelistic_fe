@@ -63,10 +63,9 @@ export class MainLayout extends Component {
   
 
     if (this.state.accessToken && this.props.isAuthorized) {
-      //this.loadInitialPosts();
       return <Route {...rest} render={matchProps => (
         <div className="main-layout">
-          <Header onSignOut={this.signOut}/>
+          <Header onSignOut={this.signOut} user={this.props.user}/>
           <div className="content">
             <Component 
               {...matchProps} 
