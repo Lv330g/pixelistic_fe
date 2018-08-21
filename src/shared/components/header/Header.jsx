@@ -24,8 +24,8 @@ export class Header extends React.Component {
                   <span className="logo-ident">Pixel</span>
                 </Grid>
               </Link>
-              <Grid item xs={2}></ Grid>
-              <Grid item xs={2}>
+              <Grid item xs={3}></ Grid>
+              <Grid item xs={1}>
                 <Search />
               </Grid>
               <Grid item xs={4} ></Grid>

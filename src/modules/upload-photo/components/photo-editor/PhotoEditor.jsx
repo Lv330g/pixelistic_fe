@@ -8,7 +8,6 @@ export default class PhotoEditor extends React.Component {
     this.state = {
       filterContext: null,
       imageObj: null,
-      lengthSide: 450,
       //filters
       grayscale: 0,
       blur: 0,
@@ -23,6 +22,9 @@ export default class PhotoEditor extends React.Component {
       colorDraw: "#ff0000",
       drawTool: "draw"
     };
+    this.state.canvasWidth = null;
+    this.state.canvasHeight = null;
+
     this.drawCanvas = null;
     this.drawContext = null;
   }
@@ -45,8 +47,8 @@ export default class PhotoEditor extends React.Component {
       imageObj,
       0,
       0,
-      this.state.lengthSide,
-      this.state.lengthSide
+      this.state.canvasWidth,
+      this.state.canvasHeight
     );
   }
 
@@ -58,6 +60,7 @@ export default class PhotoEditor extends React.Component {
 
     modalBtn.onclick = () => {
       modal.style.display = "block";
+      this.setState({canvasWidth: this.props.width, canvasHeight: this.props.height})
 
       //Draw
       let drawCanvas = ReactDOM.findDOMNode(this._drawCanvas);
@@ -89,8 +92,8 @@ export default class PhotoEditor extends React.Component {
         imageObj,
         0,
         0,
-        this.state.lengthSide,
-        this.state.lengthSide
+        this.state.canvasWidth,
+        this.state.canvasHeight
       );
     };
     this.setState({
@@ -316,16 +319,16 @@ export default class PhotoEditor extends React.Component {
                   ref={el => {
                     this._filterCanvas = el;
                   }}
-                  width={`${this.state.lengthSide}`}
-                  height={`${this.state.lengthSide}`}
+                  width={`${this.state.canvasWidth}`}
+                  height={`${this.state.canvasHeight}`}
                 />
                 <canvas
                   className="canvas drawCanvas"
                   ref={el => {
                     this._drawCanvas = el;
                   }}
-                  width={`${this.state.lengthSide}`}
-                  height={`${this.state.lengthSide}`}
+                  width={`${this.state.canvasWidth}`}
+                  height={`${this.state.canvasHeight}`}
                 />
               </div>
             </div>
@@ -408,8 +411,8 @@ export default class PhotoEditor extends React.Component {
       this.drawContext.clearRect(
         0,
         0,
-        this.state.lengthSide,
-        this.state.lengthSide
+        this.state.canvasWidth,
+        this.state.canvasHeight
       );
     }
     this.setState({

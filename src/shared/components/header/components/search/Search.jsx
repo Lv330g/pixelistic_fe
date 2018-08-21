@@ -62,7 +62,7 @@ export class Search extends Component {
       for (let i = 0; i < items.length; i++) {
         items[i].style.display = "none";
       }
-    },100)
+    }, 300)
   }
 
   getUsers = () => {
