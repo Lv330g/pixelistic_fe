@@ -3,9 +3,8 @@ const initialState = {
   errorMessage: '',
   successMessage: '' ,
   currentSessionPosts: [],
-  ownPosts: [],
   wasLoadedFirstTime: false,
-  isSaving: false
+  isLoading: false
   
 };
 
@@ -18,25 +17,20 @@ const getFeedLinePosts = (followings) => {
     });
 
     feedLinePosts = [...feedLinePosts, ...arr];
-    return 'good bye';
+    return null;
   });
 
-
   feedLinePosts = feedLinePosts.sort((a, b) => b.timestamp - a.timestamp);
-
-
-  return feedLinePosts;
-  
+  return feedLinePosts;  
 }
-
 
 export default function (state = initialState, action) {
   switch (action.type) {
-      case 'START_POST_SAVING':
+      case 'START_POST_PROCESSING':
       return {
         ...state,
         error: false,
-        isSaving: true
+        isLoading: true
       };
       
       case 'POST_ADD_SUCCESS':
@@ -46,16 +40,18 @@ export default function (state = initialState, action) {
           errorMessage: '',
           successMessage: 'Post added',
           currentSessionPosts: [ action.payload, ...state.currentSessionPosts ],
-          isSaving: false
+          isLoading: false
       };
 
       case 'POST_ADD_ERROR':
+      case 'LIKES_CHANGED_ERROR':
+      case 'COMMENT_ADDED_ERROR':
       return {
           ...state,
           error: true,
           errorMessage: action.payload.response.data.error,
           successMessage: '',
-          isSaving: false
+          isLoading: false
       };
      
       case 'CREATE_SESSION_POSTS':
@@ -66,9 +62,9 @@ export default function (state = initialState, action) {
       }
 
       case 'LIKES_CHANGED_SUCCESS':
-      const indexLikes = state.currentSessionPosts.findIndex( (item) => item._id === action.payload._id);
-      let newLikedPosts  = [ ...state.currentSessionPosts ];
-      newLikedPosts[indexLikes].likes =  action.payload.likes;
+      const indexLikes = state.currentSessionPosts.findIndex( item => item._id === action.payload._id);
+      const newLikedPosts  = [ ...state.currentSessionPosts ];
+      newLikedPosts[ indexLikes ].likes =  action.payload.likes;
       return {
         ...state,
         error: false,
@@ -78,7 +74,7 @@ export default function (state = initialState, action) {
 
       case 'COMMENT_ADDED_SUCCESS':
       const indexComments = state.currentSessionPosts.findIndex( (item) => item._id === action.payload._id);
-      let newCommentedPosts  = [ ...state.currentSessionPosts ];
+      const newCommentedPosts  = [ ...state.currentSessionPosts ];
       newCommentedPosts[indexComments].comments =  action.payload.comments;
       return {
         ...state,
@@ -87,7 +83,7 @@ export default function (state = initialState, action) {
         currentSessionPosts: newCommentedPosts
       }
       case 'ADD_POST_TO_SESSION':
-      let postsToAdd = action.payload.filter( (item)=> {
+      const postsToAdd = action.payload.filter((item) => {
         return state.currentSessionPosts.findIndex(el => el._id === item._id) < 0;
       })
       return {
@@ -96,6 +92,37 @@ export default function (state = initialState, action) {
         errorMessage:false,
         currentSessionPosts: [...state.currentSessionPosts, ...postsToAdd]
         
+      }
+
+      case 'ADD_POSTS_TO_FEEDLINE': 
+      return {
+        ...state,
+        error: false,
+        errorMessage: '',
+        currentSessionPosts: state.currentSessionPosts.map( item => {
+          if(item.author._id === action.payload) item.type = 'feed';
+          return item;
+        })
+      }
+
+      case 'REMOVE_POSTS_FROM_FEEDLINE': 
+      return {
+        ...state,
+        error: false,
+        errorMessage: '',
+        currentSessionPosts: state.currentSessionPosts.filter( item => {
+          if(item.author._id === action.payload) item.type = '';
+          return item;
+        })
+      }
+
+      case 'POST_REMOVE_SUCCESS':
+      return {
+        ...state,
+        error: false,
+        errorMessage: '',
+        currentSessionPosts: state.currentSessionPosts.filter( item => item._id !== action.payload ),
+        isLoading: false
       }
 
       case 'CLEAR_ALL_POSTS':

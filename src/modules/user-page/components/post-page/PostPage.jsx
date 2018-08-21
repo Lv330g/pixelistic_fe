@@ -4,7 +4,7 @@ import { KeyboardArrowRight, KeyboardArrowLeft } from '@material-ui/icons';
 
 import PostHeader from '../../../../shared/components/post-header/PostHeader';
 import PostFooter from '../../../../shared/components/post-footer/PostFooter';
-import { host, port } from '../../../../const/node-server-config';
+import { awsImage } from '../../../../const/node-server-config';
 
 
 
@@ -21,6 +21,7 @@ export class PostPage extends Component {
     this.postInfo.current.style.height = `${this.postImg.current.height}px`;
     window.addEventListener('resize', this.onResize)
   }
+  
   componentDidUpdate(){
     this.postInfo.current.style.height = `${this.postImg.current.height}px`;
   }
@@ -32,7 +33,7 @@ export class PostPage extends Component {
   render () {
     return <div className="post-page" ref={this.postPage}  onClick={this.props.onClosePostPage} onKeyDown={this.handleKeyPress} tabIndex="0" >
       <Grid container item direction="row" xs={12}   >
-        <Grid container item direction="column" xs={1} justify="center" alignItems="center" onClick={this.close}>
+        <Grid container item direction="column" xs={1} justify="center" alignItems="center">
             {this.props.leftButton ?  
             <IconButton className="nav-btn nav-btn-left" color="primary" onClick={this.navigateBack}  >
               <KeyboardArrowLeft className="icon"/>
@@ -40,9 +41,8 @@ export class PostPage extends Component {
         </Grid>
 
         <Grid className="post-cont" direction="row" container alignItems="center" justify="center">
-              
           <Grid className="top photo-cont" item onClick={this.noClose}> 
-              <img alt="user-img" src={`${host}:${port}/${this.props.post.image}`} ref={this.postImg} onClick={this.navigateNext}/>
+              <img alt="user-img" src={ `${awsImage}/${this.props.post.image}`} ref={this.postImg} onClick={this.navigateNext}/>
           </Grid>
           
           <Grid className="top" item onClick={this.noClose}>
@@ -51,7 +51,8 @@ export class PostPage extends Component {
                 authorName={this.props.post.author.nickname}
                 authorGeo={this.props.post.geolocation}
                 authorImg={this.props.post.author.avatar} 
-              />
+              />   
+            
               <PostFooter
                 comments={this.props.post.comments}
                 liked={this.props.post.likes.indexOf(this.props.userId) > -1}
@@ -63,6 +64,8 @@ export class PostPage extends Component {
                 date = {this.props.post.timestamp}
                 nickname={this.props.userNickname}
                 userId={this.props.userId}
+                imagePath = {this.props.post.image}
+                onClosePostPage = {this.props.onClosePostPage}
 
               />
             </div>

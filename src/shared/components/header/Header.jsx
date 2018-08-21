@@ -2,10 +2,6 @@ import React from 'react';
 import { Grid, Popper, Button, Paper, Grow, ClickAwayListener, MenuList, MenuItem } from '@material-ui/core';
 import { Extension } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
-
-import { authSignOut } from '../../../actions/auth';
-import { Redirect } from 'react-router';
-import { connect } from 'react-redux';
 import { Search } from './components/search/Search';
 
 export class Header extends React.Component {
@@ -13,22 +9,11 @@ export class Header extends React.Component {
     super(props);
     this.state = {
       open: false,
-      accessToken: false
     };
-  }
-
-  componentWillMount(){
-    let accessToken = window.localStorage.getItem('authHeaders')  ? 
-      JSON.parse(window.localStorage.getItem('authHeaders'))['accessToken'] : null;
-    this.setState({ accessToken });
   }
 
   render() {
     const { open } = this.state;
-
-    if(!this.state.accessToken){
-      return <Redirect to='/profile'/>
-    }
 
     return (
       <Grid container alignItems={"center"} justify={"center"} direction={"column"}>
@@ -113,12 +98,5 @@ export class Header extends React.Component {
   };
 };
 
+export default Header;
 
-export default connect(
-  state => ({
-    user: state.auth.user
-  }),
-  dispatch => ({
-    authSignOut: () => dispatch(authSignOut()),
-  })
-)(Header);

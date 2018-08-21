@@ -385,7 +385,7 @@ a {
     color: white;
     opacity: 0;
     cursor: pointer; }
-    .user-image .photo-info em {
+    .user-image .photo-info .post-info {
       font-style: normal;
       margin-right: 20px;
       margin-left: 5px; }

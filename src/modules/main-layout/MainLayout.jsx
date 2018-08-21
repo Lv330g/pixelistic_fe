@@ -49,17 +49,15 @@ export class MainLayout extends Component {
   }
 
   render() {
-    console.log(this.props.users)
     const { component: Component, ...rest } = this.props;
     if ( (this.state.accessToken === false && !this.props.isAuthorized) || this.props.errorMessage === 'session timeout' ) {
       return <Redirect to='/sign-in'/>;
     }
 
     if (this.state.accessToken && this.props.isAuthorized) {
-      //this.loadInitialPosts();
       return <Route {...rest} render={matchProps => (
         <div className="main-layout">
-          {this.props.path === '/dashboard' ? <DashboardHeader onSignOut={this.signOut}/> : <Header onSignOut={this.signOut}/>}
+          {this.props.path === '/dashboard' ? <DashboardHeader onSignOut={this.signOut}/> : <Header user={this.props.user} onSignOut={this.signOut}/>}
           <div className="content">
             <Component 
               {...matchProps} 

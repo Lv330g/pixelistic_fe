@@ -37,5 +37,17 @@ export const postApi = {
             }, err => reject(err)
         );
     });
+    },
+
+    removePost: (postId, userId, imagePath) => {
+      return new Promise((resolve, reject) => {
+        httpServise.delete(`${host}:${port}/remove-post`, { postId, userId, imagePath }).then(
+            res => {
+                if (res.data.postId) {
+                  resolve(res.data.postId);
+                } else reject({status: 401});
+            }, err => reject(err)
+        );
+    });
     }
 }

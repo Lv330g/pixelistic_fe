@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { host, port } from '../../const/node-server-config'
+import { awsImage } from '../../const/node-server-config'
 import PostFooter from '../../shared/components/post-footer/PostFooter';
 import PostHeader from '../../shared/components/post-header/PostHeader';
 
@@ -13,7 +13,7 @@ const Post = React.forwardRef((props, ref) => {
     />
 
     <div>
-      <img className='post-image' alt="post.jpg" src={`${host}:${port}/${props.post.image}`} />
+      <img className='post-image' alt="post.jpg" src= { `${awsImage}/${props.post.image}`} />
     </div>
 
     <PostFooter
@@ -26,6 +26,7 @@ const Post = React.forwardRef((props, ref) => {
       authorComment={props.post.description}
       date = {props.post.timestamp}
       nickname={props.nickname}
+      imagePath = {props.post.image}
       userId={props.userId}
     />
   </div>
