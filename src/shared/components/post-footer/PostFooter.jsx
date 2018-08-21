@@ -104,7 +104,7 @@ export class PostFooter extends Component {
 
       </Grid>
     
-      <p className="comment author">
+      {this.state.authorNama ? <p className="comment author">
         <Link to={`/profile/${this.state.authorName}`}>
           <span className="author-name">
             {this.state.authorName}
@@ -113,7 +113,7 @@ export class PostFooter extends Component {
         <span className="author-comment">
           {this.state.authorComment}
         </span>
-      </p>
+      </p> : null}
 
       {this.state.moreComments || (comments.length <= initCmntsAmount) ? false :  load}
 

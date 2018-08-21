@@ -29,7 +29,8 @@ body {
 
 a {
   cursor: pointer;
-  text-decoration: none; }
+  text-decoration: none;
+  color: #000; }
 
 .sign-in {
   margin-top: 40px;
@@ -120,7 +121,8 @@ a {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 100%; }
+  width: 100%;
+  margin-top: 100px; }
   .feed .upstairs-btn {
     position: fixed;
     bottom: 20px;
@@ -142,6 +144,11 @@ a {
   width: 85%; }
   .post .post-image {
     width: 100%; }
+  .post a {
+    color: #000; }
+
+.post:first-child {
+  margin-top: 0; }
 
 .feed-aside {
   display: flex;
@@ -150,7 +157,7 @@ a {
   height: 85vh;
   position: fixed;
   right: 0px;
-  margin-top: 40px; }
+  margin-top: 0px; }
   .feed-aside .user-info {
     height: 10vh; }
   .feed-aside .user-avatar {
@@ -160,7 +167,7 @@ a {
     margin: 0 0 0 15px;
     font-size: 25px; }
   .feed-aside .footer {
-    height: 5vh; }
+    height: 7vh; }
 
 .followings-list {
   width: 100%;

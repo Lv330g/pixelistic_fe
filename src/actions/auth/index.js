@@ -95,3 +95,7 @@ export const authChangePassword = (password, passwordConf, resetToken) => {
         });
     }
 }
+
+export const changeFollowersStatus = payload => {
+    return { type: 'CHANGE_FOLLOWERS_SOCKET', payload }
+};

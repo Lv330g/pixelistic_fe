@@ -208,7 +208,7 @@ export class EditProfile extends React.Component {
 export default connect(
   state => ({
     user: state.auth.user,
-    errorMessage: state.followings.errorMessage,
+    errorMessage: state.users.errorMessage,
     isAuthorized: state.auth.isAuthorized
   }),
   dispatch => ({

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { postsOnPage, startPage, bottomOffset } from '../../const/post-config';
-import { hardcodedPosts } from './feed-line-posts';
 
 import Post from '../post/Post';
 
@@ -12,7 +11,7 @@ export class FeedLine extends Component {
       per: null,
       page: null,
       totalPages: null,
-      scrolling: false,
+      scrolling: false
     }
 
     this.lastPostRef = React.createRef();
@@ -22,8 +21,8 @@ export class FeedLine extends Component {
     this.setState({ 
       per: postsOnPage,
       page: startPage,
-      totalPages: Math.ceil(hardcodedPosts.length / postsOnPage)
-     });
+      totalPages: Math.ceil(this.props.posts.length / postsOnPage)
+    });
 
     window.addEventListener('scroll', this.scrollListener);
   }
@@ -33,7 +32,6 @@ export class FeedLine extends Component {
   }
 
   static getDerivedStateFromProps (nextProps, state) {
-
     let feedlinePosts = nextProps.posts.filter( item => item.type === 'feed');
     const postsToShow = feedlinePosts.filter((item, i) => i < state.page * state.per);
     state.posts =  [...postsToShow];

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { authValidate, authSignOut } from './../../actions/auth';
-import { cleanFollowings, changeConnectionStatus, loadCurrentFollowings, handleFavorite } from '../../actions/followings';
+import { authValidate, authSignOut, changeFollowersStatus } from './../../actions/auth';
+import { cleanFollowings, loadCurrentFollowings, handleFavorite, changeFollowingsStatus } from '../../actions/followings';
 import { postClearPosts, postSessionPosts } from './../../actions/post';
 import { Redirect } from 'react-router';
 import { Route } from 'react-router-dom';
@@ -19,48 +19,41 @@ export class MainLayout extends Component {
       user: null
     }
 
-    if(this.props.user) {
-      this.socket.on('connection changed', (data) => {
-        const userId = this.props.user._id;
-        const follower = data.followers.some(item => item === userId);
-        if (follower) this.props.changeConnectionStatus(data);
-      });
-    }
+    this.socket.on('connection changed', data => {
+      if (this.props.user) {
+        this.props.changeFollowingsStatus(data);
+        this.props.changeFollowersStatus(data);
+      }
+    });
   }
 
   componentDidMount(){
     let accessToken = window.localStorage.getItem('authHeaders')  ? 
       JSON.parse(window.localStorage.getItem('authHeaders'))['accessToken'] : false;
-    
     if(accessToken && !this.props.isAuthorized) {
       this.props.authValidate();
     }
-
-    window.addEventListener('unload', () => this.emitConnectingChange('offline'));
-       
+    window.addEventListener('unload', () => {
+      this.emitOffline(this.props.user);
+    });
     this.setState({ accessToken });
   }
 
   componentDidUpdate() {
-    if(!this.props.currentSessionPosts.length && !this.props.wasLoadedFirstTime && this.props.user) {
-      this.props.postSessionPosts(this.props.user);
-      this.props.loadCurrentFollowings(this.props.user);
-      const user = this.props.user;
-  
-      if (user) {
-        this.emitConnectingChange('online');
-      }
+    const { user } = this.props;
+    if(!this.props.currentSessionPosts.length && !this.props.wasLoadedFirstTime && user) {
+      this.props.postSessionPosts(user);
+      this.props.loadCurrentFollowings(user);
+      this.emitOnline(this.props.user);
     }
   }
 
   render() {
+    console.log(this.props.users)
     const { component: Component, ...rest } = this.props;
-   
-     
     if ( (this.state.accessToken === false && !this.props.isAuthorized) || this.props.errorMessage === 'session timeout' ) {
       return <Redirect to='/sign-in'/>;
-    } 
-  
+    }
 
     if (this.state.accessToken && this.props.isAuthorized) {
       //this.loadInitialPosts();
@@ -88,17 +81,38 @@ export class MainLayout extends Component {
 
   signOut =  async () => {
     this.setState({ accessToken: false });
-    this.emitConnectingChange('offline');
+    this.emitOffline(this.props.user);
     this.socket.disconnect();
     await this.props.authSignOut();
     this.props.postClearPosts();
     this.props.cleanFollowings();
   }
 
-  emitConnectingChange = (status) => {
+  emitOnline = (user) => {
+    const sockets = user.followers.filter(item => item.socketId);
+    setTimeout(() => {
+      this.socket.emit(
+        'iOnline',
+        { 
+          sockets,
+          status: 'online',
+          socketId: this.socket.id,
+          userId: user._id,
+        }
+      );
+    }, 0);
+  }
+
+  emitOffline = (user) => {
+    const sockets = user.followers.filter(item => item.socketId);
     this.socket.emit(
-      'change connection status', 
-      {status, followers: this.props.user.followers, userId: this.props.user._id}
+      'iOffline', 
+      { 
+        sockets,
+        status: 'offline',
+        socketId: 'offline',
+        userId: user._id,
+      }
     );
   }
 };
@@ -111,14 +125,15 @@ export default connect(
     isAuthorized: state.auth.isAuthorized,
     currentSessionPosts: state.post.currentSessionPosts,
     wasLoadedFirstTime: state.post.wasLoadedFirstTime,
-    users: state.followings.users,
-    loading:  state.followings.loading
+    users: state.users.users,
+    loading:  state.users.loading
   }),
   dispatch => ({
     authValidate: (email, password) => dispatch(authValidate(email, password)),
     authSignOut: () => dispatch(authSignOut()),
     cleanFollowings: () => dispatch(cleanFollowings()),
-    changeConnectionStatus: data => dispatch(changeConnectionStatus(data)),
+    changeFollowersStatus: data => dispatch(changeFollowersStatus(data)),
+    changeFollowingsStatus: data => dispatch(changeFollowingsStatus(data)),
     postClearPosts: () => dispatch(postClearPosts()),
     postSessionPosts: (user) => dispatch(postSessionPosts(user)),
     loadCurrentFollowings: (user) => dispatch(loadCurrentFollowings(user)),

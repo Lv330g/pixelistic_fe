@@ -6,6 +6,16 @@ const initialState = {
     isAuthorized: false
 };
 
+const changeConnectionStatus = (user, payload) => {
+    user.followers.map(item => {
+      if (item._id === payload.userId) {
+        item.socketId = payload.socketId;
+      }
+      return item;
+    });
+    return user;
+};
+
 export default function (state = initialState, action) {
     switch (action.type) {
         case 'SIGN_IN_SUCCESS':
@@ -107,6 +117,16 @@ export default function (state = initialState, action) {
             confMsg: null,
             isAuthorized: false
         };
+
+
+        case 'CHANGE_FOLLOWERS_SOCKET':
+        return {
+            ...state,
+            error: false,
+            errorMessage: null,
+            user: changeConnectionStatus(state.user, action.payload)
+        }
+
         default:
         return state
     }
