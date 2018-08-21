@@ -1,58 +1,38 @@
 import React from "react";
-import ReactDOM from 'react-dom';
-import { Brush } from '@material-ui/icons';
+import ReactDOM from "react-dom";
+import { Brush } from "@material-ui/icons";
 
 export default class PhotoEditor extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-    photo: null,
-    modal: null,
-    grayscale: 0,
-    blur: 0,
-    brightness: 100,
-    contrast: 100,
-    hueRotate: 0,
-    invert: 0,
-    saturate: 100,
-    sepia: 0,
-    rotate: 0,
-    canvas: null,
-    context: null,
-    drawSize: 3,
-    colorDraw: "#ff0000",
-    drawTool: "draw",
-    imageObj: null,
-    canvasWidth: 450,
-    canvasHeight: 450
-  };
-  this.drawCanvas = null;
-  this.drawContext = null;
-}
+      filterContext: null,
+      imageObj: null,
+      lengthSide: 450,
+      //filters
+      grayscale: 0,
+      blur: 0,
+      brightness: 100,
+      contrast: 100,
+      hueRotate: 0,
+      invert: 0,
+      saturate: 100,
+      sepia: 0,
+      //Draw
+      drawSize: 3,
+      colorDraw: "#ff0000",
+      drawTool: "draw"
+    };
+    this.drawCanvas = null;
+    this.drawContext = null;
+  }
 
   componentDidUpdate() {
-    //Canvas
-    let canvas = ReactDOM.findDOMNode(this._colorCanvas);
-    let context = canvas.getContext("2d");
-    let imageObj = new Image();
-    imageObj.src = `${this.state.photo}`;
-    imageObj.onload = () => {
-      context.drawImage(
-        imageObj,
-        0,
-        0,
-        this.state.canvasWidth,
-        this.state.canvasHeight
-      );
-    };
-
-    //Draw 
-    let drawCanvas = ReactDOM.findDOMNode(this._drawCanvas);
-    let drawContext = drawCanvas.getContext("2d");
-    this.draw(drawCanvas, drawContext);
-
     //Filters
-    context.filter = `grayscale(${this.state.grayscale}%) 
+    let filterContext = this.state.filterContext;
+    let imageObj = this.state.imageObj;
+
+    filterContext.filter = `grayscale(${this.state.grayscale}%) 
       blur(${this.state.blur}px)
       brightness(${this.state.brightness}%)
       contrast(${this.state.contrast}%)
@@ -60,25 +40,32 @@ export default class PhotoEditor extends React.Component {
       invert(${this.state.invert}%)
       saturate(${this.state.saturate}%)
       sepia(${this.state.sepia}%)`;
-    context.drawImage(
+
+    filterContext.drawImage(
       imageObj,
       0,
       0,
-      this.state.canvasWidth,
-      this.state.canvasHeight
+      this.state.lengthSide,
+      this.state.lengthSide
     );
-    this.drawCanvas = drawCanvas;
-    this.drawContext = drawContext;
   }
 
   componentDidMount() {
     //Modal
-    let modal = ReactDOM.findDOMNode(this._modal)
-    let btn = ReactDOM.findDOMNode(this._modalBtn)
-    let close = ReactDOM.findDOMNode(this._close)
+    let modal = ReactDOM.findDOMNode(this._modal);
+    let modalBtn = ReactDOM.findDOMNode(this._modalBtn);
+    let close = ReactDOM.findDOMNode(this._close);
 
-    btn.onclick = () => {
+    modalBtn.onclick = () => {
       modal.style.display = "block";
+
+      //Draw
+      let drawCanvas = ReactDOM.findDOMNode(this._drawCanvas);
+      let drawContext = drawCanvas.getContext("2d");
+      this.draw(drawCanvas, drawContext);
+
+      this.drawCanvas = drawCanvas;
+      this.drawContext = drawContext;
     };
     close.onclick = () => {
       modal.style.display = "none";
@@ -90,24 +77,60 @@ export default class PhotoEditor extends React.Component {
     };
   }
 
-  componentWillReceiveProps(){
-    this.setState({photo: this.props.photo})
+  componentWillReceiveProps() {
+    this.reset();
+    // Filter canvas
+    let filterCanvas = ReactDOM.findDOMNode(this._filterCanvas);
+    let filterContext = filterCanvas.getContext("2d");
+    let imageObj = new Image();
+    imageObj.src = `${this.props.photo}`;
+    imageObj.onload = () => {
+      filterContext.drawImage(
+        imageObj,
+        0,
+        0,
+        this.state.lengthSide,
+        this.state.lengthSide
+      );
+    };
+    this.setState({
+      filterCanvas,
+      filterContext,
+      imageObj
+    });
   }
 
   render() {
     return (
-      <div className="wrap">
-        <Brush className="myBtn" ref={(el) => {this._modalBtn = el}}/>
-        <div className="modal" ref={(el) => {this._modal = el}}>
+      <div>
+        <Brush
+          className="modal-btn"
+          ref={el => {
+            this._modalBtn = el;
+          }}
+        />
+        <div
+          className="modal-photo-editor"
+          ref={el => {
+            this._modal = el;
+          }}
+        >
           <div className="modal-content">
             <div className="modal-header">
-              <span className="close" ref={(el) => {this._close = el}}>&times;</span>
+              <span
+                className="close"
+                ref={el => {
+                  this._close = el;
+                }}
+              >
+                &times;
+              </span>
               <span className="title">Image Editor</span>
             </div>
             <div className="modal-body">
               <div className="sliders">
-                <p className="item">
-                  <span className="name">Grayscale</span>
+                <div className="filter">
+                  <span className="filter-name">Grayscale</span>
                   <input
                     type="range"
                     min="0"
@@ -118,10 +141,10 @@ export default class PhotoEditor extends React.Component {
                       this.setState({ grayscale: e.target.value });
                     }}
                   />
-                </p>
+                </div>
 
-                <p className="item">
-                  <span className="name">Blur</span>
+                <div className="filter">
+                  <span className="filter-name">Blur</span>
                   <input
                     type="range"
                     min="0"
@@ -132,10 +155,10 @@ export default class PhotoEditor extends React.Component {
                       this.setState({ blur: e.target.value });
                     }}
                   />
-                </p>
+                </div>
 
-                <p className="item">
-                  <span className="name">Exposure</span>
+                <div className="filter">
+                  <span className="filter-name">Exposure</span>
                   <input
                     type="range"
                     min="0"
@@ -146,10 +169,10 @@ export default class PhotoEditor extends React.Component {
                       this.setState({ brightness: e.target.value });
                     }}
                   />
-                </p>
+                </div>
 
-                <p className="item">
-                  <span className="name">Contrast</span>
+                <div className="filter">
+                  <span className="filter-name">Contrast</span>
                   <input
                     type="range"
                     min="0"
@@ -160,10 +183,10 @@ export default class PhotoEditor extends React.Component {
                       this.setState({ contrast: e.target.value });
                     }}
                   />
-                </p>
+                </div>
 
-                <p className="item">
-                  <span className="name">Hue Rotate</span>
+                <div className="filter">
+                  <span className="filter-name">Hue Rotate</span>
                   <input
                     type="range"
                     min="0"
@@ -174,10 +197,10 @@ export default class PhotoEditor extends React.Component {
                       this.setState({ hueRotate: e.target.value });
                     }}
                   />
-                </p>
+                </div>
 
-                <p className="item">
-                  <span className="name">Invert</span>
+                <div className="filter">
+                  <span className="filter-name">Invert</span>
                   <input
                     type="range"
                     min="0"
@@ -188,10 +211,10 @@ export default class PhotoEditor extends React.Component {
                       this.setState({ invert: e.target.value });
                     }}
                   />
-                </p>
+                </div>
 
-                <p className="item">
-                  <span className="name">Saturate</span>
+                <div className="filter">
+                  <span className="filter-name">Saturate</span>
                   <input
                     type="range"
                     min="0"
@@ -202,10 +225,10 @@ export default class PhotoEditor extends React.Component {
                       this.setState({ saturate: e.target.value });
                     }}
                   />
-                </p>
+                </div>
 
-                <p className="item">
-                  <span className="name">Sepia</span>
+                <div className="filter">
+                  <span className="filter-name">Sepia</span>
                   <input
                     type="range"
                     className="set"
@@ -216,19 +239,19 @@ export default class PhotoEditor extends React.Component {
                       this.setState({ sepia: e.target.value });
                     }}
                   />
-                </p>
+                </div>
 
-                <p className="draw item">
-                  <span className="name">Draw</span>
+                <div className="draw filter">
+                  <span className="filter-name">Draw</span>
                   <input
                     type="color"
                     value={this.state.colorDraw}
-                    className="drowSet"
+                    className="set drowSet"
                     onChange={e => this.setState({ colorDraw: e.target.value })}
                   />
                   <input
                     type="text"
-                    className="drowSet sizeDraw"
+                    className="set drowSet sizeDraw"
                     placeholder="Size"
                     onChange={e => this.setState({ drawSize: e.target.value })}
                   />
@@ -238,53 +261,71 @@ export default class PhotoEditor extends React.Component {
                     alt="eraser"
                     src="https://png.icons8.com/material/50/000000/eraser.png"
                   />
-                </p>
+                </div>
 
-                <p className="addText item">
-                  <span className="textSpan name">Add text:</span>
+                <div className="addText filter">
+                  <span className="textSpan filter-name">Add text:</span>
                   <form onSubmit={this.addText}>
                     <input
                       type="text"
+                      autoComplete="off"
                       name="textField"
-                      className="addTextSet textField"
+                      className="set addTextSet textField"
                       placeholder="Text"
                     />
                     <br />
-                    <input type="text" name="x" placeholder="X" className="addTextSet" />
-                    <input type="text" name="y" placeholder="Y" className="addTextSet"/>
                     <input
                       type="text"
+                      autoComplete="off"
+                      name="x"
+                      placeholder="X"
+                      className="set addTextSet"
+                    />
+                    <input
+                      type="text"
+                      autoComplete="off"
+                      name="y"
+                      placeholder="Y"
+                      className="set addTextSet"
+                    />
+                    <input
+                      type="text"
+                      autoComplete="off"
                       name="size"
-                      className="addTextSet sizeInput"
+                      className="set addTextSet sizeInput"
                       placeholder="Size"
                     />
                     <button type="submit" className="addTextBtn">
                       Add
                     </button>
                   </form>
-                </p>
+                </div>
 
-                <button className="btn" onClick={this.reset}>
+                <button className="photo-editor-btn" onClick={this.reset}>
                   Reset
                 </button>
 
-                <button className="btn" onClick={this.save}>
+                <button className="photo-editor-btn" onClick={this.save}>
                   Save
                 </button>
               </div>
 
               <div className="imageContainer">
                 <canvas
-                  className="colorCanvas"
-                  ref={(el) => {this._colorCanvas = el}}
-                  width={this.state.canvasWidth}
-                  height={this.state.canvasHeight}
+                  className="canvas filterCanvas"
+                  ref={el => {
+                    this._filterCanvas = el;
+                  }}
+                  width={`${this.state.lengthSide}`}
+                  height={`${this.state.lengthSide}`}
                 />
                 <canvas
-                  className="drawCanvas"
-                  ref={(el) => {this._drawCanvas = el}}
-                  width={this.state.canvasWidth}
-                  height={this.state.canvasHeight}
+                  className="canvas drawCanvas"
+                  ref={el => {
+                    this._drawCanvas = el;
+                  }}
+                  width={`${this.state.lengthSide}`}
+                  height={`${this.state.lengthSide}`}
                 />
               </div>
             </div>
@@ -293,31 +334,6 @@ export default class PhotoEditor extends React.Component {
       </div>
     );
   }
-
-  drawTool = e => {
-    if (this.state.drawTool === "draw") {
-      e.target.className = "activeEraser eraser";
-      this.setState({ drawTool: "erase" });
-    } else {
-      e.target.className = "eraser";
-      this.setState({ drawTool: "draw" });
-    }
-  };
-
-  addText = e => {
-    let context = this.drawContext;
-    context.globalCompositeOperation = "source-over";
-    context.fillStyle = this.state.colorDraw;
-    context.font = `bold ${e.target.size.value}px Arial`;
-    context.fillText(
-      `${e.target.textField.value}`,
-      e.target.x.value,
-      e.target.y.value
-    );
-    e.target.textField.value = e.target.x.value = e.target.y.value = e.target.size.value =
-      "";
-    e.preventDefault();
-  };
 
   draw = (canvas, context) => {
     let canvasx = canvas.getBoundingClientRect().left;
@@ -362,7 +378,40 @@ export default class PhotoEditor extends React.Component {
     };
   };
 
+  drawTool = e => {
+    if (this.state.drawTool === "draw") {
+      e.target.className = "activeEraser eraser";
+      this.setState({ drawTool: "erase" });
+    } else {
+      e.target.className = "eraser";
+      this.setState({ drawTool: "draw" });
+    }
+  };
+
+  addText = e => {
+    let context = this.drawContext;
+    context.globalCompositeOperation = "source-over";
+    context.fillStyle = this.state.colorDraw;
+    context.font = `bold ${e.target.size.value}px Arial`;
+    context.fillText(
+      `${e.target.textField.value}`,
+      e.target.x.value,
+      e.target.y.value
+    );
+    e.target.textField.value = e.target.x.value = e.target.y.value = e.target.size.value =
+      "";
+    e.preventDefault();
+  };
+
   reset = () => {
+    if(this.drawContext){
+      this.drawContext.clearRect(
+        0,
+        0,
+        this.state.lengthSide,
+        this.state.lengthSide
+      );
+    }
     this.setState({
       grayscale: 0,
       blur: 0,
@@ -376,11 +425,12 @@ export default class PhotoEditor extends React.Component {
   };
 
   save = () => {
-    let colorCanvas = ReactDOM.findDOMNode(this._colorCanvas);
-
-    colorCanvas.getContext("2d").drawImage(this.drawCanvas, 0, 0);
-    this.drawContext.drawImage(colorCanvas, 0, 0);
-    const imgDataURL = colorCanvas.toDataURL();
+    let filterCanvas = ReactDOM.findDOMNode(this._filterCanvas);
+    let drawCanvas = this.drawCanvas;
+   
+    filterCanvas.getContext("2d").drawImage(drawCanvas, 0, 0);
+    this.drawContext.drawImage(filterCanvas, 0, 0);
+    const imgDataURL = filterCanvas.toDataURL();
 
     // send to UploadPhoto component
     this.props.returnPhoto(imgDataURL);

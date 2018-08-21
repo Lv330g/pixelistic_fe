@@ -40,7 +40,7 @@
     width: 50%;
     margin: auto;
     text-align: center;
-    padding: 20px;
+    margin-bottom: 5px;
   
      .fix{
        display: flex;
@@ -118,12 +118,7 @@
       }
       
       .canvas {
-        display: block;
-        max-width: 100%;
-        min-width: 250px;
-        max-height: 500px;
         border: 1px solid $photo-upload-panel;
-        box-sizing: border-box;
       }
     }
   }

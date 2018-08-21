@@ -13,6 +13,7 @@ export class UploadPhoto extends Component{
       photoIsDisplayed: false,
       fileSize: '',
       saveOpen: false,
+      lengthSide: 450
     }
     this.canvasRef = React.createRef();
   }
@@ -24,9 +25,7 @@ export class UploadPhoto extends Component{
       const img = new Image();
       
       img.onload = () => {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
+        ctx.drawImage(img, 0, 0, this.state.lengthSide, this.state.lengthSide);
         this.setState({ photoIsDisplayed: true });
       }
       img.src = this.state.photo;
@@ -69,7 +68,7 @@ export class UploadPhoto extends Component{
                 </div>
               </div>
               <div className="canvas-cont">
-                <canvas className="canvas" ref={this.canvasRef} onDrop={this.dropHandler} onDragOver={this.dragOverHandler}/>
+                <canvas className="canvas" ref={this.canvasRef} onDrop={this.dropHandler} onDragOver={this.dragOverHandler} width={450} height={450}/>
               </div>
             </div>
           </div>
@@ -137,9 +136,7 @@ export class UploadPhoto extends Component{
       const img = new Image();
       
       img.onload = () => {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
+        ctx.drawImage(img, 0, 0, this.state.lengthSide, this.state.lengthSide);
         this.setState({ photoIsDisplayed: true });
       }
       img.src = val;

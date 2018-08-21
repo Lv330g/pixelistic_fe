@@ -1,4 +1,4 @@
-.modal {
+.modal-photo-editor {
   display: none;
   position: fixed;
   padding-top: 10px;
@@ -55,7 +55,12 @@
     .imageContainer {
       float: left;
       margin: 20px;
-      .colorCanvas {
+      .canvas{
+        max-width: 450px;
+        min-width: 250px;
+        max-height: 500px;
+      }
+      .filterCanvas {
         position: absolute;
       }
       .drawCanvas {
@@ -66,11 +71,11 @@
       float: left;
       padding-left: 10px;
       text-align: center;
-      p.item {
+      .filter {
         margin: 6px 0;
         vertical-align: middle;
       }
-      span.name {
+      span.filter-name {
         display: inline-block;
         margin: 10px 0 0 0;
         width: 100px;
@@ -79,7 +84,7 @@
         text-align: left;
         vertical-align: middle;
       }
-      input {
+      .set {
         position: relative;
         margin: 10px 20px 0 10px;
         vertical-align: middle;
@@ -139,7 +144,6 @@
           margin: 10px;
         }
         .eraser {
-          background-color: transparent;
           border: none;
           vertical-align: middle;
           width: 25px;
@@ -202,7 +206,7 @@
           }
         }
       }
-      .btn {
+      .photo-editor-btn {
         width: 100px;
         padding: 5px;
         font-size: 20px;
@@ -226,28 +230,5 @@
         }
       }
     }
-  }
-}
-
-/* Add Animation */
-@-webkit-keyframes animatetop {
-  from {
-    top: -300px;
-    opacity: 0;
-  }
-  to {
-    top: 0;
-    opacity: 1;
-  }
-}
-
-@keyframes animatetop {
-  from {
-    top: -300px;
-    opacity: 0;
-  }
-  to {
-    top: 0;
-    opacity: 1;
   }
 }
