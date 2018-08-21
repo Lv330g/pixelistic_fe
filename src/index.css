@@ -452,7 +452,7 @@ a {
     width: 50%;
     margin: auto;
     text-align: center;
-    padding: 20px; }
+    margin-bottom: 5px; }
     .photo-upload .post-creator .fix {
       display: flex;
       text-align: left;
@@ -507,12 +507,7 @@ a {
         .photo-upload .post-creator .photo .photo-panel svg {
           color: white; }
       .photo-upload .post-creator .photo .canvas {
-        display: block;
-        max-width: 100%;
-        min-width: 250px;
-        max-height: 500px;
-        border: 1px solid #5cb85c;
-        box-sizing: border-box; }
+        border: 1px solid #5cb85c; }
 
 .save-post {
   position: fixed;
@@ -572,7 +567,7 @@ a {
   background-color: #a0c4ff;
   cursor: pointer; }
 
-.modal {
+.modal-photo-editor {
   display: none;
   position: fixed;
   padding-top: 10px;
@@ -585,7 +580,7 @@ a {
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 999;
   cursor: auto; }
-  .modal .modal-content {
+  .modal-photo-editor .modal-content {
     position: relative;
     background-color: #fefefe;
     margin: auto;
@@ -598,7 +593,7 @@ a {
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
     animation-duration: 0.4s; }
-  .modal .modal-header {
+  .modal-photo-editor .modal-header {
     font-size: 20px;
     line-height: 35px;
     font-weight: 500;
@@ -608,33 +603,37 @@ a {
     background-color: #5cb85c;
     color: white;
     /* The Close Button */ }
-    .modal .modal-header .close {
+    .modal-photo-editor .modal-header .close {
       color: white;
       float: right;
       font-size: 28px;
       font-weight: bold; }
-    .modal .modal-header .close:hover,
-    .modal .modal-header .close:focus {
+    .modal-photo-editor .modal-header .close:hover,
+    .modal-photo-editor .modal-header .close:focus {
       color: #000;
       text-decoration: none;
       cursor: pointer; }
-  .modal .modal-body {
+  .modal-photo-editor .modal-body {
     padding: 2px 16px; }
-    .modal .modal-body .imageContainer {
+    .modal-photo-editor .modal-body .imageContainer {
       float: left;
       margin: 20px; }
-      .modal .modal-body .imageContainer .colorCanvas {
+      .modal-photo-editor .modal-body .imageContainer .canvas {
+        max-width: 450px;
+        min-width: 250px;
+        max-height: 500px; }
+      .modal-photo-editor .modal-body .imageContainer .filterCanvas {
         position: absolute; }
-      .modal .modal-body .imageContainer .drawCanvas {
+      .modal-photo-editor .modal-body .imageContainer .drawCanvas {
         position: absolute; }
-    .modal .modal-body .sliders {
+    .modal-photo-editor .modal-body .sliders {
       float: left;
       padding-left: 10px;
       text-align: center; }
-      .modal .modal-body .sliders p.item {
+      .modal-photo-editor .modal-body .sliders .filter {
         margin: 6px 0;
         vertical-align: middle; }
-      .modal .modal-body .sliders span.name {
+      .modal-photo-editor .modal-body .sliders span.filter-name {
         display: inline-block;
         margin: 10px 0 0 0;
         width: 100px;
@@ -642,20 +641,20 @@ a {
         color: #22313f;
         text-align: left;
         vertical-align: middle; }
-      .modal .modal-body .sliders input {
+      .modal-photo-editor .modal-body .sliders .set {
         position: relative;
         margin: 10px 20px 0 10px;
         vertical-align: middle;
         -webkit-appearance: none;
         border-radius: 5px;
         width: 150px; }
-        .modal .modal-body .sliders input::-webkit-slider-runnable-track {
+        .modal-photo-editor .modal-body .sliders .set::-webkit-slider-runnable-track {
           width: 300px;
           height: 7px;
           background: #abb7b7;
           border: none;
           border-radius: 3px; }
-        .modal .modal-body .sliders input::-webkit-slider-thumb {
+        .modal-photo-editor .modal-body .sliders .set::-webkit-slider-thumb {
           -webkit-appearance: none;
           border: none;
           height: 20px;
@@ -664,13 +663,13 @@ a {
           background: #a7e393;
           margin-top: -6px;
           vertical-align: middle; }
-        .modal .modal-body .sliders input:focus {
+        .modal-photo-editor .modal-body .sliders .set:focus {
           outline: none; }
-        .modal .modal-body .sliders input:hover {
+        .modal-photo-editor .modal-body .sliders .set:hover {
           cursor: pointer; }
-        .modal .modal-body .sliders input[type="color"] {
+        .modal-photo-editor .modal-body .sliders .set[type="color"] {
           width: 50px; }
-        .modal .modal-body .sliders input[type="text"] {
+        .modal-photo-editor .modal-body .sliders .set[type="text"] {
           padding: 8px;
           font-size: 20px;
           border: 2px solid rgba(255, 255, 255, 0.5);
@@ -686,46 +685,45 @@ a {
           outline: none;
           color: #333;
           width: 100px; }
-      .modal .modal-body .sliders .draw {
+      .modal-photo-editor .modal-body .sliders .draw {
         text-align: start; }
-        .modal .modal-body .sliders .draw input.drowSet {
+        .modal-photo-editor .modal-body .sliders .draw input.drowSet {
           margin: 10px; }
-        .modal .modal-body .sliders .draw .eraser {
-          background-color: transparent;
+        .modal-photo-editor .modal-body .sliders .draw .eraser {
           border: none;
           vertical-align: middle;
           width: 25px;
           height: 25px; }
-        .modal .modal-body .sliders .draw .activeEraser {
+        .modal-photo-editor .modal-body .sliders .draw .activeEraser {
           border: #a7e393 4px solid;
           margin: -4px;
           border-radius: 4px; }
-        .modal .modal-body .sliders .draw .sizeDraw {
+        .modal-photo-editor .modal-body .sliders .draw .sizeDraw {
           width: 30px;
           height: 10px;
           font-size: 15px;
           cursor: default; }
-      .modal .modal-body .sliders .addText {
+      .modal-photo-editor .modal-body .sliders .addText {
         text-align: center;
         font-size: 16px;
         color: #22313f; }
-        .modal .modal-body .sliders .addText .textSpan {
+        .modal-photo-editor .modal-body .sliders .addText .textSpan {
           margin: auto;
           display: block;
           margin-bottom: 10px;
           font-size: 20px; }
-        .modal .modal-body .sliders .addText input.addTextSet {
+        .modal-photo-editor .modal-body .sliders .addText input.addTextSet {
           margin: 20px 5px;
           cursor: default;
           width: 22px;
           height: 10px; }
-        .modal .modal-body .sliders .addText input.textField {
+        .modal-photo-editor .modal-body .sliders .addText input.textField {
           width: 215px;
           height: 10px;
           margin: 0; }
-        .modal .modal-body .sliders .addText input.sizeInput {
+        .modal-photo-editor .modal-body .sliders .addText input.sizeInput {
           width: 40px; }
-        .modal .modal-body .sliders .addText .addTextBtn {
+        .modal-photo-editor .modal-body .sliders .addText .addTextBtn {
           padding: 5px;
           font-size: 20px;
           border: 2px solid rgba(255, 255, 255, 0.5);
@@ -737,11 +735,11 @@ a {
           color: #333;
           width: 65px;
           cursor: pointer; }
-          .modal .modal-body .sliders .addText .addTextBtn:focus {
+          .modal-photo-editor .modal-body .sliders .addText .addTextBtn:focus {
             outline: none; }
-          .modal .modal-body .sliders .addText .addTextBtn:hover {
+          .modal-photo-editor .modal-body .sliders .addText .addTextBtn:hover {
             cursor: pointer; }
-      .modal .modal-body .sliders .btn {
+      .modal-photo-editor .modal-body .sliders .photo-editor-btn {
         width: 100px;
         padding: 5px;
         font-size: 20px;
@@ -755,27 +753,10 @@ a {
         outline: none;
         color: #333;
         cursor: pointer; }
-        .modal .modal-body .sliders .btn:focus {
+        .modal-photo-editor .modal-body .sliders .photo-editor-btn:focus {
           outline: none; }
-        .modal .modal-body .sliders .btn:hover {
+        .modal-photo-editor .modal-body .sliders .photo-editor-btn:hover {
           cursor: pointer; }
-
-/* Add Animation */
-@-webkit-keyframes animatetop {
-  from {
-    top: -300px;
-    opacity: 0; }
-  to {
-    top: 0;
-    opacity: 1; } }
-
-@keyframes animatetop {
-  from {
-    top: -300px;
-    opacity: 0; }
-  to {
-    top: 0;
-    opacity: 1; } }
 
 .form-error {
   color: red;
@@ -822,20 +803,20 @@ a {
   min-width: 160px;
   padding: 12px 16px;
   max-height: 250px; }
-  .search .item {
+  .search .search-item {
     color: black;
     text-decoration: none;
     display: none;
     padding: 12px 16px;
     vertical-align: middle; }
-    .search .item:hover {
+    .search .search-item:hover {
       background-color: #f1f1f1; }
-    .search .item .avatar {
+    .search .search-item .avatar {
       float: left;
       width: 30px;
       height: 30px;
       border-radius: 30px; }
-    .search .item .nickname {
+    .search .search-item .nickname {
       height: 30px;
       line-height: 30px;
       margin-left: 10px; }
