@@ -5,6 +5,40 @@ const initialState = {
   loading: false,
 };
 
+const updateUserProps = (oldUser, newUser) => {
+  oldUser.bio = newUser.bio;
+  oldUser.website = newUser.website;
+  oldUser.fullName = newUser.fullName;
+  oldUser.avatar = newUser.avatar;
+  oldUser.nickname = newUser.nickname;
+}
+
+const editUser = (users, payload) => {
+
+  return users.map( item => {
+    if (item._id === payload._id) {
+      updateUserProps(item, payload)
+    }
+    return item;
+  });
+};
+
+const editOrAdd = (users, payload) => {
+  let isOldUser = false;
+  let newUsers = users.map( item => {
+    if (item._id === payload._id) {
+      updateUserProps(item, payload)
+      isOldUser = true
+    }
+    return item;
+  });
+  if (isOldUser) {
+    return newUsers
+  } else {
+    return [...users, payload]
+  }
+}
+
 export default function (state = initialState, action) {
   switch (action.type) {
 
@@ -103,7 +137,15 @@ export default function (state = initialState, action) {
         ...state,
         error: false,
         errorMessage: null,
-        users: [...state.users, action.payload],
+        users: editOrAdd(state.users, action.payload),
+        loading: false
+      };
+
+      case 'PROFILE_UPDATED_SUCCESS':
+      return {
+        error: false,
+        errorMessage: null,
+        users: editUser(state.users, action.payload),
         loading: false
       };
 

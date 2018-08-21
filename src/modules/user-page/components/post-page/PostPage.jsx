@@ -51,8 +51,7 @@ export class PostPage extends Component {
                 authorName={this.props.post.author.nickname}
                 authorGeo={this.props.post.geolocation}
                 authorImg={this.props.post.author.avatar} 
-              />   
-              {console.log(this.props.userId)}
+              />
               <PostFooter
                 comments={this.props.post.comments}
                 liked={this.props.post.likes.indexOf(this.props.userId) > -1}

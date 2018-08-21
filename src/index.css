@@ -3,9 +3,6 @@
 .light-grey {
   color: #AEAEAE; }
 
-.change-photo, .user-nickname, .nickname {
-  font-family: "Segoe UI", Helvetica, Arial, sans-serif; }
-
 .btn-upload.bg-green {
   background-color: #5cb85c; }
 
@@ -248,28 +245,41 @@ a {
   margin-top: 100px; }
   .user-dashboard .user-nickname {
     font-weight: 200;
-    font-size: 32px; }
+    font-size: 32px;
+    font-family: "Segoe UI", Helvetica, Arial, sans-serif; }
+  .user-dashboard .left-pdg {
+    padding-left: 50px; }
+  .user-dashboard .nick-btn {
+    display: flex; }
   .user-dashboard .all-infa {
     padding: 30px 0; }
-  .user-dashboard div span {
+  .user-dashboard .quantity .number {
     font-weight: 600; }
   .user-dashboard .followers {
     padding: 0 20px; }
-  .user-dashboard .avatar-container {
-    margin-right: 80px; }
   .user-dashboard .user-avatar {
-    width: 150px;
-    height: 150px; }
+    width: 200px;
+    height: 200px; }
   .user-dashboard .user-name {
     font-weight: 600; }
   .user-dashboard .location {
     padding: 10px 0;
     font-size: 14px; }
-  .user-dashboard .link {
+  .user-dashboard .link-website {
     color: #003569;
     font-weight: 650; }
-  .user-dashboard .link:active {
+  .user-dashboard .link-website:active {
     color: #C4CCD5; }
+  .user-dashboard #dashboard-btn {
+    margin-left: 10px;
+    padding: 0 5px;
+    height: 40px; }
+  .user-dashboard .link {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    text-decoration: none;
+    color: black; }
 
 #dashboard-btn {
   margin-left: 10px !important;
@@ -375,14 +385,31 @@ a {
 
 .edit-profile {
   margin-top: 100px; }
+  .edit-profile .file-input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1; }
+  .edit-profile .avatar-nickname {
+    width: 1366px; }
   .edit-profile .nickname {
     font-weight: 200;
-    font-size: 24px; }
+    font-size: 24px;
+    font-family: "Segoe UI", Helvetica, Arial, sans-serif; }
+  .edit-profile .user-avatar {
+    width: 100px;
+    height: 100px; }
   .edit-profile .change-photo {
     color: #3897f0;
-    font-weight: 500; }
+    font-weight: 500;
+    padding-top: 5px;
+    font-family: "Segoe UI", Helvetica, Arial, sans-serif; }
   .edit-profile .change-photo:active {
     color: #C4CCD5; }
+  .edit-profile .form {
+    width: 800px; }
 
 .photo-upload {
   text-align: center;
