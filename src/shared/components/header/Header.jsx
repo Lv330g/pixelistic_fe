@@ -111,7 +111,6 @@ export class Header extends React.Component {
     }
     this.setState({ open: false });
   };
-
 };
 
 

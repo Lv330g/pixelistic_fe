@@ -10,4 +10,12 @@
   .post-image {
     width: 100%;
   }
+
+  a {
+    color: #000;
+  }
+}
+
+.post:first-child {
+  margin-top: 0;
 }
