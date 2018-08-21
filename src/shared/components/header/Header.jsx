@@ -34,7 +34,11 @@ export class Header extends React.Component {
       <Grid container alignItems={"center"} justify={"center"} direction={"column"}>
           <Grid container className="header" item xs={12} alignItems = {"center"}>
               <Grid item xs={1}> </Grid> 
-              <Grid className="logo" item xs={2}><span className="logo-ident">Pixel</span></Grid>
+              <Link className="logo-link" to="/">
+                <Grid className="logo" item xs={2}>
+                  <span className="logo-ident">Pixel</span>
+                </Grid>
+              </Link>
               <Grid item xs={2}></ Grid>
               <Grid item xs={2}>
                 <Search />
@@ -60,7 +64,7 @@ export class Header extends React.Component {
                   >
                     <Paper>
                       <ClickAwayListener onClickAway={this.handleClose}>
-                          <MenuList>
+                          <MenuList onClick={this.handleClose}>
                             <Link to={`/profile/${this.props.user.nickname}`}>
                               <MenuItem>
                                 Profile

@@ -84,6 +84,41 @@ export const authApi = {
                 }, err => reject(err)
             )
         })
-    }
+    },
 
+    forgotEmail: (email) => {
+        return new Promise ((resolve, reject) => {
+            httpServise.post(`${host}:${port}/forgot`, {email: email}).then(
+                res => {
+                    if (res.data.text) {
+                        resolve(res.data.text);
+                    } else reject({status: 401});
+                }, err => reject(err)
+            )
+        })
+    },
+
+    VerifyPasswordReset: (reset) => {
+        return new Promise ((resolve, reject) => {
+            httpServise.get(`${host}:${port}/change/${reset}`).then(
+                res => {
+                    if (res.data.text) {
+                        resolve(res.data.text);
+                    } else reject({status: 401});
+                }, err => reject(err)
+            )
+        })
+    },
+
+    ChangePassword: (password, passwordConf, resetToken) =>{
+        return new Promise ((resolve, reject) => {
+            httpServise.post(`${host}:${port}/change`, {password: password, passwordConf: passwordConf, resetToken: resetToken}).then(
+                res => {
+                    if (res.data.text) {
+                        resolve(res.data.text);
+                    } else reject({status: 401});
+                }, err => reject(err)
+            )
+        })
+    }
 }
