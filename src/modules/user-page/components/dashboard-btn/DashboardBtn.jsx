@@ -8,6 +8,7 @@ export default class DashboardBtn extends Component {
 
   render() {
     const { current, profileUser } = this.props;
+    
     if(profileUser._id === current._id) {
       return <Button variant="outlined" id="dashboard-btn">
         <Link
@@ -43,6 +44,7 @@ export default class DashboardBtn extends Component {
       current: this.props.current._id, 
       following: this.props.profileUser._id
     };
+    this.props.postAddToFeedLine(this.props.profileUser._id);
     this.props.follow(data);
   };
 
@@ -52,7 +54,7 @@ export default class DashboardBtn extends Component {
       followingId: this.props.profileUser.followingId,
       followingInfoId: this.props.profileUser.followingInfoId
     };
-
+    this.props.postRemoveFromFeedLine(this.props.profileUser._id);
     this.props.unfollow(data);
   }
 };

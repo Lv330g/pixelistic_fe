@@ -25,6 +25,8 @@ import { updateAvatarUrlPath } from './../../../../shared/utils/avatarUtil';
                 follow={this.props.follow}
                 unfollow={this.props.unfollow}
                 users={this.props.users}
+                postAddToFeedLine = {this.props.postAddToFeedLine}
+                postRemoveFromFeedLine = {this.props.postRemoveFromFeedLine}
               />
             </Grid>
             <Grid className="all-infa" container>

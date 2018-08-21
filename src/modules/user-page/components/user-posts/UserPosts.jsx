@@ -5,7 +5,7 @@ import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { Link } from 'react-router-dom';
 
 import { rowSize } from '../../../../const/user-page-config.js';
-import { host, port } from '../../../../const/node-server-config'
+import { awsImage } from '../../../../const/node-server-config'
 
 import MinimizedPost from '../minimized-post/MinimizedPost';
 import PostPage from '../post-page/PostPage';
@@ -63,9 +63,9 @@ export class UserPosts extends Component {
     if(this.state.posts.length === 0){
       return <div className="empty-posts">  
         <p> {this.props.ownPage ? 'You have no posts' : 'This user has no posts yet'} </p>
-        { this.props.ownPage ? 
-        <Link to="/upload"> <AddAPhoto className="add-photo"/> </Link> : <BrokenImage/> 
-        }
+        { this.props.ownPage 
+        ? <Link to="/upload"> <AddAPhoto className="add-photo"/> </Link> 
+        : <BrokenImage/> }
       </div>
     }
 
@@ -74,8 +74,8 @@ export class UserPosts extends Component {
 
   generateRows = () => {
 
-    let posts = this.state.posts;
-    let rowsCount = Math.ceil(posts.length / this.state.rowSize) || 1;
+    const posts = this.state.posts;
+    const rowsCount = Math.ceil(posts.length / this.state.rowSize) || 1;
     let curPost = 0;
     let table = [];
     
@@ -83,10 +83,10 @@ export class UserPosts extends Component {
       let row = [];
       for( let j = 0; j < this.state.rowSize; j++) {
         if(curPost < posts.length) {
-          let rowItem = <MinimizedPost
+          const rowItem = <MinimizedPost
             key = {posts[curPost]._id}
             id = {posts[curPost]._id}
-            img = {`${host}:${port}/${posts[curPost].image}`}
+            img = { `${awsImage}/${posts[curPost].image}`}
             likes = {posts[curPost].likes.length}
             comments = {posts[curPost++].comments.length}
             onOpenPost = {this.openPostPage}
@@ -97,7 +97,7 @@ export class UserPosts extends Component {
           break;
         }
       }
-      let completeRow =  <Grid key={i} container item direction="row" xs={8} className="box"> {row} </Grid>;
+      const completeRow =  <Grid key={i} container item direction="row" xs={8} className="box"> {row} </Grid>;
       table = [ ...table, completeRow ];
     }
     return table;
@@ -106,7 +106,7 @@ export class UserPosts extends Component {
   openPostPage = (id) => {
     disableBodyScroll();
     setTimeout( () => {
-      let index = this.state.posts.findIndex(item => item._id === id);
+      const index = this.state.posts.findIndex(item => item._id === id);
       this.setState({postOpenIndex: index > -1 ? index : null });  
     }, 10);    
   }

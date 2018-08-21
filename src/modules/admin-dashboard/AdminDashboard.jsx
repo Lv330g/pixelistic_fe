@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Grid } from '@material-ui/core';
 import { getUsers, updateUserStatus } from  './../../actions/dashboard';
 import DashboardTable from  './components/DashboardTable';
-import DashboardHeader from './components/DasnboardHeader';
+import LoadingSpinner from '../../shared/components/loading-spinner/LoadingSpinner';
 
 class AdminDashboard extends React.Component {
   constructor(props) {
@@ -30,7 +30,7 @@ class AdminDashboard extends React.Component {
         </Grid>
       );
     };
-    return <h1>Loading</h1>
+    return <LoadingSpinner/>
   };
 
   handleSwitchChange = (e) => {

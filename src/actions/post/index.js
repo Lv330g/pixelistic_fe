@@ -2,7 +2,7 @@ import { postApi } from '../../api/post-api';
 
 export const postAddPost = (image, description, geolocation, user) => {
   return dispatch => {
-    dispatch({type: 'START_POST_SAVING'});
+    dispatch({type: 'START_POST_PROCESSING'});
     return postApi.addPost(image, description, geolocation, user).then( post => {
         dispatch({ type: 'POST_ADD_SUCCESS', payload: post });
       }, err => {    
@@ -41,4 +41,23 @@ export const postCommentAdd = (postId, userNickname, comment) => {
         dispatch({ type: 'COMMENT_ADDED_ERROR', payload: err });
       });
   } 
+}
+
+export const postAddToFeedLine = (userId) => {
+  return { type: 'ADD_POSTS_TO_FEEDLINE', payload: userId };
+}
+
+export const postRemoveFromFeedLine = (userId) => {
+  return { type: 'REMOVE_POSTS_FROM_FEEDLINE', payload: userId };
+}
+
+export const postRemovePost = (postId, userId, imagePath) => {
+  return dispatch => {
+    dispatch({type: 'START_POST_PROCESSING'});
+    return postApi.removePost(postId, userId, imagePath).then( postId => {
+        dispatch({ type: 'POST_REMOVE_SUCCESS', payload: postId });
+      }, err => {    
+        dispatch({ type: 'POST_REMOVE_ERROR', payload: err })
+      });
+  }
 }

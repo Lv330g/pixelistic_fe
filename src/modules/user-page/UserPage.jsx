@@ -2,8 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getProfile } from './../../actions/profile';
 import { follow, unfollow } from './../../actions/followings';
-import { postAddPostsToSession } from './../../actions/post';
-
+import { postAddPostsToSession, postAddToFeedLine, postRemoveFromFeedLine } from './../../actions/post';
 
 import UserDashboard from './components/user-dashboard/UserDashboard';
 import UserPosts from './components/user-posts/UserPosts';
@@ -19,7 +18,6 @@ export class UserPage extends React.Component {
       posts: []
     }
   }
-
 
   componentDidMount(){
     this.getNewProfile();
@@ -56,13 +54,16 @@ export class UserPage extends React.Component {
             userprofile={this.state.profileUser}  
             follow={this.props.follow}
             unfollow={this.props.unfollow}
+            postAddToFeedLine = {this.props.postAddToFeedLine}
+            postRemoveFromFeedLine = {this.props.postRemoveFromFeedLine}
             users={this.props.users}
           />
-
+          
           <UserPosts 
             posts={this.state.posts} 
             userId = {this.props.user._id}
             userNickname = {this.props.user.nickname}
+            ownPage = {this.props.user._id === this.state.profileUser._id}
           />
       </div>
     }
@@ -87,6 +88,8 @@ export default connect(
     getProfile: (nickname) => dispatch(getProfile(nickname)),
     follow: (data) => dispatch(follow(data)),
     unfollow: (data) => dispatch(unfollow(data)),
-    postAddPostsToSession: (posts) => dispatch(postAddPostsToSession(posts))
+    postAddPostsToSession: (posts) => dispatch(postAddPostsToSession(posts)),
+    postAddToFeedLine: (userId) => dispatch(postAddToFeedLine(userId)),
+    postRemoveFromFeedLine: (userId) => dispatch(postRemoveFromFeedLine(userId))
   })
 )(UserPage);

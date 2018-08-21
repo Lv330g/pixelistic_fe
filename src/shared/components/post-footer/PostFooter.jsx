@@ -7,7 +7,7 @@ import { initCmntsAmount, expandCmntsAmount } from '../../../const/post-config';
 
 import Like from '../like/Like';
 import CustomTime from '../custom-time/CustomTime';
-import { postLikeChange, postCommentAdd } from '../../../actions/post';
+import { postLikeChange, postCommentAdd, postRemovePost } from '../../../actions/post';
 
 import { Grid, Divider, TextField, Checkbox, IconButton } from '@material-ui/core';
 import { CommentOutlined, DeleteOutlined } from '@material-ui/icons';
@@ -27,7 +27,8 @@ export class PostFooter extends Component {
       authorComment: '',
       date: '',
       commentsAmount: null,
-      commentCheckbox: false
+      commentCheckbox: false,
+      startRemoving: false
     };
 
     this.textfieldRef = React.createRef();
@@ -49,6 +50,7 @@ export class PostFooter extends Component {
     state.authorId = nextProps.authorId;
     state.authorComment = nextProps.authorComment;
     state.date = nextProps.date;
+    state.imagePath = nextProps.imagePath
     
     return state;
   }
@@ -96,7 +98,7 @@ export class PostFooter extends Component {
         />
 
         {this.props.userId === this.state.authorId ?
-          <IconButton color="secondary">
+          <IconButton color="secondary" onClick={this.handleRemovePost}>
             <DeleteOutlined />
           </IconButton> 
           : null
@@ -196,6 +198,13 @@ export class PostFooter extends Component {
       commentCheckbox: true
     });
   }
+
+  handleRemovePost = () => {
+    const { postId, authorId, imagePath } = this.state;
+    this.props.postRemovePost(postId, authorId, imagePath);
+    this.props.onClosePostPage();
+    this.setState({ startRemoving: true });
+  }
 };
 
 PostFooter.propTypes = {
@@ -210,9 +219,12 @@ PostFooter.propTypes = {
 };
 
 export default connect(
-  null,
+  state => ({
+    isLoading: state.post.isLoading
+  }),
   dispatch => ({
     postLikeChange: (postId, userId, type) => dispatch(postLikeChange(postId, userId, type)),
-    postCommentAdd: (postId, userId, text) => dispatch(postCommentAdd(postId, userId, text))
+    postCommentAdd: (postId, userId, text) => dispatch(postCommentAdd(postId, userId, text)),
+    postRemovePost: (postId, userId, imagePath) => dispatch(postRemovePost(postId, userId, imagePath))
   })
 )(PostFooter);

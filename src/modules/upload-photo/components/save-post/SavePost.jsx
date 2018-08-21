@@ -36,7 +36,7 @@ export class SavePost extends Component{
           { this.checkSavingProcess() }
           
           {this.state.savingStarted ? null : 
-            <Button onClick={this.uploadPost} className="save-btn btn-upload bg-green" color="primary" variant="contained" disabled={this.state.isSaving}>Save</Button>
+            <Button onClick={this.uploadPost} className="save-btn btn-upload bg-green" color="primary" variant="contained" disabled={this.state.savingStarted}>Save</Button>
           }
         </div>
       </ClickAwayListener>
@@ -57,11 +57,11 @@ export class SavePost extends Component{
 
   checkSavingProcess = () => {
 
-    if (this.state.savingStarted && this.props.isSaving) {
+    if (this.state.savingStarted && this.props.isLoading) {
       return <LoadingSpinner size={30}/>
     }
 
-    if(this.state.savingStarted && !this.props.isSaving) {
+    if(this.state.savingStarted && !this.props.isLoading) {
       return <Redirect to={`/profile/${this.props.user.nickname}`}/>
     }
 
@@ -83,7 +83,7 @@ export class SavePost extends Component{
 export default connect(
   state => ({
     successMessage: state.post.successMessage,
-    isSaving: state.post.isSaving
+    isLoading: state.post.isLoading
   }),
   dispatch => ({
     postAddPost: (image, description, geolocation, author) => dispatch(postAddPost(image, description, geolocation, author))
