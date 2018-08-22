@@ -40,8 +40,13 @@ export class UserPage extends React.Component {
       }
     }
 
-    let posts = next.posts.filter((item) => item.author.nickname === profileNickname);
-    state.posts = posts;
+
+    let curUser = next.users.find(item => item.nickname === profileNickname);
+    if(curUser){
+      let posts = next.posts.filter((item) => item.author._id === curUser._id && !item.deleted);
+      state.posts = posts;
+    }
+
     return state;
   }
 

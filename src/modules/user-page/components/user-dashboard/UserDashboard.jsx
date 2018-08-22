@@ -45,7 +45,7 @@ import { updateAvatarUrlPath } from './../../../../shared/utils/avatarUtil';
                   {this.props.userprofile.fullName}
                 </div>
                 <div className="location">{this.props.userprofile.bio}</div>
-                <a target="_blank" href={this.props.userprofile.website} className="link-website">{this.props.userprofile.website}</a>
+                <a target="_blank" href={`http://${this.props.userprofile.website}`} className="link-website">{this.props.userprofile.website}</a>
               </Grid>
             </Grid>
           </Grid>

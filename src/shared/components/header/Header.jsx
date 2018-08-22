@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid, Popper, Button, Paper, Grow, ClickAwayListener, MenuList, MenuItem } from '@material-ui/core';
 import { Extension } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
+import Notification from '../../../modules/notification/Notification'
 import { Search } from './components/search/Search';
 
 export class Header extends React.Component {
@@ -28,7 +29,8 @@ export class Header extends React.Component {
               <Grid item xs={1}>
                 <Search />
               </Grid>
-              <Grid item xs={4} ></Grid>
+              <Grid item xs={3} ></Grid>
+              <Notification/>
               <Grid item xs={1}>
                 <Button
                 buttonRef={node => {

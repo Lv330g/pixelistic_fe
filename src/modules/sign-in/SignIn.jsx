@@ -68,6 +68,9 @@ export class SignIn extends React.Component {
                 <p className={this.props.errMsg ? 'err-msg msg' : 'msg'}>
                   {this.props.errMsg}
                 </p>
+                <p>
+                  <Link className="reset_link" to="/forgot">Forgot password?</Link>
+                </p>
 
                 <Button className="submit-btn" type={"submit"} color={"primary"} variant={"contained"} fullWidth disabled={!this.validateForm()}>
                   <AccountCircle className="signin-icon" />
