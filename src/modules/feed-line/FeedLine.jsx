@@ -34,8 +34,9 @@ export class FeedLine extends Component {
   static getDerivedStateFromProps (nextProps, state) {
     const feedlinePosts = nextProps.posts.filter( item => item.type === 'feed');
     const postsToShow = feedlinePosts.filter((item, i) => i < state.page * state.per);
-    state.posts =  [...postsToShow];
+    state.posts = [...postsToShow];
     state.scrolling = false;
+    state.totalPages = Math.ceil(nextProps.posts.length / postsOnPage);
     return state;
   }
 

@@ -13,7 +13,6 @@ export class UploadPhoto extends Component{
       photoIsDisplayed: false,
       fileSize: '',
       saveOpen: false,
-      lengthSide: 450
     }
     this.canvasRef = React.createRef();
   }
@@ -25,7 +24,9 @@ export class UploadPhoto extends Component{
       const img = new Image();
       
       img.onload = () => {
-        ctx.drawImage(img, 0, 0, this.state.lengthSide, this.state.lengthSide);
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
         this.setState({ photoIsDisplayed: true });
       }
       img.src = this.state.photo;
@@ -53,10 +54,12 @@ export class UploadPhoto extends Component{
               <label htmlFor="file-input"><AddAPhoto/></label> 
               <input className="file-input" name="file-input" id="file-input" accept="image/*" type="file" onChange={this.fileChangedHandler}/>
               <label > 
-                <PhotoEditor 
+              <PhotoEditor 
                   photo={this.state.photo} 
                   returnPhoto = {this.getModifiedImage}
-                /> 
+                  width = { this.canvasRef.current ? this.canvasRef.current.clientWidth : 0}
+                  height = { this.canvasRef.current ? this.canvasRef.current.clientHeight : 0}
+              />
               </label>
             </div>
 
@@ -68,7 +71,7 @@ export class UploadPhoto extends Component{
                 </div>
               </div>
               <div className="canvas-cont">
-                <canvas className="canvas" ref={this.canvasRef} onDrop={this.dropHandler} onDragOver={this.dragOverHandler} width={450} height={450}/>
+                <canvas className="canvas" ref={this.canvasRef} onDrop={this.dropHandler} onDragOver={this.dragOverHandler}/>
               </div>
             </div>
           </div>
@@ -136,7 +139,9 @@ export class UploadPhoto extends Component{
       const img = new Image();
       
       img.onload = () => {
-        ctx.drawImage(img, 0, 0, this.state.lengthSide, this.state.lengthSide);
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
         this.setState({ photoIsDisplayed: true });
       }
       img.src = val;
