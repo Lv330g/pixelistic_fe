@@ -4,6 +4,7 @@ import { Grid } from '@material-ui/core';
 import { getUsers, updateUserStatus } from  './../../actions/dashboard';
 import DashboardTable from  './components/DashboardTable';
 import LoadingSpinner from '../../shared/components/loading-spinner/LoadingSpinner';
+import { Redirect } from 'react-router-dom';
 
 class AdminDashboard extends React.Component {
   constructor(props) {
@@ -23,6 +24,9 @@ class AdminDashboard extends React.Component {
   };
 
   render() {
+    if (!this.props.user.isAdmin) {
+      return <Redirect to="/"/>
+    } 
     if (this.state.users.length) {
       return (
         <Grid>
