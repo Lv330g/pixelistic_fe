@@ -55,9 +55,9 @@ const loadCurrentFollowings = (users, payload) => {
       item.status = followings[i].status;
       item.avatar = followings[i].avatar;
       item.nickname = followings[i].nickname;
-      item.fullName = followings[i].userName;
+      item.fullName = followings[i].fullName;
       item.website = followings[i].website;
-      item.bio = followings[i].userBio;
+      item.bio = followings[i].bio;
       item.posts = followings[i].posts;
       item.followingInfoId = item._id;
       item._id = followings[i]._id;

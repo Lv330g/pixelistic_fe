@@ -106,7 +106,7 @@ export class PostFooter extends Component {
 
       </Grid>
     
-      {this.state.authorNama ? <p className="comment author">
+      {this.state.authorComment ? <p className="comment author">
         <Link to={`/profile/${this.state.authorName}`}>
           <span className="author-name">
             {this.state.authorName}

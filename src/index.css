@@ -806,6 +806,9 @@ a {
 .dashboard-pagination-arrows {
   display: flex; }
 
+.dashboard-status-cell {
+  min-width: 135px; }
+
 .form-error {
   color: red;
   font-size: 12px;

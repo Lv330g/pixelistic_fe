@@ -63,7 +63,7 @@ class DashboardTable extends React.Component {
                     <TableCell>{user.nickname}</TableCell>
                     <TableCell>{user.email}</TableCell>
                     <TableCell>{user.posts.length}</TableCell>
-                    <TableCell>  
+                    <TableCell className="dashboard-status-cell">  
                       <FormControlLabel
                         control={ 
                           <Switch
