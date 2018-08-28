@@ -1,4 +1,4 @@
-const initialState = {
+export const initialState = {
   error: false,
   errorMessage: null,
   users: [],
@@ -103,7 +103,7 @@ const follow = (users, payload) => {
 export default function (state = initialState, action) {
   switch (action.type) {
     case 'LOADING':{
-      return{
+      return {
         ...state,
         loading: true
       }
@@ -125,15 +125,11 @@ export default function (state = initialState, action) {
       users: unfollow(state.users, action.payload)
     };
 
-    case 'GET_PROFILE_ERROR':
-    case 'HANDLE_FAVORITE_ERROR':
-    case 'FOLLOW_ERROR':
-    case 'UNFOLLOW_ERROR':
+    case 'ERROR':
     return {
       ...state,
       error: true,
-      errorMessage: action.payload.response.data.error,
-      users: [...state.users],
+      errorMessage: action.payload.response.data.error
     };
 
     case 'HANDLE_FAVORITE_SUCCESS':
@@ -150,25 +146,25 @@ export default function (state = initialState, action) {
       users: loadCurrentFollowings(state.users, action.payload)
     };
 
-    case 'CLEAN_FOLLOWINGS':
+    case 'CLEAN_USERS_ARRAY':
     return initialState;
 
-      case 'GET_PROFILE_SUCCESS':
-      return {
-        ...state,
-        error: false,
-        errorMessage: null,
-        users: editOrAdd(state.users, action.payload),
-        loading: false
-      };
+    case 'GET_PROFILE_SUCCESS':
+    return {
+      ...state,
+      error: false,
+      errorMessage: null,
+      users: editOrAdd(state.users, action.payload),
+      loading: false
+    };
 
-      case 'PROFILE_UPDATED_SUCCESS':
-      return {
-        error: false,
-        errorMessage: null,
-        users: editUser(state.users, action.payload),
-        loading: false
-      };
+    case 'PROFILE_UPDATED_SUCCESS':
+    return {
+      error: false,
+      errorMessage: null,
+      users: editUser(state.users, action.payload),
+      loading: false
+    };
 
     case 'STATUS_CONNECTION_CHANGE':
     return {
