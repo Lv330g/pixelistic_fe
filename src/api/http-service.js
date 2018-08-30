@@ -1,5 +1,17 @@
 import axios from 'axios';
 
+const getHeaders = () => {
+    let headers = {'Client-Device': 'web', 'Content-Type': 'application/json'};
+    let userToken;
+    try {
+        userToken = window.localStorage.getItem('authHeaders');
+    } catch(err) {
+        return 'jest test';
+    }
+    if (userToken) headers['Authorization'] = JSON.parse(userToken) ? `Bearer ${JSON.parse(userToken)['accessToken']}` : '';
+    return headers;
+}
+
 const httpServise = {
     get: (url, params) => {
         return new Promise((resolve, reject) => {
@@ -54,25 +66,18 @@ const httpServise = {
         });
     },
     patch: (url, params) => {
-      return new Promise((resolve, reject) => {
-          axios(url, {
-              method: 'PATCH',
-              headers: getHeaders(),
-              data: params
-          }).then(res => {
-              resolve(res);
-          }, err => {
-              reject(err);
-          });
-      });
-  }
+        return new Promise((resolve, reject) => {
+            axios(url, {
+                method: 'PATCH',
+                headers: getHeaders(),
+                data: params
+            }).then(res => {
+                resolve(res);
+            }, err => {
+                reject(err);
+            });
+        });
+    }
 };
 
-function getHeaders() {
-    let headers = {'Client-Device': 'web', 'Content-Type': 'application/json'};
-
-    let userToken = window.localStorage.getItem('authHeaders');
-    if (userToken) headers['Authorization'] = JSON.parse(userToken) ? `Bearer ${JSON.parse(userToken)['accessToken']}` : '';
-    return headers;
-}
 export default httpServise;

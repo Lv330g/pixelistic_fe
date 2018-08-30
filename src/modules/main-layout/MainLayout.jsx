@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { authValidate, authSignOut, changeFollowersStatus } from './../../actions/auth';
-import { cleanFollowings, loadCurrentFollowings, handleFavorite, changeFollowingsStatus } from '../../actions/followings';
+import { cleanUsersArray, loadCurrentFollowings, handleFavorite, changeFollowingsStatus } from '../../actions/followings';
 import { postClearPosts, postSessionPosts } from './../../actions/post';
 import { Redirect } from 'react-router';
 import { Route } from 'react-router-dom';
@@ -83,7 +83,7 @@ export class MainLayout extends Component {
     this.socket.disconnect();
     await this.props.authSignOut();
     this.props.postClearPosts();
-    this.props.cleanFollowings();
+    this.props.cleanUsersArray();
   }
 
   emitOnline = (user) => {
@@ -129,7 +129,7 @@ export default connect(
   dispatch => ({
     authValidate: (email, password) => dispatch(authValidate(email, password)),
     authSignOut: () => dispatch(authSignOut()),
-    cleanFollowings: () => dispatch(cleanFollowings()),
+    cleanUsersArray: () => dispatch(cleanUsersArray()),
     changeFollowersStatus: data => dispatch(changeFollowersStatus(data)),
     changeFollowingsStatus: data => dispatch(changeFollowingsStatus(data)),
     postClearPosts: () => dispatch(postClearPosts()),

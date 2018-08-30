@@ -2,11 +2,11 @@ import { profileAPI } from '../../api/profile-api';
 
 export const getProfile = (nickname) => {
     return dispatch => {
-      dispatch({type:'LOADING'});
+      dispatch({ type:'LOADING' });
         return profileAPI.getProfile(nickname).then(payload => {
-            dispatch({ type: 'GET_PROFILE_SUCCESS', payload: payload});
+            dispatch({ type: 'GET_PROFILE_SUCCESS', payload});
         }, err => {    
-            dispatch({ type: 'GET_PROFILE_ERROR', payload: err })
+            dispatch({ type: 'ERROR', payload: err })
         });
     }
 };
@@ -17,7 +17,7 @@ export const updateProfile = (_id, fullName, newNickname, website, bio, avatar, 
             updateStateCallback();
             dispatch({ type: 'PROFILE_UPDATED_SUCCESS', payload: userprofile });
         }, err => {    
-            dispatch({ type: 'GET_PROFILE_ERROR', payload: err })
+            dispatch({ type: 'ERROR', payload: err })
             if (typeof onErrorCallback === 'function') {
                 onErrorCallback();
             }
