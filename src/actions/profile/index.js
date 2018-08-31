@@ -16,7 +16,7 @@ export const updateProfile = (_id, fullName, newNickname, website, bio, avatar, 
         return profileAPI.updateProfile(_id, fullName, newNickname, website, bio, avatar).then(userprofile => {
             updateStateCallback();
             dispatch({ type: 'PROFILE_UPDATED_SUCCESS', payload: userprofile });
-        }, err => {    
+        }, err => {
             dispatch({ type: 'ERROR', payload: err })
             if (typeof onErrorCallback === 'function') {
                 onErrorCallback();

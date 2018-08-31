@@ -35,4 +35,47 @@ describe('profile async actions', () => {
       {"data": undefined, "headers": "jest test", "method": "GET"}
     );
   });
+
+  it('dispatches the PROFILE_UPDATED_SUCCESS action', async () => {
+    mockAxios.mockImplementationOnce(() => Promise.resolve({
+      data: {
+        payload: {
+          _id: '1',
+          bio: 'update_bio',
+          website: 'update_website',
+          fullName: 'update_fullName',
+          avatar: 'update_avatar',
+          nickname: 'update_nickname'
+        }
+      }
+    }));
+
+    const expectedActions = [
+      {
+        type: 'PROFILE_UPDATED_SUCCESS',
+        payload: {
+          _id: '1',
+          bio: 'update_bio',
+          website: 'update_website',
+          fullName: 'update_fullName',
+          avatar: 'update_avatar',
+          nickname: 'update_nickname'
+        }
+      }
+    ];
+
+    await store.dispatch(actions.updateProfile('1', 'update_fullName', 'update_nickname', 'update_website', 'update_bio', 'update_avatar', ()=>{}, ()=>{}));
+    expect(store.getActions()).toEqual(expectedActions);
+    expect(mockAxios).toHaveBeenCalledTimes(1);
+    expect(mockAxios).toHaveBeenCalledWith(
+      `${host}:${port}/profile/1`,
+      {"data": {
+        bio: 'update_bio',
+        website: 'update_website',
+        fullName: 'update_fullName',
+        avatar: 'update_avatar',
+        nickname: 'update_nickname'
+      }, "headers": "jest test", "method": "POST"}
+    );
+  });
 });

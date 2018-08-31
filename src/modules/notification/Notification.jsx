@@ -25,7 +25,6 @@ class Notification extends React.Component {
 
   render() {
     const { open } = this.state;
-    console.log(this.props.post);
 
     return (
       <Grid item xs={1} container >

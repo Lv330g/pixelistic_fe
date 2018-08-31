@@ -4,7 +4,6 @@ import { Redirect } from 'react-router';
 
 import { authValidate } from './../../actions/auth';
 import { updateProfile, getProfile } from './../../actions/profile';
-import { updateAvatarUrlPath } from './../../shared/utils/avatarUtil';
 
 import { Grid, Avatar, FormControl, Input, InputLabel, Button } from '@material-ui/core';
 
@@ -46,7 +45,7 @@ export class EditProfile extends React.Component {
             <Grid item>
               <Avatar
                 alt={"user avatar"}
-                src={this.state.avatar || updateAvatarUrlPath(this.props.user.avatar)}
+                src={this.state.avatar || this.props.user.avatar}
                 className="user-avatar"
               />
             </Grid>
@@ -58,7 +57,7 @@ export class EditProfile extends React.Component {
           </Grid>
           <form onSubmit={this.onSubmit}>
             <Grid className="form" container alignItems={"center"} justify={"center"}>
-              <FormControl margin="normal" fullWidth>
+              <FormControl  margin="normal" fullWidth>
                 <InputLabel htmlFor="inp-name">Full name</InputLabel>
                 <Input required
                   id="inp-name"
@@ -70,7 +69,7 @@ export class EditProfile extends React.Component {
                 />
               </FormControl>
               <FormError formErrors={this.state.formErrors.fullName} />
-              <FormControl margin="normal" fullWidth>
+              <FormControl fullWidth>
                 <InputLabel htmlFor="inp-nickname">Nickname</InputLabel>
                 <Input required
                   id="inp-nickname"
@@ -82,7 +81,7 @@ export class EditProfile extends React.Component {
                 />
               </FormControl>
               <FormError formErrors={this.state.formErrors.nickname} />
-              <FormControl margin="normal" fullWidth>
+              <FormControl fullWidth>
                 <InputLabel htmlFor="inp-website">Website</InputLabel>
                 <Input required
                   id="inp-Website"
@@ -94,7 +93,7 @@ export class EditProfile extends React.Component {
                 />
               </FormControl>
               <FormError formErrors={this.state.formErrors.website} />
-              <FormControl margin="normal" fullWidth>
+              <FormControl fullWidth>
                 <InputLabel htmlFor="inp-bio">Bio</InputLabel>
                 <Input required
                   id="inp-bio"
@@ -124,6 +123,15 @@ export class EditProfile extends React.Component {
 </Button>
                 </Grid>
               </Grid>
+              <Grid className="password-btn" container alignItems={"flex-start"} justify={"flex-start"}>
+                <Grid item>
+                  <Button variant="contained" color="primary">
+                    Change password
+                  </Button>
+                </Grid>
+              </Grid>
+
+              
             </Grid>
           </form>
         </Grid>
@@ -178,7 +186,7 @@ export class EditProfile extends React.Component {
         break;
       case 'nickname':
         nicknameValid = value.length <= 50 && value.length > 0;
-        fieldValidationErrors.nickname = nicknameValid ? '' : `Nickname must be at most 50 symbol and not empty. ${this.props.errorMessage}`;
+        fieldValidationErrors.nickname = nicknameValid ? '' : `Nickname must be at most 50 symbol and not empty`;
         break;
       case 'website':
         websiteValid = value.length <= 70;
