@@ -4,7 +4,8 @@ const initialState = {
     user: null,
     confMsg: null,
     isAuthorized: false,
-    tokenBroken: false
+    tokenBroken: false,
+    isDisabled: false
 };
 
 const changeConnectionStatus = (user, payload) => {
@@ -49,6 +50,13 @@ export default function (state = initialState, action) {
             confMsg: action.payload,
             isAuthorized: false
         };
+
+        case 'SIGN_IN_BANNED': 
+        return {
+            ...state,
+            isDisabled: true,
+            isAuthorized: true
+        }
 
         case 'VERIFY_ERROR':
         return {
