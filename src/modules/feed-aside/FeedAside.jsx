@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import FollowingsList from './components/followings-list/FollowingsList';
+import { updateAvatarUrlPath } from './../../shared/utils/avatarUtil';
 
 import { Grid, Divider, Avatar } from '@material-ui/core';
 
@@ -16,7 +17,7 @@ export const FeedAside = (props) => {
         <Link to={`/profile/${user.nickname}`}>
           <Avatar
             alt={"user avatar"}
-            src={user.avatar}
+            src={updateAvatarUrlPath(user.avatar)}
             className="user-avatar"
           />
         </Link>
