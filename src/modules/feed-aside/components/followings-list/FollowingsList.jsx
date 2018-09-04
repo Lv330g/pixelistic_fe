@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
+import PropTypes from 'prop-types';
 
 import LabelBottomNav from '../label-bottom-nav/LabelBottomNav';
 import FollowingItem from '../following-item/FollowingItem';
 
-export default class FollowingsList extends Component {
+export class FollowingsList extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      mappedFollowings: false
-    }
+      mappedFollowings: null
+    };
   }
 
   render() {
@@ -58,20 +59,20 @@ export default class FollowingsList extends Component {
     return this.mapFollowings(filteredFollowings);
   }
 
-  mapFollowings = (followings) => {
-    const mappedFollowings = followings.map((item, i) => {
+  mapFollowings = followings => {
+    const mappedFollowings = followings.map(item => {
       return <FollowingItem 
         following={item}
         key={item.followingId}
         handleFavorite={this.handleFavorite}
       />
     });
-    this.setState({mappedFollowings})
+    this.setState({mappedFollowings});
   }
 
   renderFirstTime = () => {
     return this.props.followings.sort((a, b) => a.nickname > b.nickname)
-      .map((item, i) => {
+      .map(item => {
         return <FollowingItem 
           following={item}
           key={item.followingId}
@@ -82,6 +83,13 @@ export default class FollowingsList extends Component {
 
   handleFavorite = (checked, followingInfoId) => {
     const data = {checked, followingInfoId};
-    this.props.handleFavorite(data);
+    return this.props.handleFavorite(data);
   }
 };
+
+FollowingsList.propTypes = {
+  followings: PropTypes.array.isRequired,
+  handleFavorite: PropTypes.func.isRequired
+};
+
+export default FollowingsList;

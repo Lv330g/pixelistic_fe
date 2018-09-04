@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 import { KeyboardArrowUp } from '@material-ui/icons';
 
-const UpstairsBtn = () => {
+export const UpstairsBtn = () => {
   return <Button
     className={"upstairs-btn"}
     variant={"outlined"}

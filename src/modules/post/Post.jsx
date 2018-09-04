@@ -4,7 +4,7 @@ import { awsImage } from '../../const/node-server-config'
 import PostFooter from '../../shared/components/post-footer/PostFooter';
 import PostHeader from '../../shared/components/post-header/PostHeader';
 
-const Post = React.forwardRef((props, ref) => {
+export const Post = React.forwardRef((props, ref) => {
   return <div ref={ref} className="post">
     <PostHeader
       authorName={props.post.author.nickname}
@@ -33,7 +33,9 @@ const Post = React.forwardRef((props, ref) => {
 });
 
 Post.propTypes = {
-  post: PropTypes.object.isRequired
+  post: PropTypes.object.isRequired,
+  userId: PropTypes.string.isRequired,
+  nickname: PropTypes.string.isRequired
 };
 
 export default Post;

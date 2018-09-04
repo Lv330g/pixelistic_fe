@@ -51,7 +51,6 @@ export class PostFooter extends Component {
     state.authorComment = nextProps.authorComment;
     state.date = nextProps.date;
     state.imagePath = nextProps.imagePath
-    
     return state;
   }
   
@@ -79,7 +78,6 @@ export class PostFooter extends Component {
       });
 
     return <Grid className="post-footer" item xs={11} container direction={"column"}>
-      
       <Grid className="likes-panel" container alignItems={"center"} item xs={12}>
         <p className="likes-amount">
           {this.state.likesAmount} likes
@@ -103,7 +101,6 @@ export class PostFooter extends Component {
           </IconButton> 
           : null
          }
-
       </Grid>
     
       {this.state.authorComment ? <p className="comment author">
@@ -121,7 +118,6 @@ export class PostFooter extends Component {
 
       {mappedComments}
 
-    
       <CustomTime timestamp={this.state.date}/>
 
       <Divider />

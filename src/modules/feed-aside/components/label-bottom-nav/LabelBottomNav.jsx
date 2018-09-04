@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import { ImportExport, Favorite, Mail, WifiTethering } from '@material-ui/icons';
 
-export default class LabelBottomNav extends Component {
+export class LabelBottomNav extends Component {
   constructor(props) {
     super(props);
 
@@ -11,7 +13,7 @@ export default class LabelBottomNav extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({
       value: 'ABC'
     });
@@ -22,27 +24,27 @@ export default class LabelBottomNav extends Component {
 
     return (
       <BottomNavigation value={value} onChange={this.handleChange} className="bottom-nav">
-        <BottomNavigationAction 
-          label="ABC" 
-          value="ABC" 
+        <BottomNavigationAction
+          label="ABC"
+          value="ABC"
           icon={<ImportExport />}
           onClick={this.props.handleABC}
         />
-        <BottomNavigationAction 
-          label="Favorites" 
-          value="favorites" 
+        <BottomNavigationAction
+          label="Favorites"
+          value="favorites"
           icon={<Favorite />}
           onClick={this.props.handleFavorites}
         />
-        <BottomNavigationAction 
-          label="Received" 
-          value="received" 
+        <BottomNavigationAction
+          label="Received"
+          value="received"
           icon={<Mail />}
           onClick={this.props.handleReceived}
         />
-        <BottomNavigationAction 
-          label="Online" 
-          value="online" 
+        <BottomNavigationAction
+          label="Online"
+          value="online"
           icon={<WifiTethering />}
           onClick={this.props.handleOnline}
         />
@@ -50,7 +52,16 @@ export default class LabelBottomNav extends Component {
     );
   }
 
-  handleChange = (event, value) => {
+  handleChange = (e, value) => {
     this.setState({ value });
   };
-}
+};
+
+LabelBottomNav.propTypes = {
+  handleABC: PropTypes.func.isRequired,
+  handleFavorites: PropTypes.func.isRequired,
+  handleReceived: PropTypes.func.isRequired,
+  handleOnline: PropTypes.func.isRequired,
+};
+
+export default LabelBottomNav;

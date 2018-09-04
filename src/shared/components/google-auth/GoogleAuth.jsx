@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
-import PassportBtn from '../passport-btn/PassportBtn';
+import PropTypes from 'prop-types';
 
-export default class GoogleAuth extends Component {
+import PassportBtn from '../passport-btn/PassportBtn';
+import { googleId } from '../../../const/social-auth-config';
+
+export class GoogleAuth extends Component {
   render() {
     return <GoogleLogin
-      clientId="717152176938-vu6ravml2e21irkb1cfs7ld6op75grr7.apps.googleusercontent.com"
+      clientId={googleId}
       onSuccess={this.responseGoogle}
-      render={(props) => <PassportBtn onClick={props.onClick} name="google" />}
+      render={props => <PassportBtn onClick={props.onClick} name="google" />}
     />
   }
 
-  responseGoogle = (res) => {
-    this.props.handleGoogle(res.profileObj);
-  }
-}
+  responseGoogle = res => this.props.handleGoogle(res.profileObj);
+};
+
+GoogleAuth.propTypes = {
+  handleGoogle: PropTypes.func.isRequired
+};
+
+export default GoogleAuth;

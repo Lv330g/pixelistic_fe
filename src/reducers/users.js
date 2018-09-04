@@ -62,6 +62,8 @@ const loadCurrentFollowings = (users, payload) => {
       item.followingInfoId = item._id;
       item._id = followings[i]._id;
       item.following = true;
+      item.followers = followings[i].followers;
+      item.followings = followings[i].followings;
       return item;
     });
   }
