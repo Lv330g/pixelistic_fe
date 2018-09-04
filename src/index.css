@@ -404,7 +404,7 @@ a {
     position: absolute;
     z-index: -1; }
   .edit-profile .avatar-nickname {
-    width: 1366px; }
+    width: 800px; }
   .edit-profile .nickname {
     font-weight: 200;
     font-size: 24px;
@@ -421,6 +421,8 @@ a {
     color: #C4CCD5; }
   .edit-profile .form {
     width: 800px; }
+  .edit-profile .password-btn {
+    margin: 15px 0 15px 0; }
 
 .header .notifications-icon {
   font-size: 36px; }

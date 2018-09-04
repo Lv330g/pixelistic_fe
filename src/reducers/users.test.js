@@ -8,7 +8,7 @@ describe('users reducer', () => {
   it('should return loading=true', () => {
     expect(reducer(
       undefined,
-      {type: 'LOADING'}
+      { type: 'LOADING' }
     )).toEqual({
       ...initialState,
       loading: true
@@ -248,7 +248,7 @@ describe('users reducer', () => {
         users: ['a few objects inside']
       },
       { type: 'CLEAN_USERS_ARRAY' }
-    )).toEqual({...initialState});
+    )).toEqual({ ...initialState });
   });
 
   it('should change connection status', () => {
@@ -335,5 +335,167 @@ describe('users reducer', () => {
         ]
       }
     );
+  });
+
+  it('should get profile and update', () => {
+    expect(reducer(
+      {
+        ...initialState,
+        users: [
+          {
+            _id: '0',
+            bio: 'bio',
+            website: 'website',
+            fullName: 'fullName',
+            avatar: 'avatar',
+            nickname: 'nickname'
+          },
+          {
+            _id: '1',
+            bio: 'bio2',
+            website: 'website2',
+            fullName: 'fullName2',
+            avatar: 'avatar2',
+            nickname: 'nickname2'
+          }
+        ]
+      },
+      {
+        type: 'GET_PROFILE_SUCCESS',
+        payload: {
+          _id: '1',
+          bio: 'updated_bio',
+          website: 'updated_website',
+          fullName: 'updated_fullName',
+          avatar: 'updated_avatar',
+          nickname: 'updated_nickname'
+        }
+      }
+    )).toEqual({
+      ...initialState,
+      users: [
+        {
+          _id: '0',
+          bio: 'bio',
+          website: 'website',
+          fullName: 'fullName',
+          avatar: 'avatar',
+          nickname: 'nickname'
+        },
+        {
+          _id: '1',
+          bio: 'updated_bio',
+          website: 'updated_website',
+          fullName: 'updated_fullName',
+          avatar: 'updated_avatar',
+          nickname: 'updated_nickname'
+        }
+      ]
+    });
+  });
+
+  it('should get profile and add', () => {
+    expect(reducer(
+      {
+        ...initialState,
+        users: [
+          {
+            _id: '0',
+            bio: 'bio',
+            website: 'website',
+            fullName: 'fullName',
+            avatar: 'avatar',
+            nickname: 'nickname'
+          }
+        ]
+      },
+      {
+        type: 'GET_PROFILE_SUCCESS',
+        payload: {
+          _id: '1',
+          bio: 'bio2',
+          website: 'website2',
+          fullName: 'fullName2',
+          avatar: 'avatar2',
+          nickname: 'nickname2'
+        }
+      }
+    )).toEqual({
+      ...initialState,
+      users: [
+        {
+          _id: '0',
+          bio: 'bio',
+          website: 'website',
+          fullName: 'fullName',
+          avatar: 'avatar',
+          nickname: 'nickname'
+        },
+        {
+          _id: '1',
+          bio: 'bio2',
+          website: 'website2',
+          fullName: 'fullName2',
+          avatar: 'avatar2',
+          nickname: 'nickname2'
+        }
+      ]
+    });
+  });
+  it('should update profile', () => {
+    expect(reducer(
+      {
+        ...initialState,
+        users: [
+          {
+            _id: '0',
+            bio: 'bio',
+            website: 'website',
+            fullName: 'fullName',
+            avatar: 'avatar',
+            nickname: 'nickname'
+          },
+          {
+            _id: '1',
+            bio: 'bio2',
+            website: 'website2',
+            fullName: 'fullName2',
+            avatar: 'avatar2',
+            nickname: 'nickname2'
+          }
+        ]
+      },
+      {
+        type: 'PROFILE_UPDATED_SUCCESS',
+        payload: {
+          _id: '1',
+          bio: 'updated_bio',
+          website: 'updated_website',
+          fullName: 'updated_fullName',
+          avatar: 'updated_avatar',
+          nickname: 'updated_nickname'
+        }
+      }
+    )).toEqual({
+      ...initialState,
+      users: [
+        {
+          _id: '0',
+          bio: 'bio',
+          website: 'website',
+          fullName: 'fullName',
+          avatar: 'avatar',
+          nickname: 'nickname'
+        },
+        {
+          _id: '1',
+          bio: 'updated_bio',
+          website: 'updated_website',
+          fullName: 'updated_fullName',
+          avatar: 'updated_avatar',
+          nickname: 'updated_nickname'
+        }
+      ]
+    });
   });
 });

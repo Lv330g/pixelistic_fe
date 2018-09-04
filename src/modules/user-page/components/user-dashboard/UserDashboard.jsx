@@ -1,7 +1,6 @@
 import React from 'react';
 import { Grid, Avatar } from '@material-ui/core';
 import DashboardBtn from '../dashboard-btn/DashboardBtn';
-import { updateAvatarUrlPath } from './../../../../shared/utils/avatarUtil';
 
  export default class UserDashboard extends React.Component {
    render() {
@@ -10,7 +9,7 @@ import { updateAvatarUrlPath } from './../../../../shared/utils/avatarUtil';
           <Grid item>
             <Avatar
               alt={"user avatar"}
-              src={updateAvatarUrlPath(this.props.userprofile.avatar)}
+              src={this.props.userprofile.avatar}
               className="user-avatar"
             />
           </Grid>
@@ -38,7 +37,7 @@ import { updateAvatarUrlPath } from './../../../../shared/utils/avatarUtil';
                 </span> followers</div>
               <div className="quantity"><span className="number">
                 {this.props.userprofile.followings ? this.props.userprofile.followings.length: '0'}
-              </span> following</div>
+              </span> followings</div>
             </Grid>
             <Grid container direction={"column"}>
             <div className="user-name">
