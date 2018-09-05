@@ -32,56 +32,56 @@ export class ChangePassword extends Component {
       return <Redirect to='/'/>;
     }
 //if link is incorrect 
-    if(this.props.errMsg){
+    if(this.props.forgotErrMsg){
         return(
             <Grid container alignItems="center" justify="center" direction="column">
-            <Grid className="sign-up" item xs={5} container alignItems="center" justify="center" direction="column">
-              <Grid className="signup-container" container justify="center">
+              <div className="change">
+              <Grid className="change-container" container justify="center">
                 <Grid item xs={8} container justify="flex-start" direction="column">
                   <h1>Link is incorrect or expire. Please try again.</h1>
                     <Link className="reset_link" to="/forgot">
-                        <Button className="submit-btn" color={"primary"} variant={"contained"} fullWidth>
+                        <Button className="forgot-submit-btn" color={"primary"} variant={"contained"} fullWidth>
                             Forgot password
                         </Button>
                     </Link>
                 </Grid>
-                <Grid className="login-container_link" item xs={12} container justify="center">
+                <div className="change-container_link">
                   <Typography>
-                    or try to
-                    <Link to="/sign-in"> Log in</Link>
+                    or you can
+                  <Link to="/sign-in"> sign in</Link>
                   </Typography>
-                </Grid>
+                </div>
               </Grid>
-            </Grid>
+            </div>
           </Grid> 
         )
       //after password changing
-    }else if(this.props.confMsg){
+    }else if(this.props.forgotConfMsg){
         return(
             <Grid container alignItems="center" justify="center" direction="column">
-              <Grid className="sign-up" item xs={5} container alignItems="center" justify="center" direction="column">
-                <Grid className="signup-container" container justify="center">
+               <div className="change">
+                <Grid className="change-container" container justify="center">
                   <Grid item xs={8} container justify="flex-start" direction="column">
                     <h1>Success</h1>
-                    <p className={this.props.errMsg ? 'err-msg msg' : 'msg'}>
-                        {this.props.confMsg ? 'Password was changed, please Sing-in.' : this.props.errMsg}
+                    <p className={this.props.forgotErrMsg ? 'err-msg msg' : 'msg'}>
+                        {this.props.forgotConfMsg ? 'Password was changed, please Sing-in.' : this.props.forgotErrMsg}
                     </p>
                     <Link className="reset_link" to="/sing-in">
-                      <Button className="submit-btn" color={"primary"} variant={"contained"} fullWidth>
+                      <Button className="forgot-submit-btn" color={"primary"} variant={"contained"} fullWidth>
                         Sing-in
                       </Button>
                     </Link>
                   </Grid>
                 </Grid>
-              </Grid>
+                </div>
             </Grid> 
           );
     }else{
       //change password
         return(
             <Grid container alignItems="center" justify="center" direction="column">
-              <Grid className="sign-up" item xs={5} container alignItems="center" justify="center" direction="column">
-                <Grid className="signup-container" container justify="center">
+               <div className="change">
+                <Grid className="change-container" container justify="center">
                   <Grid item xs={8} container justify="flex-start" direction="column">
                     <h1>Change password</h1>
                     <form onSubmit={this.handleSubmit}>
@@ -106,11 +106,11 @@ export class ChangePassword extends Component {
                         />
                         <FormError formErrors={this.state.formErrors.passwordConf}/>
                       </FormControl>
-                      <p className={this.props.errMsg ? 'err-msg msg' : 'msg'}>
-                        {this.props.confMsg ? 'Password was changed, please Sing-in.' : this.props.errMsg}
+                      <p className={this.props.forgotErrMsg ? 'err-msg' : 'msg'}>
+                        {this.props.forgotConfMsg ? 'Password was changed, please Sing-in.' : this.props.forgotErrMsg}
                       </p>
                       <Button 
-                        className="submit-btn" 
+                        className="forgot-submit-btn" 
                         type="submit"
                         color="primary"
                         variant="contained" 
@@ -122,7 +122,7 @@ export class ChangePassword extends Component {
                     </form>
                   </Grid>
                 </Grid>
-              </Grid>
+              </div>
             </Grid> 
           );
     }        
@@ -183,8 +183,8 @@ export class ChangePassword extends Component {
 export default connect(
   state => ({
     isAuthorized: state.auth.isAuthorized,
-    errMsg: state.auth.errorMessage,
-    confMsg: state.auth.confMsg
+    forgotErrMsg: state.auth.forgotErrMsg,
+    forgotConfMsg: state.auth.forgotConfMsg
   }),
   dispatch => ({
     authVerifyPasswordReset: (reset) => dispatch(authVerifyPasswordReset(reset)),

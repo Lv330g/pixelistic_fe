@@ -98,7 +98,7 @@ export const authApi = {
         })
     },
 
-    VerifyPasswordReset: (reset) => {
+    VerifyPasswordResetToken: (reset) => {
         return new Promise ((resolve, reject) => {
             httpServise.get(`${host}:${port}/change/${reset}`).then(
                 res => {

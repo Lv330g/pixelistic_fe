@@ -59,29 +59,19 @@ export const authVerifyEmail = (hash) => {
 export const authForgotEmail = (email) => {
     return dispatch => {
         return authApi.forgotEmail(email).then(text => {
-            dispatch({ type: 'EMAIL_EXIST', payload: text });
+            dispatch({ type: 'FORGOT_EMAIL_EXIST', payload: text });
         }, err => {    
-            dispatch({ type: 'EMAIL_DOESNOT_EXIST', payload: err })
-        });
-    }
-}
-
-export const authForgotTokenCheck = (email) => {
-    return dispatch => {
-        return authApi.forgotEmail(email).then(text => {
-            dispatch({ type: 'EMAIL_EXIST', payload: text });
-        }, err => {    
-            dispatch({ type: 'EMAIL_DOESNOT_EXIST', payload: err })
+            dispatch({ type: 'FORGOT_EMAIL_DOESNOT_EXIST', payload: err })
         });
     }
 }
 
 export const authVerifyPasswordReset = (reset) => {
     return dispatch => {
-        return authApi.VerifyPasswordReset(reset).then(text => {
-            dispatch({ type: 'RESET_TOKEN_CORRECT', payload: text });
+        return authApi.VerifyPasswordResetToken(reset).then(text => {
+            dispatch({ type: 'FORGOT_RESET_TOKEN_CORRECT', payload: text });
         }, err => {    
-            dispatch({ type: 'RESET_TOKEN_INCORRECT', payload: err })
+            dispatch({ type: 'FORGOT_RESET_TOKEN_INCORRECT', payload: err })
         });
     }
 }
