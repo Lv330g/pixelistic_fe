@@ -62,32 +62,35 @@ export default function (state = initialState, action) {
             error: false,
             errorMessage: null,
             user: null,
-            confMsg: action.payload,
+            forgotConfMsg: action.payload,
             isAuthorized: false
         };
 
-        case 'RESET_TOKEN_CORRECT':
-        return{
-            error: false,
-            errorMessage: null,
-            user: null,
-            confMsg: action.payload,
-            isAuthorized: false
-        };
-
+        case 'FORGOT_EMAIL_EXIST':
+        case 'FORGOT_RESET_TOKEN_CORRECT':
         case 'PASSWORD_CHANGE_SUCCESS':
         return{
             error: false,
             errorMessage: null,
             user: null,
-            confMsg: action.payload,
+            forgotConfMsg: action.payload,
             isAuthorized: false
         };
 
+        case 'FORGOT_EMAIL_DOESNOT_EXIST':
+        case 'FORGOT_RESET_TOKEN_INCORRECT':
+        return {
+            ...state,
+            error: true,
+            forgotErrMsg: action.payload.response.data.error,
+            user: null,
+            confMsg: null,
+            isAuthorized: false
+        };
+        
         case 'SIGN_IN_ERROR':
         case 'REGISTER_ERROR':
         case 'EMAIL_DOESNOT_EXIST':
-        case 'RESET_TOKEN_INCORRECT':
         case 'PASSWORD_DONT_CHANGE':
         return {
             ...state,

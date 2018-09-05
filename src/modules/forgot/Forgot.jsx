@@ -29,28 +29,29 @@ export class ForgotPassword extends React.Component {
     }
     return (
       <Grid container alignItems={"center"} justify={"center"} direction={"column"}>
-        <Grid className="sign-in" item xs={5} container alignItems={"center"} justify={"center"} direction={"column"}>
-          <Grid className="signin-container" container justify={"center"}>
+      <div className="forgot">
+          <Grid className="forgot-container" container justify={"center"}>
             <Grid item xs={8} container alignItems={"center"} justify={"flex-start"} direction={"column"}>
               <h1>Reset password</h1>
                 <form className="forgot-form" onSubmit={this.handleSubmit}>
                 <Input required
                     fullWidth
+                    placeholder="Enter Your email"
                     id="inp-email"
                     name="email"
                     type={"email"}
                     onChange={this.validate}/>
-                <p className={this.props.errMsg ? 'err-msg msg' : 'msg'}>
-                {this.props.errMsg || this.props.confMsg}
+                <p className={this.props.forgotErrMsg ? 'forgot-err-msg' : 'forgot-msg'}>
+                  {this.props.forgotErrMsg || this.props.forgotConfMsg}
                 </p>
-                <Button className="submit-btn" type={"submit"} color={"primary"} variant={"contained"} fullWidth disabled={this.props.confMsg ? true : false || !this.state.emailValid} >
+                <Button className="forgot-reset-btn" type={"submit"} color={"primary"} variant={"contained"} fullWidth disabled={this.props.forgotConfMsg ? true : false || !this.state.emailValid} >
                   <AccountCircle className="signin-icon" />
                   Reset
                 </Button>
             </form>
             </Grid>
           </Grid>
-        </Grid>
+        </div>
       </Grid>
     )
   }
@@ -75,23 +76,20 @@ export class ForgotPassword extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.authForgotEmail(this.state.email);
   }
-
-
 };
 
 export default connect(
     state => ({
       isAuthorized: state.auth.isAuthorized,
-      errMsg: state.auth.errorMessage,
-      confMsg: state.auth.confMsg
+      forgotErrMsg: state.auth.forgotErrMsg,
+      forgotConfMsg: state.auth.forgotConfMsg
     }),
     dispatch => ({
-        authForgotEmail: (email, password) => dispatch(authForgotEmail(email, password))
+        authForgotEmail: (email) => dispatch(authForgotEmail(email))
     }
     )
   )(ForgotPassword);
