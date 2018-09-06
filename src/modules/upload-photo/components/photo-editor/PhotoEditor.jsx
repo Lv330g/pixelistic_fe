@@ -6,8 +6,12 @@ export default class PhotoEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      open: false,
+      photo: null,
       filterContext: null,
       imageObj: null,
+      canvasWidth: null,
+      canvasHeight: null,
       //filters
       grayscale: 0,
       blur: 0,
@@ -22,18 +26,28 @@ export default class PhotoEditor extends React.Component {
       colorDraw: "#ff0000",
       drawTool: "draw"
     };
-    this.state.canvasWidth = null;
-    this.state.canvasHeight = null;
-
     this.drawCanvas = null;
     this.drawContext = null;
   }
 
   componentDidUpdate() {
-    //Filters
-    let filterContext = this.state.filterContext;
-    let imageObj = this.state.imageObj;
+    if (!this.state.open || !this.state.photo) return;
 
+    let filterCanvas = ReactDOM.findDOMNode(this._filterCanvas);
+    let filterContext = filterCanvas.getContext("2d");
+    let imageObj = new Image();
+    imageObj.src = `${this.props.photo}`;
+    imageObj.onload = () => {
+      filterContext.drawImage(
+        imageObj,
+        0,
+        0,
+        this.state.canvasWidth,
+        this.state.canvasHeight
+      );
+    };
+
+    //Filters
     filterContext.filter = `grayscale(${this.state.grayscale}%) 
       blur(${this.state.blur}px)
       brightness(${this.state.brightness}%)
@@ -50,56 +64,19 @@ export default class PhotoEditor extends React.Component {
       this.state.canvasWidth,
       this.state.canvasHeight
     );
-  }
 
-  componentDidMount() {
-    //Modal
-    let modal = ReactDOM.findDOMNode(this._modal);
-    let modalBtn = ReactDOM.findDOMNode(this._modalBtn);
-    let close = ReactDOM.findDOMNode(this._close);
-
-    modalBtn.onclick = () => {
-      modal.style.display = "block";
-      this.setState({canvasWidth: this.props.width, canvasHeight: this.props.height})
-
-      //Draw
-      let drawCanvas = ReactDOM.findDOMNode(this._drawCanvas);
-      let drawContext = drawCanvas.getContext("2d");
-      this.draw(drawCanvas, drawContext);
-
-      this.drawCanvas = drawCanvas;
-      this.drawContext = drawContext;
-    };
-    close.onclick = () => {
-      modal.style.display = "none";
-    };
-    window.onclick = event => {
-      if (event.target === modal) {
-        modal.style.display = "none";
-      }
-    };
+    //Draw
+    let drawCanvas = ReactDOM.findDOMNode(this._drawCanvas);
+    let drawContext = drawCanvas.getContext("2d");
+    this.draw(drawCanvas, drawContext);
+    this.drawCanvas = drawCanvas;
+    this.drawContext = drawContext;
   }
 
   componentWillReceiveProps() {
     this.reset();
-    // Filter canvas
-    let filterCanvas = ReactDOM.findDOMNode(this._filterCanvas);
-    let filterContext = filterCanvas.getContext("2d");
-    let imageObj = new Image();
-    imageObj.src = `${this.props.photo}`;
-    imageObj.onload = () => {
-      filterContext.drawImage(
-        imageObj,
-        0,
-        0,
-        this.state.canvasWidth,
-        this.state.canvasHeight
-      );
-    };
     this.setState({
-      filterCanvas,
-      filterContext,
-      imageObj
+      photo: this.props.photo
     });
   }
 
@@ -108,235 +85,255 @@ export default class PhotoEditor extends React.Component {
       <div>
         <Brush
           className="modal-btn"
-          ref={el => {
-            this._modalBtn = el;
-          }}
+          onClick={this.openModal}
         />
-        <div
-          className="modal-photo-editor"
-          ref={el => {
-            this._modal = el;
-          }}
-        >
-          <div className="modal-content">
-            <div className="modal-header">
-              <span
-                className="close"
-                ref={el => {
-                  this._close = el;
-                }}
-              >
-                &times;
-              </span>
-              <span className="title">Image Editor</span>
-            </div>
-            <div className="modal-body">
-              <div className="sliders">
-                <div className="filter">
-                  <span className="filter-name">Grayscale</span>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    className="set"
-                    value={this.state.grayscale}
-                    onChange={e => {
-                      this.setState({ grayscale: e.target.value });
-                    }}
-                  />
-                </div>
-
-                <div className="filter">
-                  <span className="filter-name">Blur</span>
-                  <input
-                    type="range"
-                    min="0"
-                    max="10"
-                    className="set"
-                    value={this.state.blur}
-                    onChange={e => {
-                      this.setState({ blur: e.target.value });
-                    }}
-                  />
-                </div>
-
-                <div className="filter">
-                  <span className="filter-name">Exposure</span>
-                  <input
-                    type="range"
-                    min="0"
-                    max="200"
-                    className="set"
-                    value={this.state.brightness}
-                    onChange={e => {
-                      this.setState({ brightness: e.target.value });
-                    }}
-                  />
-                </div>
-
-                <div className="filter">
-                  <span className="filter-name">Contrast</span>
-                  <input
-                    type="range"
-                    min="0"
-                    max="200"
-                    className="set"
-                    value={this.state.contrast}
-                    onChange={e => {
-                      this.setState({ contrast: e.target.value });
-                    }}
-                  />
-                </div>
-
-                <div className="filter">
-                  <span className="filter-name">Hue Rotate</span>
-                  <input
-                    type="range"
-                    min="0"
-                    max="360"
-                    className="set"
-                    value={this.state.hueRotate}
-                    onChange={e => {
-                      this.setState({ hueRotate: e.target.value });
-                    }}
-                  />
-                </div>
-
-                <div className="filter">
-                  <span className="filter-name">Invert</span>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    className="set"
-                    value={this.state.invert}
-                    onChange={e => {
-                      this.setState({ invert: e.target.value });
-                    }}
-                  />
-                </div>
-
-                <div className="filter">
-                  <span className="filter-name">Saturate</span>
-                  <input
-                    type="range"
-                    min="0"
-                    max="500"
-                    className="set"
-                    value={this.state.saturate}
-                    onChange={e => {
-                      this.setState({ saturate: e.target.value });
-                    }}
-                  />
-                </div>
-
-                <div className="filter">
-                  <span className="filter-name">Sepia</span>
-                  <input
-                    type="range"
-                    className="set"
-                    min="0"
-                    max="100"
-                    value={this.state.sepia}
-                    onChange={e => {
-                      this.setState({ sepia: e.target.value });
-                    }}
-                  />
-                </div>
-
-                <div className="draw filter">
-                  <span className="filter-name">Draw</span>
-                  <input
-                    type="color"
-                    value={this.state.colorDraw}
-                    className="set drowSet"
-                    onChange={e => this.setState({ colorDraw: e.target.value })}
-                  />
-                  <input
-                    type="text"
-                    className="set drowSet sizeDraw"
-                    placeholder="Size"
-                    onChange={e => this.setState({ drawSize: e.target.value })}
-                  />
-                  <img
-                    className="eraser"
-                    onClick={this.drawTool}
-                    alt="eraser"
-                    src="https://png.icons8.com/material/50/000000/eraser.png"
-                  />
-                </div>
-
-                <div className="addText filter">
-                  <span className="textSpan filter-name">Add text:</span>
-                  <form onSubmit={this.addText}>
-                    <input
-                      type="text"
-                      autoComplete="off"
-                      name="textField"
-                      className="set addTextSet textField"
-                      placeholder="Text"
-                    />
-                    <br />
-                    <input
-                      type="text"
-                      autoComplete="off"
-                      name="x"
-                      placeholder="X"
-                      className="set addTextSet"
-                    />
-                    <input
-                      type="text"
-                      autoComplete="off"
-                      name="y"
-                      placeholder="Y"
-                      className="set addTextSet"
-                    />
-                    <input
-                      type="text"
-                      autoComplete="off"
-                      name="size"
-                      className="set addTextSet sizeInput"
-                      placeholder="Size"
-                    />
-                    <button type="submit" className="addTextBtn">
-                      Add
-                    </button>
-                  </form>
-                </div>
-
-                <button className="photo-editor-btn" onClick={this.reset}>
-                  Reset
-                </button>
-
-                <button className="photo-editor-btn" onClick={this.save}>
-                  Save
-                </button>
+        {this.state.open ? (
+          <div
+            className="modal-photo-editor"
+            ref={el => {
+              this._modal = el;
+            }}
+          >
+            <div className="modal-content">
+              <div className="modal-header">
+                <span
+                  className="close"
+                  onClick = {() => {
+                    this.setState({ open: false });
+                  }}
+                >
+                  &times;
+                </span>
+                <span className="title">Image Editor</span>
               </div>
+              <div className="modal-body">
+                <div className="sliders">
+                  <div className="filter">
+                    <span className="filter-name">Grayscale</span>
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      className="set"
+                      value={this.state.grayscale}
+                      onChange={e => {
+                        this.setState({ grayscale: e.target.value });
+                      }}
+                    />
+                  </div>
 
-              <div className="imageContainer">
-                <canvas
-                  className="canvas filterCanvas"
-                  ref={el => {
-                    this._filterCanvas = el;
-                  }}
-                  width={`${this.state.canvasWidth}`}
-                  height={`${this.state.canvasHeight}`}
-                />
-                <canvas
-                  className="canvas drawCanvas"
-                  ref={el => {
-                    this._drawCanvas = el;
-                  }}
-                  width={`${this.state.canvasWidth}`}
-                  height={`${this.state.canvasHeight}`}
-                />
+                  <div className="filter">
+                    <span className="filter-name">Blur</span>
+                    <input
+                      type="range"
+                      min="0"
+                      max="10"
+                      className="set"
+                      value={this.state.blur}
+                      onChange={e => {
+                        this.setState({ blur: e.target.value });
+                      }}
+                    />
+                  </div>
+
+                  <div className="filter">
+                    <span className="filter-name">Exposure</span>
+                    <input
+                      type="range"
+                      min="0"
+                      max="200"
+                      className="set"
+                      value={this.state.brightness}
+                      onChange={e => {
+                        this.setState({ brightness: e.target.value });
+                      }}
+                    />
+                  </div>
+
+                  <div className="filter">
+                    <span className="filter-name">Contrast</span>
+                    <input
+                      type="range"
+                      min="0"
+                      max="200"
+                      className="set"
+                      value={this.state.contrast}
+                      onChange={e => {
+                        this.setState({ contrast: e.target.value });
+                      }}
+                    />
+                  </div>
+
+                  <div className="filter">
+                    <span className="filter-name">Hue Rotate</span>
+                    <input
+                      type="range"
+                      min="0"
+                      max="360"
+                      className="set"
+                      value={this.state.hueRotate}
+                      onChange={e => {
+                        this.setState({ hueRotate: e.target.value });
+                      }}
+                    />
+                  </div>
+
+                  <div className="filter">
+                    <span className="filter-name">Invert</span>
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      className="set"
+                      value={this.state.invert}
+                      onChange={e => {
+                        this.setState({ invert: e.target.value });
+                      }}
+                    />
+                  </div>
+
+                  <div className="filter">
+                    <span className="filter-name">Saturate</span>
+                    <input
+                      type="range"
+                      min="0"
+                      max="500"
+                      className="set"
+                      value={this.state.saturate}
+                      onChange={e => {
+                        this.setState({ saturate: e.target.value });
+                      }}
+                    />
+                  </div>
+
+                  <div className="filter">
+                    <span className="filter-name">Sepia</span>
+                    <input
+                      type="range"
+                      className="set"
+                      min="0"
+                      max="100"
+                      value={this.state.sepia}
+                      onChange={e => {
+                        this.setState({ sepia: e.target.value });
+                      }}
+                    />
+                  </div>
+
+                  <div className="draw filter">
+                    <span className="filter-name">Draw</span>
+                    <input
+                      type="color"
+                      value={this.state.colorDraw}
+                      className="set drowSet"
+                      onChange={e =>
+                        this.setState({ colorDraw: e.target.value })
+                      }
+                    />
+                    <input
+                      type="text"
+                      className="set drowSet sizeDraw"
+                      placeholder="Size"
+                      onChange={e =>
+                        this.setState({ drawSize: e.target.value })
+                      }
+                    />
+                    <img
+                      className="eraser"
+                      onClick={this.drawTool}
+                      alt="eraser"
+                      src="https://png.icons8.com/material/50/000000/eraser.png"
+                    />
+                  </div>
+
+                  <div className="addText filter">
+                    <span className="textSpan filter-name">Add text:</span>
+                    <form onSubmit={this.addText}>
+                      <input
+                        type="text"
+                        autoComplete="off"
+                        name="textField"
+                        className="set addTextSet textField"
+                        placeholder="Text"
+                      />
+                      <br />
+                      <input
+                        type="text"
+                        autoComplete="off"
+                        name="x"
+                        placeholder="X"
+                        className="set addTextSet"
+                      />
+                      <input
+                        type="text"
+                        autoComplete="off"
+                        name="y"
+                        placeholder="Y"
+                        className="set addTextSet"
+                      />
+                      <input
+                        type="text"
+                        autoComplete="off"
+                        name="size"
+                        className="set addTextSet sizeInput"
+                        placeholder="Size"
+                      />
+                      <button type="submit" className="addTextBtn">
+                        Add
+                      </button>
+                    </form>
+                  </div>
+
+                  <button className="photo-editor-btn" onClick={this.reset}>
+                    Reset
+                  </button>
+
+                  <button className="photo-editor-btn" onClick={this.save}>
+                    Save
+                  </button>
+                </div>
+
+                <div className="imageContainer">
+                  <canvas
+                    className="canvas filterCanvas"
+                    ref={el => {
+                      this._filterCanvas = el;
+                    }}
+                    width={`${this.state.canvasWidth}`}
+                    height={`${this.state.canvasHeight}`}
+                  />
+                  <canvas
+                    className="canvas drawCanvas"
+                    ref={el => {
+                      this._drawCanvas = el;
+                    }}
+                    width={`${this.state.canvasWidth}`}
+                    height={`${this.state.canvasHeight}`}
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div />
+        )}
       </div>
     );
   }
+
+  openModal = () => {
+    this.setState({
+      open: true,
+      canvasWidth: this.props.width,
+      canvasHeight: this.props.height
+    });
+
+    window.addEventListener("click", event => {
+      if (event.target === ReactDOM.findDOMNode(this._modal)) {
+        this.setState({ open: false });
+      }
+    });
+  };
 
   draw = (canvas, context) => {
     let canvasx = canvas.getBoundingClientRect().left;
@@ -407,7 +404,7 @@ export default class PhotoEditor extends React.Component {
   };
 
   reset = () => {
-    if(this.drawContext){
+    if (this.drawContext) {
       this.drawContext.clearRect(
         0,
         0,
@@ -429,15 +426,13 @@ export default class PhotoEditor extends React.Component {
 
   save = () => {
     let filterCanvas = ReactDOM.findDOMNode(this._filterCanvas);
-    let drawCanvas = this.drawCanvas;
-   
-    filterCanvas.getContext("2d").drawImage(drawCanvas, 0, 0);
+
+    filterCanvas.getContext("2d").drawImage(this.drawCanvas, 0, 0);
     this.drawContext.drawImage(filterCanvas, 0, 0);
     const imgDataURL = filterCanvas.toDataURL();
 
     // send to UploadPhoto component
     this.props.returnPhoto(imgDataURL);
-
-    ReactDOM.findDOMNode(this._modal).style.display = "none";
+    this.setState({ open: false });
   };
 }

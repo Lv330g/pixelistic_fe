@@ -10,59 +10,49 @@ export class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: null
+      users: null,
+      showUsers: []
     }
   }
 
   render() {
-    return (
+    return ( 
       <div>
-        {this.state.users === null ? (
-          <div className="search">
-            <Input placeholder="Search" onFocus={this.getUsers} />
-          </div>
-        ) : (
-            <div className="search">
-              <Input placeholder="Search" ref={(el) => {this._search = el}} onChange={this.onChange} onBlur={this.lostFocus} />
+        <div className="search">
+            <Input placeholder="Search" className="search-inp" onFocus={this.getUsers} onChange={this.onChange} onBlur={this.lostFocus} />
               <Scrollbars autoHeight>
-              {this.state.users.map( (item, id) => (
+              {this.state.showUsers.map( (item, id) => (
               <Link to={`/profile/${item.nickname}`} className="search-item" ref={(el) => {this._item = el}} key = {id}>
                 <img src={`${item.avatar}`} className="avatar" alt="avatar"/> 
                 <span className="nickname">{item.nickname}</span>
               </Link>
               ))}
               </Scrollbars>
-            </div>
-        )}
+        </div>
       </div>
     );
   }
 
   onChange = e => {
     let filter = e.target.value.toUpperCase();
-    //ref does not fit
-    let items = document.getElementsByClassName("search-item");
-    let nickname = document.getElementsByClassName('nickname');
-    for (let i = 0; i < items.length; i++) {
-      if (nickname[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-        items[i].style.display = "block";
-      } else {
-        items[i].style.display = "none";
+    let users = this.state.users;
+    let showUsers = [];
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].nickname.toUpperCase().indexOf(filter) > -1) {
+        showUsers = [...showUsers, users[i]];
       }
-      if(filter === ''){
-        items[i].style.display = "none";
+      if (filter === ''){
+        showUsers = [];
       }
     }
+    this.setState({showUsers});
   };
 
   lostFocus = e => {
     e.target.value = "";
     setTimeout(() => {
-      let items = document.getElementsByClassName("search-item");
-      for (let i = 0; i < items.length; i++) {
-        items[i].style.display = "none";
-      }
-    }, 300)
+      this.setState({showUsers: []})
+    }, 300);
   }
 
   getUsers = () => {

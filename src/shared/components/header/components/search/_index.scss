@@ -6,14 +6,13 @@
     padding: 12px 16px;
     max-height: 250px;
     .search-item {
+        display: block;
         color: black;
         text-decoration: none;
-        display: none;
         padding: 12px 16px;
         &:hover {
             background-color: #f1f1f1
         }
-        vertical-align: middle;
         .avatar{
             float: left;
             width: 30px;
