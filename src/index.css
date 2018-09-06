@@ -644,7 +644,6 @@ a {
   cursor: pointer; }
 
 .modal-photo-editor {
-  display: none;
   position: fixed;
   padding-top: 10px;
   left: 0;
@@ -919,11 +918,10 @@ a {
   padding: 12px 16px;
   max-height: 250px; }
   .search .search-item {
+    display: block;
     color: black;
     text-decoration: none;
-    display: none;
-    padding: 12px 16px;
-    vertical-align: middle; }
+    padding: 12px 16px; }
     .search .search-item:hover {
       background-color: #f1f1f1; }
     .search .search-item .avatar {
