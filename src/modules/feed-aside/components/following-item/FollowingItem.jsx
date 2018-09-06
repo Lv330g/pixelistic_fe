@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Like from '../../../../shared/components/like/Like';
 
@@ -17,7 +18,7 @@ import {
   Person
 } from '@material-ui/icons';
 
-const FollowingItem = (props) => {
+export const FollowingItem = (props) => {
   const { 
     nickname,
     status,
@@ -38,45 +39,51 @@ const FollowingItem = (props) => {
     </Badge>;
   }
 
-  return <ExpansionPanel className="following-item">
-    <ExpansionPanelSummary className="exp-summary" expandIcon={<ExpandMore />}>
-      <div className="chip">
-        <Avatar
-          src={avatar} 
-          alt={"avatar"}
-          className="avatar"
-        />
-        <div 
-          className={`status status-${status}`} 
-        />
-        <p className={"nickname"}>
-          {nickname}
-        </p>
-        {badge}
-      </div>
-    </ExpansionPanelSummary>
+  return <Fragment>
+    <ExpansionPanel className="following-item">
+      <ExpansionPanelSummary className="exp-summary" expandIcon={<ExpandMore />}>
+        <div className="chip">
+          <Avatar
+            src={avatar} 
+            alt={"avatar"}
+            className="avatar"
+          />
+          <div 
+            className={`status status-${status}`} 
+          />
+          <p className={"nickname"}>
+            {nickname}
+          </p>
+          {badge}
+        </div>
+      </ExpansionPanelSummary>
 
-    <ExpansionPanelDetails className="exp-details">
-      <Button variant={"contained"} size="small" className="btn">
-        <Link to={`/profile/${nickname}`} className="link">
-          Profile
-          <Person />
-        </Link>
-      </Button>
-      <Button variant={"contained"} size="small" className="btn msgs-btn">
-        <Link to="" className="link">
-          Messanger
-          <Mail />
-        </Link>
-      </Button>
-      <Like
-        className="favorite"
-        liked={favorite}
-        parentId={followingInfoId}
-        handleLike={props.handleFavorite}
-      />
-    </ExpansionPanelDetails>
-  </ExpansionPanel>
+      <ExpansionPanelDetails className="exp-details">
+        <Button variant={"contained"} size="small" className="btn">
+          <Link to={`/profile/${nickname}`} className="link">
+            Profile
+            <Person />
+          </Link>
+        </Button>
+        <Button variant={"contained"} size="small" className="btn msgs-btn">
+          <Link to="" className="link">
+            Messanger
+            <Mail />
+          </Link>
+        </Button>
+        <Like
+          className="favorite"
+          liked={favorite}
+          parentId={followingInfoId}
+          handleLike={props.handleFavorite}
+        />
+      </ExpansionPanelDetails>
+    </ExpansionPanel>
+  </Fragment>
+};
+
+FollowingItem.propTypes = {
+  following: PropTypes.object.isRequired,
 };
 
 export default FollowingItem;

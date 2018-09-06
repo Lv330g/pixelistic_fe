@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { postsOnPage, startPage, bottomOffset } from '../../const/post-config';
 
 import Post from '../post/Post';
@@ -12,7 +13,7 @@ export class FeedLine extends Component {
       page: null,
       totalPages: null,
       scrolling: false
-    }
+    };
 
     this.lastPostRef = React.createRef();
   }
@@ -57,14 +58,14 @@ export class FeedLine extends Component {
   }
 
   handleScroll = () => {
-    const { scrolling, totalPages, page} = this.state;
+    const { scrolling, totalPages, page } = this.state;
     if (scrolling) return;
     if (totalPages < page) return;
     const lastPost = this.lastPostRef;
     const lastPostOffset = lastPost.offsetTop + lastPost.clientHeight;
     const pageOffset = window.pageYOffset + window.innerHeight;
     if (pageOffset > lastPostOffset - bottomOffset) {
-      this.loadMore()
+      this.loadMore();
     }
   }
 
@@ -88,12 +89,18 @@ export class FeedLine extends Component {
   }
 
   scrollListener = e => {
-    this.handleScroll(e)
+    this.handleScroll(e);
   }
 
   likeHandler = () => {
     this.loadPosts();
   }
+};
+
+FeedLine.propTypes = {
+  posts: PropTypes.array.isRequired,
+  nickname: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired
 };
 
 export default FeedLine;

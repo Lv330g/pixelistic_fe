@@ -40,19 +40,16 @@ export class UserPage extends React.Component {
       }
     }
 
-
     let curUser = next.users.find(item => item.nickname === profileNickname);
     if(curUser){
       let posts = next.posts.filter((item) => item.author._id === curUser._id && !item.deleted);
       state.posts = posts;
     }
-
     return state;
   }
 
   render() {
     if (this.state.userLoaded) {
-
       return <div>
           <UserDashboard 
             user={this.props.user} 
@@ -72,7 +69,6 @@ export class UserPage extends React.Component {
           />
       </div>
     }
-
     return <LoadingSpinner/>
   }
 
@@ -84,7 +80,6 @@ export class UserPage extends React.Component {
       this.props.getProfile(profileNickname);
     }
   }
-
 };
 
 export default connect(

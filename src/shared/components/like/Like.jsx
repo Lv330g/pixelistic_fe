@@ -1,23 +1,27 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { Checkbox } from '@material-ui/core';
 import { FavoriteBorder, Favorite } from '@material-ui/icons';
 
-
-const Like = (props) => {
-  const { liked, handleLike, parentId } = props;
-  const handleChange = (e, checked) => {
-    handleLike(checked, parentId);
+export class Like extends Component {
+  render() {
+    return <div className="like">
+      <Checkbox
+        checked={this.props.liked}
+        icon={<FavoriteBorder />} 
+        checkedIcon={<Favorite />}
+        onChange={this.handleChange}
+      />
+    </div>
   }
 
-  return <div className="like">
-    <Checkbox
-      checked={liked}
-      icon={<FavoriteBorder />} 
-      checkedIcon={<Favorite />}
-      onChange={handleChange}
-    />
-  </div>
+  handleChange = (e, checked) => this.props.handleLike(checked, this.props.parentId);
+};
+
+Like.propTypes = {
+  liked: PropTypes.bool.isRequired,
+  handleLike: PropTypes.func.isRequired
 };
 
 export default Like;

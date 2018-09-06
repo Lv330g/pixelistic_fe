@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import FollowingsList from './components/followings-list/FollowingsList';
 
 import { Grid, Divider, Avatar } from '@material-ui/core';
 
-const FeedAside = (props) => {
+export const FeedAside = (props) => {
   const { user } = props;
   const followings = props.users.filter(item => item.following === true);
 
@@ -41,6 +42,12 @@ const FeedAside = (props) => {
       </Grid>
     </Grid>
   </div>
+};
+
+FeedAside.propTypes = {
+  users: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
+  handleFavorite: PropTypes.func.isRequired
 };
 
 export default FeedAside;
