@@ -9,9 +9,6 @@
     box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.10);
     z-index: 999;
 
-    
-    
-
     .logo {
         background-image: url("./media//logo.png") ;
         background-repeat: no-repeat;
@@ -37,6 +34,9 @@
 
     .extension-icon {
         font-size: 36px;
+    }
+    .menu-list{
+        position: absolute;
     }
   }
   
