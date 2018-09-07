@@ -78,4 +78,31 @@ describe('profile async actions', () => {
       }, "headers": "jest test", "method": "POST"}
     );
   });
+
+  it('dispatches the CHANGE_PASSWORD action', async () => {
+    mockAxios.mockImplementationOnce(() => Promise.resolve({
+      data: {
+        payload: 'password saved'
+      }
+    }));
+
+    const expectedActions = [
+      {
+        type: 'CHANGE_PASSWORD',
+        payload: 'password saved'
+      }
+    ];
+
+    await store.dispatch(actions.userChangePassword('1', 'oldPassword', 'newPassword', 'newPassword'));
+    expect(store.getActions()).toEqual(expectedActions);
+    expect(mockAxios).toHaveBeenCalledTimes(1);
+    expect(mockAxios).toHaveBeenCalledWith(
+      `${host}:${port}/profile/change-password/1`,
+      {"data": { 
+        oldPassword: 'oldPassword', 
+        newPassword: 'newPassword', 
+        newPasswordConf: 'newPassword' 
+      }, "headers": "jest test", "method": "POST"}
+    );
+  });
 });

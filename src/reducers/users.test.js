@@ -145,11 +145,34 @@ describe('users reducer', () => {
       {
         ...initialState,
         error: true,
-        errorMessage: 'here comes an err'
+        errorMessage: 'here comes an err',
+        successMsg: null
       }
     );
   })
 
+  it('should clear error and messages', () => {
+    expect(reducer(
+      {
+        ...initialState,
+        error: true,
+      errorMessage: 'some err Msg',
+      successMsg: 'some success Msg'
+
+      },
+      {
+        type: 'CLEAR_ERROR_AND_MESSAGES'
+        
+      }
+    )).toEqual(
+      {
+        ...initialState,
+        error: false,
+      errorMessage: null,
+      successMsg: null
+      }
+    );
+  })
   it('should handle favorite', () => {
     expect(reducer(
       {
@@ -442,6 +465,7 @@ describe('users reducer', () => {
       ]
     });
   });
+
   it('should update profile', () => {
     expect(reducer(
       {
@@ -498,4 +522,23 @@ describe('users reducer', () => {
       ]
     });
   });
+
+  it('should change password error', () => {
+    expect(reducer(
+      {
+        ...initialState
+      },
+      {
+        type: 'CHANGE_PASSWORD',
+        payload: 'here comes a msg'
+      }
+    )).toEqual(
+      {
+        ...initialState,
+        error: false,
+        errorMessage: null,
+        successMsg: 'here comes a msg'
+      }
+    );
+  })
 });

@@ -464,8 +464,40 @@ a {
     color: #C4CCD5; }
   .edit-profile .form {
     width: 800px; }
+  .edit-profile .save-cancel-btn {
+    width: 85px;
+    height: 20px; }
   .edit-profile .password-btn {
-    margin: 15px 0 15px 0; }
+    margin: 15px 650px 15px 0;
+    width: 170px; }
+
+.modal-change-password {
+  position: relative;
+  top: 15%;
+  left: 25%;
+  width: 50%;
+  background: white; }
+  .modal-change-password .form-modal {
+    margin-left: 25px;
+    margin-right: 25px; }
+  .modal-change-password .mar-top {
+    margin-top: 25px; }
+  .modal-change-password .save-cancel-btn {
+    width: 85px;
+    height: 20px; }
+  .modal-change-password .mar-top-btn {
+    margin-top: 15px;
+    padding-bottom: 15px; }
+  .modal-change-password .err-msg {
+    margin: 0;
+    text-align: center;
+    color: #f34b4b;
+    height: 20px; }
+  .modal-change-password .msg {
+    margin: 0;
+    text-align: center;
+    color: limegreen;
+    height: 20px; }
 
 .header .notifications-icon {
   font-size: 36px; }

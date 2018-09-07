@@ -131,7 +131,18 @@ export default function (state = initialState, action) {
     return {
       ...state,
       error: true,
-      errorMessage: action.payload.response.data.error
+      errorMessage: action.payload.response.data.error,
+      successMsg: null
+
+    };
+
+    case 'CLEAR_ERROR_AND_MESSAGES':
+    return {
+      ...state,
+      error: false,
+      errorMessage: null,
+      successMsg: null
+
     };
 
     case 'HANDLE_FAVORITE_SUCCESS':
@@ -166,6 +177,14 @@ export default function (state = initialState, action) {
       errorMessage: null,
       users: editUser(state.users, action.payload),
       loading: false
+    };
+
+    case 'CHANGE_PASSWORD':
+    return {
+      ...state,
+      error: false,
+      errorMessage: null,
+      successMsg: action.payload
     };
 
     case 'STATUS_CONNECTION_CHANGE':

@@ -24,3 +24,13 @@ export const updateProfile = (_id, fullName, newNickname, website, bio, avatar, 
         });
     }
 };
+
+export const userChangePassword = (_id, oldPassword, newPassword, newPasswordConf)  => {
+    return dispatch => {
+        return profileAPI.userChangePassword(_id, oldPassword, newPassword, newPasswordConf).then(success => {
+            dispatch({ type: 'CHANGE_PASSWORD', payload: success });
+        }, err => {
+            dispatch({ type: 'ERROR', payload: err })
+        });
+    }
+};

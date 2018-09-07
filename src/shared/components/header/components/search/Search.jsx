@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import httpServise from "../../../../../api/http-service";
 import { host, port } from "../../../../../const/node-server-config";
+import { updateAvatarUrlPath } from './../../../../utils/avatarUtil';
 
 export class Search extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ export class Search extends Component {
               <Scrollbars autoHeight>
               {this.state.showUsers.map( (item, id) => (
               <Link to={`/profile/${item.nickname}`} className="search-item" ref={(el) => {this._item = el}} key = {id}>
-                <img src={`${item.avatar}`} className="avatar" alt="avatar"/> 
+                <img src={`${updateAvatarUrlPath(item.avatar)}`} className="avatar" alt="avatar"/> 
                 <span className="nickname">{item.nickname}</span>
               </Link>
               ))}

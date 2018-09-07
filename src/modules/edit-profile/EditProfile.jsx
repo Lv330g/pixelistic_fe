@@ -4,6 +4,8 @@ import { Redirect } from 'react-router';
 
 import { authValidate } from './../../actions/auth';
 import { updateProfile, getProfile } from './../../actions/profile';
+import { updateAvatarUrlPath } from './../../shared/utils/avatarUtil';
+import  ModalChangePassword  from './modal-window/ModalChangePassword';
 
 import { Grid, Avatar, FormControl, Input, InputLabel, Button } from '@material-ui/core';
 
@@ -23,11 +25,15 @@ export class EditProfile extends React.Component {
       nicknameValid: true,
       websiteValid: true,
       bioValid: true,
-      formErrors: { fullName: '', nickname: '', website: '', bio: '' },
+      formErrors: { fullName: '', nickname: '', website: '', bio: ''},
       saveDone: false,
-      cancel: false
+      cancel: false,
+      //modal window
+      open: false
     }
   }
+
+
   render() {
 
     if (this.state.cancel) {
@@ -45,7 +51,7 @@ export class EditProfile extends React.Component {
             <Grid item>
               <Avatar
                 alt={"user avatar"}
-                src={this.state.avatar || this.props.user.avatar}
+                src={this.state.avatar || updateAvatarUrlPath(this.props.user.avatar)}
                 className="user-avatar"
               />
             </Grid>
@@ -57,7 +63,7 @@ export class EditProfile extends React.Component {
           </Grid>
           <form onSubmit={this.onSubmit}>
             <Grid className="form" container alignItems={"center"} justify={"center"}>
-              <FormControl  margin="normal" fullWidth>
+              <FormControl margin="normal" fullWidth>
                 <InputLabel htmlFor="inp-name">Full name</InputLabel>
                 <Input required
                   id="inp-name"
@@ -108,32 +114,43 @@ export class EditProfile extends React.Component {
               <Grid container spacing={8} alignItems={"center"} justify={"center"} direction={"row"}>
                 <Grid item>
                   <Button
-                    className="submit-btn"
+                    className="save-cancel-btn"
                     onClick={this.onSubmit}
                     color="primary"
                     variant="contained"
                     disabled={!this.validateForm()}
                   >
                     Save
-</Button>
+                  </Button>
                 </Grid>
                 <Grid item>
-                  <Button color="primary" onClick={this.cancel}>
+                  <Button
+                    className="save-cancel-btn"
+                    onClick={this.cancel}
+                    variant="contained"
+                    color="secondary"
+                  >
                     Cancel
-</Button>
-                </Grid>
-              </Grid>
-              <Grid className="password-btn" container alignItems={"flex-start"} justify={"flex-start"}>
-                <Grid item>
-                  <Button variant="contained" color="primary">
-                    Change password
                   </Button>
                 </Grid>
               </Grid>
-
-              
             </Grid>
           </form>
+          <Grid className="password-btn" container >
+            <Button
+              onClick={this.handleOpen}
+              variant="contained"
+            >
+              Change password
+            </Button>
+            {/* modal window */}
+            <ModalChangePassword
+            open={this.state.open}
+            handleClose={this.handleClose}
+            userId={this.props.user._id}
+            />
+            {/* modal window */}
+          </Grid>
         </Grid>
       );
     }
@@ -185,8 +202,8 @@ export class EditProfile extends React.Component {
         fieldValidationErrors.fullName = fullNameValid ? '' : 'FullName must be at most 50 symbol';
         break;
       case 'nickname':
-        nicknameValid = value.length <= 50 && value.length > 0;
-        fieldValidationErrors.nickname = nicknameValid ? '' : `Nickname must be at most 50 symbol and not empty`;
+        nicknameValid = value.match(/^[A-Za-z][A-Za-z0-9_]{1,30}$/);
+        fieldValidationErrors.nickname = nicknameValid ? '' : `Nickname must be less than 30 charachters and not empty and must contain only letters, numbers and/or underline charachter`;
         break;
       case 'website':
         websiteValid = value.length <= 70;
@@ -212,7 +229,17 @@ export class EditProfile extends React.Component {
   validateForm = () => {
     return this.state.fullNameValid && this.state.nicknameValid && this.state.websiteValid && this.state.bioValid;
   }
-}
+  // modal window
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+    this.props.clearErrorAndMessages();
+  };
+  // modal window
+};
 export default connect(
   state => ({
     user: state.auth.user,
@@ -223,6 +250,7 @@ export default connect(
     authValidate: () => dispatch(authValidate()),
     getProfile: (nickname, onSuccessCallback, onErrorCallback) => dispatch(getProfile(nickname, onSuccessCallback, onErrorCallback)),
     updateProfile: (_id, fullName, newNickname, website, bio, avatar, callback, onErrorCallback) =>
-      dispatch(updateProfile(_id, fullName, newNickname, website, bio, avatar, callback, onErrorCallback))
+      dispatch(updateProfile(_id, fullName, newNickname, website, bio, avatar, callback, onErrorCallback)),
+    clearErrorAndMessages: () => dispatch({type: 'CLEAR_ERROR_AND_MESSAGES'}),
   })
 )(EditProfile)
