@@ -64,7 +64,7 @@ export class Header extends React.Component {
                             </Link>
                             <Link to="/upload">
                               <MenuItem onClick={this.handleClose}>
-                                Upload
+                                Add a post
                               </MenuItem>
                             </Link>
                             { this.props.user.isAdmin ? 

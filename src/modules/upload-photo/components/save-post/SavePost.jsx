@@ -3,12 +3,11 @@ import { TextField, Button, ClickAwayListener, InputAdornment} from '@material-u
 import { Redirect } from 'react-router';
 import { Comment } from '@material-ui/icons';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { postAddPost } from '../../../../actions/post';
 import LocationAutocomplete from '../location-autocomplete/LocationAutocomplete';
 import LoadingSpinner from '../../../../shared/components/loading-spinner/LoadingSpinner'; 
-
-
 
 export class SavePost extends Component{
   constructor(props){
@@ -27,7 +26,7 @@ export class SavePost extends Component{
           <div className="field">       
             <TextField 
               InputProps={{startAdornment: (<InputAdornment position="start"><Comment/></InputAdornment>),}}
-              onKeyPress={this.changeDescription} className="input" multiline rowsMax={4} rows={1} placeholder="Description"
+              onChange={this.changeDescription} className="input" multiline rowsMax={4} rows={1} placeholder="Description"
             />
           </div>
           
@@ -43,8 +42,7 @@ export class SavePost extends Component{
     </div>
   }
 
-  uploadPost = (e) => { 
-    
+  uploadPost = () => { 
     this.setState({ savingStarted: true });
     
     this.props.postAddPost(
@@ -79,6 +77,12 @@ export class SavePost extends Component{
     this.setState({ description: e.target.value });
   }
 }
+
+SavePost.propTypes = {
+  user: PropTypes.object.isRequired,
+  photo: PropTypes.object.isRequired,
+  onCloseSaveModal: PropTypes.func.isRequired
+};
 
 export default connect(
   state => ({

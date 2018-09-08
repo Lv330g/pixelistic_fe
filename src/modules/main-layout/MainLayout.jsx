@@ -50,7 +50,7 @@ export class MainLayout extends Component {
 
   render() {
     const { component: Component, ...rest } = this.props;
-    if ( (this.state.accessToken === false && !this.props.isAuthorized) || this.props.errorMessage === 'session timeout' ) {
+    if ( (this.state.accessToken === false && !this.props.isAuthorized) || this.props.tokenBroken) {
       return <Redirect to='/sign-in'/>;
     }
 
@@ -65,7 +65,6 @@ export class MainLayout extends Component {
               users={this.props.users} 
               posts={this.props.currentSessionPosts}
               handleFavorite={this.props.handleFavorite}
-              loading={this.props.loading}
             />
           </div>
         </div>
@@ -121,6 +120,7 @@ export default connect(
     error: state.auth.error,
     errorMessage: state.auth.errorMessage,
     isAuthorized: state.auth.isAuthorized,
+    tokenBroken: state.auth.tokenBroken,
     currentSessionPosts: state.post.currentSessionPosts,
     wasLoadedFirstTime: state.post.wasLoadedFirstTime,
     users: state.users.users,

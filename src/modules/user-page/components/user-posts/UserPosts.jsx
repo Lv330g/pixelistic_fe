@@ -3,14 +3,13 @@ import { Grid } from '@material-ui/core';
 import { BrokenImage, AddAPhoto } from '@material-ui/icons';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { rowSize } from '../../../../const/user-page-config.js';
 import { awsImage } from '../../../../const/node-server-config'
 
 import MinimizedPost from '../minimized-post/MinimizedPost';
 import PostPage from '../post-page/PostPage';
-import LoadingSpinner from '../../../../shared/components/loading-spinner/LoadingSpinner';
-
 
 export class UserPosts extends Component {
   constructor(props){
@@ -41,10 +40,14 @@ export class UserPosts extends Component {
   }
 
   render () {
-    if(this.state.posts.length > 0){
+    if(this.state.posts.length){
       return <div className="user-posts">
         <Grid container direction="column" alignItems="center" item xs={12} className="user-images">
-          
+          <div className="posts-header">
+              <span className="posts-title">Posts</span>
+              {this.props.ownPage ?   <Link to="/upload"> <AddAPhoto className="right-add-photo"/> </Link> : null }
+          </div>
+
           {this.generateRows()}
 
           {this.state.postOpenIndex > -1 ? <PostPage 
@@ -53,27 +56,22 @@ export class UserPosts extends Component {
             userNickname= {this.props.userNickname}
             onChangePost = {this.changeCurrentPost}
             onClosePostPage = {this.closePostPage}
-            leftButton = { this.state.postOpenIndex === 0 ? false : true }
-            rightButton = { this.state.postOpenIndex === this.state.posts.length - 1 ? false : true }
+            leftButton = { !(this.state.postOpenIndex === 0 )}
+            rightButton = { !(this.state.postOpenIndex === this.state.posts.length - 1) }
             /> : null}
         </Grid>
       </div>
     }
 
-    if(this.state.posts.length === 0){
-      return <div className="empty-posts">  
-        <p> {this.props.ownPage ? 'You have no posts' : 'This user has no posts yet'} </p>
-        { this.props.ownPage 
-        ? <Link to="/upload"> <AddAPhoto className="add-photo"/> </Link> 
-        : <BrokenImage/> }
-      </div>
-    }
-
-    return <LoadingSpinner size={40}/>
+    return <div className="empty-posts">  
+      <p> {this.props.ownPage ? 'You have no posts' : 'This user has no posts yet'} </p>
+      { this.props.ownPage 
+      ? <Link to="/upload"> <AddAPhoto className="add-photo"/> </Link> 
+      : <BrokenImage/> }
+    </div>
   }
 
   generateRows = () => {
-
     const posts = this.state.posts;
     const rowsCount = Math.ceil(posts.length / this.state.rowSize) || 1;
     let curPost = 0;
@@ -105,14 +103,12 @@ export class UserPosts extends Component {
 
   openPostPage = (id) => {
     disableBodyScroll();
-    setTimeout( () => {
-      const index = this.state.posts.findIndex(item => item._id === id);
-      this.setState({postOpenIndex: index > -1 ? index : null });  
-    }, 10);    
+    const index = this.state.posts.findIndex(item => item._id === id);
+    this.setState({ postOpenIndex: index });  
   }
 
   closePostPage = () => {
-    this.setState({postOpenIndex: -1 });
+    this.setState({ postOpenIndex: -1 });
   }
 
   changeCurrentPost = (val) => {
@@ -124,6 +120,13 @@ export class UserPosts extends Component {
     }
     this.setState({ postOpenIndex });
   } 
+}
+
+UserPosts.propTypes = {
+  posts: PropTypes.array.isRequired,
+  userId: PropTypes.string.isRequired,
+  userNickname: PropTypes.string.isRequired,
+  ownPage: PropTypes.bool.isRequired
 }
 
 export default UserPosts;

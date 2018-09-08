@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Input, ClickAwayListener, InputAdornment} from '@material-ui/core';
 import { Place } from '@material-ui/icons';
-import httpService from '../../../../api/http-service'
+import httpService from '../../../../api/http-service';
+import PropTypes from 'prop-types';
 
 export class LocationAutocomplete extends Component{
   constructor(props){
@@ -20,7 +21,8 @@ export class LocationAutocomplete extends Component{
       variants = this.state.features.map( (item, i) => {
       return <div 
         className= {`search-loc ${i === this.state.currentIndex ? 'selected' : ''}`}
-        key={i} id={i}
+        key={i} 
+        id={i}
         onClick={this.selectPlace}
         onMouseEnter = {this.changeIndex}> 
         {item.place_name_en} 
@@ -35,6 +37,7 @@ export class LocationAutocomplete extends Component{
           onChange={this.handleInput} onKeyDown={this.arrowNavigate} className="input" value={this.state.searchText} placeholder="Location"
         />
       </div>
+      
       <div className="autocomplete">
         <ClickAwayListener onClickAway={this.closeSuggestion}>
           <div className="variants">
@@ -48,8 +51,8 @@ export class LocationAutocomplete extends Component{
   handleInput = (e) => {
     const text = e.target.value;
     if(text.length > 2){
-      this.setState({ searchText: text });
       this.getPlaces(text);
+      this.setState({ searchText: text });
     } else {
       this.setState({ searchText: text, suggestionOpen: false });
     }
@@ -68,7 +71,8 @@ export class LocationAutocomplete extends Component{
       res => {
         if (res.data.features) {
           this.setState( { features: res.data.features, suggestionOpen: true });
-        } return;
+        } 
+        return;
       }
     );
   }
@@ -78,7 +82,7 @@ export class LocationAutocomplete extends Component{
   }
   
   changeIndex = (e) => {
-    this.setState({ currentIndex: Number(e.target.id)});
+    this.setState({ currentIndex: Number(e.target.id) });
   }
 
   arrowNavigate = (e) => {
@@ -96,7 +100,8 @@ export class LocationAutocomplete extends Component{
         case 13: 
           const newSearch = this.state.features[index].place_name_en;
           this.props.onSelectLocation(newSearch);
-          return this.setState({ searchText: newSearch, suggestionOpen: false });
+          this.setState({ searchText: newSearch, suggestionOpen: false });
+          break;
         case 27:
           this.closeSuggestion();
           break;
@@ -110,5 +115,9 @@ export class LocationAutocomplete extends Component{
     }
   }
 }
+
+LocationAutocomplete.propTypes = {
+  onSelectLocation: PropTypes.func.isRequired
+};
 
 export default LocationAutocomplete;

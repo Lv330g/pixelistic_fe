@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { postsOnPage, startPage, bottomOffset } from '../../const/post-config';
+import startImage from '../../media/start-page.jpg';
 
 import Post from '../post/Post';
 
@@ -52,8 +53,17 @@ export class FeedLine extends Component {
       />
     });
 
-    return <div className="feed-line">
+    if(allPosts.length){
+      return  <div className="feed-line">
       {allPosts}
+    </div>
+    }
+
+    return <div className="start-page">
+      <h1 className="welcome-title">
+        Welcome to <span className="social-name">Pixel</span> - №1 social photo network
+      </h1>
+      <img src={ startImage } alt="start-page.jpg"/>
     </div>
   }
 

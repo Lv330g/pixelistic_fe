@@ -96,7 +96,7 @@ export class PostFooter extends Component {
         />
 
         {this.props.userId === this.state.authorId ?
-          <IconButton color="secondary" onClick={this.handleRemovePost}>
+          <IconButton color="secondary" onClick={this.handleRemovePost} disabled={this.state.startRemoving}>
             <DeleteOutlined />
           </IconButton> 
           : null
@@ -131,6 +131,7 @@ export class PostFooter extends Component {
         onBlur={this.handleTextfieldBlur}
         onFocus={this.handleTextfieldFocus}
       />
+      
     </Grid>
   }
 
@@ -154,11 +155,11 @@ export class PostFooter extends Component {
   }
 
   handleTextfieldInput = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       e.preventDefault();
     }
 
-    if (e.key === "Enter" && !e.shiftKey && e.target.value !== '') {
+    if (e.key === 'Enter' && !e.shiftKey && e.target.value !== '') {
       const val = e.target.value;
       const comment = {
         author: this.props.nickname,
@@ -166,7 +167,7 @@ export class PostFooter extends Component {
       }
 
       this.props.postCommentAdd(this.props.postId, this.props.nickname, val);
-      e.target.value = "";
+      e.target.value = '';
       
       this.setState((prev) => {
         return {

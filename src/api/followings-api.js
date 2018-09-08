@@ -1,5 +1,5 @@
 import httpServise from './http-service';
-import { host , port } from '../const/node-server-config';
+import { host, port } from '../const/node-server-config';
 
 export const followApi = {
   follow: (data) => {
@@ -32,7 +32,7 @@ export const followApi = {
         res => {
           if (res.data.payload) {
             resolve(res.data.payload);
-          } else reject({status: 401});
+          } else reject({ status: 401});
         }, err => reject(err)
       );
     });
