@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Grid, FormControl, Input, InputLabel, Button } from '@material-ui/core';
 import Modal from '@material-ui/core/Modal';
 
-import { FormError } from '../../../shared/components/form-error/FormError';
-import { userChangePassword } from './../../../actions/profile';
+import { FormError } from '../../../../shared/components/form-error/FormError';
+import { userChangePassword } from './../../../../actions/profile';
 
 export class ModalChangePassword extends React.Component {
 
@@ -37,7 +37,7 @@ export class ModalChangePassword extends React.Component {
                 type="password"
                 name="oldPassword"
                 onChange={this.oldPassword}
-                onBlur={this.onBlur2}
+                onBlur={this.onBlur}
               />
               <FormError formErrors={this.state.formErrors.oldPassword} />
             </FormControl>
@@ -48,7 +48,7 @@ export class ModalChangePassword extends React.Component {
                 type="password"
                 name="newPassword"
                 onChange={this.onChangePassword}
-                onBlur={this.onBlur2}
+                onBlur={this.onBlur}
               />
               <FormError formErrors={this.state.formErrors.newPassword} />
             </FormControl>
@@ -74,7 +74,7 @@ export class ModalChangePassword extends React.Component {
                   disabled={!this.buttonEnabled()}
                 >
                   SAVE
-                    </Button>
+                </Button>
               </Grid>
               <Grid item>
                 <Button
@@ -84,7 +84,7 @@ export class ModalChangePassword extends React.Component {
                   color="secondary"
                 >
                   Cancel
-                      </Button>
+                </Button>
               </Grid>
             </Grid>
           </form>
@@ -113,7 +113,7 @@ export class ModalChangePassword extends React.Component {
       { 'newPassword': e.target.value },
       () => {
         if (this.state.newPasswordConf)
-          this.validateField2('newPasswordConf', this.state.newPasswordConf)
+          this.validateField('newPasswordConf', this.state.newPasswordConf)
       }
     );
   };
@@ -122,15 +122,15 @@ export class ModalChangePassword extends React.Component {
     const name = e.target.name;
     const value = e.target.value;
     this.setState(
-      { [name]: value }, () => { this.validateField2(name, value) }
+      { [name]: value }, () => { this.validateField(name, value) }
     );
   };
 
-  onBlur2 = (e) => {
-    this.validateField2(e.target.name, e.target.value);
+  onBlur = (e) => {
+    this.validateField(e.target.name, e.target.value);
   };
 
-  validateField2(fieldName, value) {
+  validateField(fieldName, value) {
     let fieldValidationErrors = this.state.formErrors;
     let oldPasswordValid = this.state.oldPasswordValid;
     let newPasswordValid = this.state.newPasswordValid;

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Like from '../../../../shared/components/like/Like';
+import { updateAvatarUrlPath } from './../../../../shared/utils/avatarUtil';
 
 import { 
   Avatar,
@@ -44,7 +45,7 @@ export const FollowingItem = (props) => {
       <ExpansionPanelSummary className="exp-summary" expandIcon={<ExpandMore />}>
         <div className="chip">
           <Avatar
-            src={avatar} 
+            src={updateAvatarUrlPath(avatar)} 
             alt={"avatar"}
             className="avatar"
           />
