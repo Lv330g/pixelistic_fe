@@ -5,7 +5,7 @@ import { Redirect } from 'react-router';
 import { authValidate } from './../../actions/auth';
 import { updateProfile, getProfile } from './../../actions/profile';
 import { updateAvatarUrlPath } from './../../shared/utils/avatarUtil';
-import  ModalChangePassword  from './modal-window/ModalChangePassword';
+import  ModalChangePassword  from './components/modal-change-password/ModalChangePassword';
 
 import { Grid, Avatar, FormControl, Input, InputLabel, Button } from '@material-ui/core';
 
@@ -114,6 +114,7 @@ export class EditProfile extends React.Component {
               <Grid container spacing={8} alignItems={"center"} justify={"center"} direction={"row"}>
                 <Grid item>
                   <Button
+                    id="save"
                     className="save-cancel-btn"
                     onClick={this.onSubmit}
                     color="primary"
@@ -125,6 +126,7 @@ export class EditProfile extends React.Component {
                 </Grid>
                 <Grid item>
                   <Button
+                    id="cancel"
                     className="save-cancel-btn"
                     onClick={this.cancel}
                     variant="contained"
@@ -138,6 +140,7 @@ export class EditProfile extends React.Component {
           </form>
           <Grid className="password-btn" container >
             <Button
+              id="modal-window"
               onClick={this.handleOpen}
               variant="contained"
             >

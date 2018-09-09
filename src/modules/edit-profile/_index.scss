@@ -1,55 +1,43 @@
 .edit-profile{
   margin-top: 100px;
   .file-input{
-      width: 0.1px;
-      height: 0.1px;
-      opacity: 0;
-      overflow: hidden;
-      position: absolute;
-      z-index: -1;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
     }
   .avatar-nickname{
-      width: 800px;
+    width: 800px;
     }
   .nickname{
-      font-weight: 200;
-      font-size: 24px;
-      font-family: $font-arial;
+    font-weight: 200;
+    font-size: 24px;
+    font-family: $font-arial;
   }
   .user-avatar{
-      width: 100px;
-      height: 100px;
+    width: 100px;
+    height: 100px;
   }
   .change-photo{
-      color: #3897f0;
-      font-weight: 500;
-      padding-top: 5px;
-      font-family: $font-arial;
+    color: #3897f0;
+    font-weight: 500;
+    padding-top: 5px;
+    font-family: $font-arial;
   }
   .change-photo:active{
-      color: #C4CCD5;
+    color: #C4CCD5;
   }
   .form{
-      width: 800px;
+    width: 800px;
   }
   .save-cancel-btn{
-      width: 85px;
-      height: 20px;
+    width: 85px;
+    height: 20px;
   }
   .password-btn{
-      margin: 15px 650px 15px 0;
-      width: 170px;
+    margin: 15px 650px 15px 0;
+    width: 170px;
   }       
-}
-.modal-windows{
-    position: relative;
-    top: 15%;
-    left: 25%;
-    width: 50%;
-    height: 60%;
-    background: white;
-    .form-modal{
-    margin-left: 25px;
-    margin-right: 25px;
-    }
 }
