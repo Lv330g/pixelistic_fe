@@ -1,12 +1,11 @@
 import React , { Component } from 'react';
 import { Grid, IconButton} from '@material-ui/core';
 import { KeyboardArrowRight, KeyboardArrowLeft } from '@material-ui/icons';
+import PropTypes from 'prop-types';
 
 import PostHeader from '../../../../shared/components/post-header/PostHeader';
 import PostFooter from '../../../../shared/components/post-footer/PostFooter';
 import { awsImage } from '../../../../const/node-server-config';
-
-
 
 export class PostPage extends Component {
   constructor(props){
@@ -17,13 +16,13 @@ export class PostPage extends Component {
   }
 
   componentDidMount(){
-    this.postPage.current.focus();
-    this.postInfo.current.style.height = `${this.postImg.current.height}px`;
-    window.addEventListener('resize', this.onResize)
+      this.postPage.current.focus();
+      this.postInfo.current.style.height = `${this.postImg.current.height}px`;
+      window.addEventListener('resize', this.onResize)
   }
   
   componentDidUpdate(){
-    this.postInfo.current.style.height = `${this.postImg.current.height}px`;
+      this.postInfo.current.style.height = `${this.postImg.current.height}px`;
   }
 
   componentWillUnmount() {
@@ -32,7 +31,7 @@ export class PostPage extends Component {
 
   render () {
     return <div className="post-page" ref={this.postPage}  onClick={this.props.onClosePostPage} onKeyDown={this.handleKeyPress} tabIndex="0" >
-      <Grid container item direction="row" xs={12}   >
+      <Grid container item direction="row" xs={12}>
         <Grid container item direction="column" xs={1} justify="center" alignItems="center">
             {this.props.leftButton ?  
             <IconButton className="nav-btn nav-btn-left" color="primary" onClick={this.navigateBack}  >
@@ -66,7 +65,6 @@ export class PostPage extends Component {
                 userId={this.props.userId}
                 imagePath = {this.props.post.image}
                 onClosePostPage = {this.props.onClosePostPage}
-
               />
             </div>
          </Grid>
@@ -111,8 +109,13 @@ export class PostPage extends Component {
   onResize = () => {
     this.forceUpdate();
   }
-
 }
+
+PostPage.propTypes = {
+  post: PropTypes.object.isRequired,
+  onChangePost: PropTypes.func.isRequired,
+  onClosePostPage: PropTypes.func.isRequired
+};
 
 export default PostPage;
 

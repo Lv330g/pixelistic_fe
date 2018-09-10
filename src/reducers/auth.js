@@ -3,7 +3,8 @@ const initialState = {
     errorMessage: null,
     user: null,
     confMsg: null,
-    isAuthorized: false
+    isAuthorized: false,
+    tokenBroken: false
 };
 
 const changeConnectionStatus = (user, payload) => {
@@ -25,6 +26,7 @@ export default function (state = initialState, action) {
             errorMessage: null,
             user: action.payload,
             confMsg: null,
+            tokenBroken: false,
             isAuthorized: true
         };
 
@@ -106,6 +108,7 @@ export default function (state = initialState, action) {
           ...state,
           error: true,
           errorMessage: 'session timeout',
+          tokenBroken: true,
           user: null,
           confMsg: null,
           isAuthorized: false

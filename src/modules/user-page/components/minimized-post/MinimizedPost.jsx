@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import { Favorite, ChatBubble } from '@material-ui/icons';
-
+import PropTypes from 'prop-types';
 
 export const UserImage = (props) => {
   
@@ -21,6 +21,12 @@ export const UserImage = (props) => {
       </div>
     </div>  
 }
+
+UserImage.propTypes = {
+  img: PropTypes.string.isRequired,
+  likes: PropTypes.number.isRequired,
+  comments: PropTypes.number.isRequired
+};
 
 export default UserImage;
 

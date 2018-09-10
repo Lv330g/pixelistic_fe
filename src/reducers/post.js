@@ -1,11 +1,10 @@
 const initialState = {
   error: false,
   errorMessage: '',
-  successMessage: '' ,
+  successMessage: '',
   currentSessionPosts: [],
   wasLoadedFirstTime: false,
   isLoading: false
-  
 };
 
 const getFeedLinePosts = (followings) => {
@@ -68,8 +67,8 @@ export default function (state = initialState, action) {
       return {
         ...state,
         error: false,
-        errorMessage: false,
-        currentSessionPosts: newLikedPosts
+        errorMessage: '',
+        currentSessionPosts: [ ...newLikedPosts ]
       }
 
       case 'COMMENT_ADDED_SUCCESS':
@@ -79,8 +78,8 @@ export default function (state = initialState, action) {
       return {
         ...state,
         error: false,
-        errorMessage: false,
-        currentSessionPosts: newCommentedPosts
+        errorMessage: '',
+        currentSessionPosts: [ ...newCommentedPosts ]
       }
       case 'ADD_POST_TO_SESSION':
       const postsToAdd = action.payload.filter((item) => {
@@ -89,9 +88,8 @@ export default function (state = initialState, action) {
       return {
         ...state,
         error: false,
-        errorMessage:false,
-        currentSessionPosts: [...state.currentSessionPosts, ...postsToAdd]
-        
+        errorMessage: '',
+        currentSessionPosts: [ ...state.currentSessionPosts, ...postsToAdd ]
       }
 
       case 'ADD_POSTS_TO_FEEDLINE': 
@@ -99,10 +97,10 @@ export default function (state = initialState, action) {
         ...state,
         error: false,
         errorMessage: '',
-        currentSessionPosts: state.currentSessionPosts.map( item => {
+        currentSessionPosts: [ ...state.currentSessionPosts.map( item => {
           if(item.author._id === action.payload) item.type = 'feed';
           return item;
-        })
+        }) ]
       }
 
       case 'REMOVE_POSTS_FROM_FEEDLINE': 
@@ -110,10 +108,10 @@ export default function (state = initialState, action) {
         ...state,
         error: false,
         errorMessage: '',
-        currentSessionPosts: state.currentSessionPosts.filter( item => {
+        currentSessionPosts: [ ...state.currentSessionPosts.filter( item => {
           if(item.author._id === action.payload) item.type = '';
           return item;
-        })
+        }) ]
       }
 
       case 'POST_REMOVE_SUCCESS':
@@ -121,10 +119,10 @@ export default function (state = initialState, action) {
         ...state,
         error: false,
         errorMessage: '',
-        currentSessionPosts: state.currentSessionPosts.map( item => { 
+        currentSessionPosts: [ ...state.currentSessionPosts.map( item => { 
          if(item._id === action.payload) item.deleted = true;
          return item;
-        }),
+        }) ],
         isLoading: false
       }
 

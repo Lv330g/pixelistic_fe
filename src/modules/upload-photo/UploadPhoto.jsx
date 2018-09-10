@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
 import { AddAPhoto, Close } from '@material-ui/icons';
 
+import PropTypes from 'prop-types';
+
 import SavePost from './components/save-post/SavePost';
 import PhotoEditor from './components/photo-editor/PhotoEditor'
 
@@ -15,30 +17,30 @@ export class UploadPhoto extends Component{
       saveOpen: false,
     }
     this.canvasRef = React.createRef();
+    this.dropAreaRef = React.createRef();
+    this.addRef = React.createRef();
   }
 
   componentDidUpdate() {
     if(this.state.photo && !this.state.photoIsDisplayed){
-      const canvas =  this.canvasRef.current;
-      const ctx = canvas.getContext('2d');
-      const img = new Image();
-      
-      img.onload = () => {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-        this.setState({ photoIsDisplayed: true });
-      }
-      img.src = this.state.photo;
+      this.uploadToCanvas(this.state.photo);
     }
   }
   
   render() {
     if(!this.state.photo){
       return <div className="photo-upload">
-        <div className="empty-photo" onDrop={this.dropHandler} onDragOver={this.dragOverHandler}>
-          <label htmlFor="file-input"><AddAPhoto/></label>
-          <input className="file-input" name="file-input" id="file-input" type="file"  accept="image/*" onChange={this.fileChangedHandler}/>
+        <div className="empty-photo" 
+          ref={this.dropAreaRef} 
+          onDragEnter={this.startDrag} 
+          onDragLeave={this.endDrag}
+          onDrop={this.dropHandler} 
+          onDragOver={this.dragOverHandler}
+        >
+          <div className="add-photo-div" ref={this.addRef}> 
+            <label htmlFor="file-input"><AddAPhoto/></label>
+            <input className="file-input" name="file-input" id="file-input" type="file"  accept="image/*" onChange={this.fileChangedHandler}/>
+          </div>
         </div>
       </div>
     } else {
@@ -71,7 +73,7 @@ export class UploadPhoto extends Component{
                 </div>
               </div>
               <div className="canvas-cont">
-                <canvas className="canvas" ref={this.canvasRef} onDrop={this.dropHandler} onDragOver={this.dragOverHandler}/>
+                <canvas className="canvas" ref={this.canvasRef} onDrop={this.dropHandler} onDragOver={this.dragOverHandler} />
               </div>
             </div>
           </div>
@@ -99,7 +101,7 @@ export class UploadPhoto extends Component{
   getDataURL = (file) => {
     const reader = new FileReader();
     const fileSize = `${(file.size / 1000000).toFixed(2)} MB`;
-    reader.onload = (e) => {
+    reader.onload =  (e) =>  {
       this.setState({ 
         photo: e.target.result, 
         photoIsDisplayed: false, 
@@ -108,17 +110,30 @@ export class UploadPhoto extends Component{
     };
     reader.readAsDataURL(file);
   }
-
+  
   dropHandler = (e) => {
     e.preventDefault();
     const imageType = /image.*/;
-    if (e.dataTransfer.files[0].type.match(imageType)) {
-      this.getDataURL(e.dataTransfer.files[0])
+
+    if(e.dataTransfer.files[0]){
+      if (e.dataTransfer.files[0].type.match(imageType)) {
+        this.getDataURL(e.dataTransfer.files[0])
+      }
     }
   } 
   
   dragOverHandler = (e) => {
     e.preventDefault();
+  }
+
+  startDrag = () => {
+    this.dropAreaRef.current.className = 'empty-photo drop';
+    this.addRef.current.className = 'hidden-btn';
+  }
+
+  endDrag = () => {
+    this.dropAreaRef.current.className = 'empty-photo';
+    this.addRef.current.className = '';
   }
 
   closePhotoUpload = () => {
@@ -133,7 +148,7 @@ export class UploadPhoto extends Component{
     this.setState({ saveOpen: false });
   }
 
-  getModifiedImage = (val) => {
+  uploadToCanvas = (image) => {
       const canvas =  this.canvasRef.current;
       const ctx = canvas.getContext('2d');
       const img = new Image();
@@ -144,9 +159,17 @@ export class UploadPhoto extends Component{
         ctx.drawImage(img, 0, 0);
         this.setState({ photoIsDisplayed: true });
       }
-      img.src = val;
-      this.setState({ photo: val});
+      img.src = image;
+  }
+
+  getModifiedImage = (image) => {
+    this.uploadToCanvas(image);  
+    this.setState({ photo: image});
   }
 }
+
+UploadPhoto.propTypes = {
+  user: PropTypes.object.isRequired
+};
 
 export default UploadPhoto;

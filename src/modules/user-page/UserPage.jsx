@@ -20,11 +20,11 @@ export class UserPage extends React.Component {
   }
 
   componentDidMount(){
-    this.getNewProfile();
+    this.checkNewProfile();
   }
 
   componentDidUpdate(){
-    this.getNewProfile();
+    this.checkNewProfile();
   }
 
   static getDerivedStateFromProps(next, state) {
@@ -40,9 +40,9 @@ export class UserPage extends React.Component {
       }
     }
 
-    let curUser = next.users.find(item => item.nickname === profileNickname);
+    const curUser = next.users.find(item => item.nickname === profileNickname);
     if(curUser){
-      let posts = next.posts.filter((item) => item.author._id === curUser._id && !item.deleted);
+      const posts = next.posts.filter((item) => item.author._id === curUser._id && !item.deleted);
       state.posts = posts;
     }
     return state;
@@ -59,6 +59,7 @@ export class UserPage extends React.Component {
             postAddToFeedLine = {this.props.postAddToFeedLine}
             postRemoveFromFeedLine = {this.props.postRemoveFromFeedLine}
             users={this.props.users}
+            postsLen = {this.state.posts.length}
           />
           
           <UserPosts 
@@ -72,18 +73,20 @@ export class UserPage extends React.Component {
     return <LoadingSpinner/>
   }
 
-  getNewProfile = () =>{
+  checkNewProfile = () =>{
     const profileNickname = this.props.match.params.nickname;
     let inUsers =  this.props.users.some(item => item.nickname === profileNickname);
 
-    if(!inUsers && ! this.props.loading) {
+    if(!inUsers && !this.props.loading) {
       this.props.getProfile(profileNickname);
     }
   }
 };
 
 export default connect(
-  null,
+  state => ({
+    loading:  state.users.loading
+  }),
   dispatch => ({
     getProfile: (nickname) => dispatch(getProfile(nickname)),
     follow: (data) => dispatch(follow(data)),

@@ -174,6 +174,21 @@ a {
   align-items: flex-end;
   width: 67%; }
 
+.start-page {
+  font-family: 'Raleway', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 67%;
+  margin-bottom: 30px; }
+  .start-page h1, .start-page h2 {
+    font-weight: normal;
+    margin: 3px; }
+  .start-page .welcome-title {
+    color: #9b4bc0; }
+  .start-page .social-name {
+    color: #3ee755; }
+
 .post {
   background-color: white;
   border: solid 2px #AEAEAE;
@@ -346,6 +361,19 @@ a {
 
 .user-posts {
   margin-top: 50px; }
+  .user-posts .posts-header {
+    padding: 10px 50px;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 25px; }
+    .user-posts .posts-header .right-add-photo {
+      margin-left: 10px; }
+    .user-posts .posts-header .right-add-photo:hover {
+      opacity: 0.7;
+      cursor: pointer; }
 
 .empty-posts {
   display: flex;
@@ -365,9 +393,9 @@ a {
 
 .post-page {
   position: fixed;
-  outline: 0;
   width: 100%;
   height: 100%;
+  outline: 0;
   left: 0;
   top: 0;
   background-color: rgba(0, 0, 0, 0.8);
@@ -475,6 +503,17 @@ a {
     margin: 15px 650px 15px 0;
     width: 170px; }
 
+.modal-windows {
+  position: relative;
+  top: 15%;
+  left: 25%;
+  width: 50%;
+  height: 60%;
+  background: white; }
+  .modal-windows .form-modal {
+    margin-left: 25px;
+    margin-right: 25px; }
+
 .modal-change-password {
   position: relative;
   top: 15%;
@@ -529,8 +568,6 @@ a {
   text-align: center;
   margin-bottom: 50px; }
   .photo-upload .file-input {
-    width: 0.1px;
-    height: 0.1px;
     opacity: 0;
     overflow: hidden;
     position: absolute;
@@ -545,6 +582,7 @@ a {
     margin-top: 20px;
     background-color: transparent;
     border: 2px dashed #5cb85c;
+    border-radius: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -554,7 +592,18 @@ a {
       cursor: pointer; }
     .photo-upload .empty-photo svg {
       width: 70px;
-      height: 70px; }
+      height: 70px;
+      z-index: -1; }
+  .photo-upload .drop {
+    border: 2px dashed #9d52e4;
+    opacity: 0.7;
+    background-color: #e7e7e7;
+    background-image: url("./media//dropzone.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100px; }
+  .photo-upload .hidden-btn {
+    display: none; }
   .photo-upload .post-creator {
     width: 50%;
     margin: auto;
@@ -977,36 +1026,45 @@ a {
   .loading-spinner .spinner {
     color: #acbdac; }
 
-.post-footer svg {
-  width: 30px;
-  height: 30px; }
-
-.post-footer .likes-amount {
-  font-weight: 500; }
-
-.post-footer .likes-panel {
-  display: flex;
-  align-items: center; }
-
-.post-footer .load-comments {
-  cursor: pointer;
-  margin: 0 0 9px; }
-
-.post-footer .comment {
-  margin: 0 0 7px 0; }
-
-.post-footer .author-name {
-  font-family: 'Titillium Web', sans-serif;
-  font-weight: 600; }
-
-.post-footer .author-comment {
-  margin-left: 15px; }
-
-.post-footer .date {
-  margin: 10px 0; }
-
-.post-footer .text-field {
-  padding: 10px 0; }
+.post-footer {
+  position: relative; }
+  .post-footer svg {
+    width: 30px;
+    height: 30px; }
+  .post-footer .likes-amount {
+    font-weight: 500; }
+  .post-footer .likes-panel {
+    display: flex;
+    align-items: center; }
+  .post-footer .load-comments {
+    cursor: pointer;
+    margin: 0 0 9px; }
+  .post-footer .comment {
+    margin: 0 0 7px 0; }
+  .post-footer .author-name {
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 600; }
+  .post-footer .author-comment {
+    margin-left: 15px; }
+  .post-footer .date {
+    margin: 10px 0; }
+  .post-footer .text-field {
+    padding: 10px 0; }
+  .post-footer .deleting-modal {
+    text-align: center;
+    position: absolute;
+    width: 150px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    background-color: white;
+    box-shadow: 0px 0px 56px -13px rgba(0, 0, 0, 0.75);
+    padding: 10px 0; }
+    .post-footer .deleting-modal .deleting {
+      font-size: small;
+      color: #ccc; }
 
 .post-header {
   padding: 10px 0; }

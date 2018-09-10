@@ -31,7 +31,7 @@ export default function (state = initialState, action) {
         ...state,
         error: false,
         errorMessage: null,
-       users: updatedUsers
+        users: updatedUsers
       };
       case 'USER_STATUS_ERROR':
       return {
