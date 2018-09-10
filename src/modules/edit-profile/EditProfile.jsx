@@ -49,11 +49,14 @@ export class EditProfile extends React.Component {
         <Grid className="edit-profile" container alignItems={"center"} justify={"center"} direction={"column"}>
           <Grid className="avatar-nickname" container spacing={16} alignItems={"center"} justify={"center"} direction={"row"}>
             <Grid item>
+              <label htmlFor="file-input">
               <Avatar
                 alt={"user avatar"}
                 src={this.state.avatar || updateAvatarUrlPath(this.props.user.avatar)}
                 className="user-avatar"
               />
+              </label>
+              <input className="file-input" name="file-input" id="file-input" type="file" accept="image/*" onChange={this.fileChangedHandler} />
             </Grid>
             <Grid item  >
               <div className="nickname">{this.props.user.nickname}</div>

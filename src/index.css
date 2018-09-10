@@ -454,14 +454,18 @@ a {
     font-family: "Segoe UI", Helvetica, Arial, sans-serif; }
   .edit-profile .user-avatar {
     width: 100px;
-    height: 100px; }
+    height: 100px;
+    cursor: pointer; }
   .edit-profile .change-photo {
     color: #3897f0;
     font-weight: 500;
     padding-top: 5px;
-    font-family: "Segoe UI", Helvetica, Arial, sans-serif; }
+    font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    cursor: pointer; }
   .edit-profile .change-photo:active {
     color: #C4CCD5; }
+  .edit-profile .change-photo:hover {
+    color: #3F51B5; }
   .edit-profile .form {
     width: 800px; }
   .edit-profile .save-cancel-btn {
