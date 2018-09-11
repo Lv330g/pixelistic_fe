@@ -38,7 +38,7 @@ export default class UserDashboard extends React.Component {
                 </span> followers</div>
               <div className="quantity"><span className="number">
                 {this.props.userprofile.followings ? this.props.userprofile.followings.length: '0'}
-              </span> following</div>
+              </span> followings</div>
             </Grid>
             <Grid container direction={"column"}>
             <div className="user-name">

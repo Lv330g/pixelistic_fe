@@ -28,6 +28,7 @@ export class EditProfile extends React.Component {
       formErrors: { fullName: '', nickname: '', website: '', bio: ''},
       saveDone: false,
       cancel: false,
+      savingStarted: false,
       //modal window
       open: false
     }
@@ -164,13 +165,14 @@ export class EditProfile extends React.Component {
   }
 
   onProfileSave = () => {
-    this.setState({ saveDone: true });
     this.props.authValidate();
+    this.setState({ saveDone: true, savingStarted: false });
+    
   }
   onProfileSaveError = () => {
     let fieldValidationErrors = this.state.formErrors;
     fieldValidationErrors.nickname = this.props.errorMessage;
-    this.setState({ formErrors: fieldValidationErrors });
+    this.setState({ formErrors: fieldValidationErrors, savingStarted: false });
   }
   fileChangedHandler = (e) => {
     if (e.target.files[0]) {
@@ -188,9 +190,10 @@ export class EditProfile extends React.Component {
   }
   onSubmit = (e) => {
     e.preventDefault();
-    if (this.validateForm()) {
+    if (this.validateForm() && !this.state.savingStarted) {
       let { fullName, nickname, website, bio, avatar } = this.state;
       this.props.updateProfile(this.props.user._id, fullName, nickname, website, bio, avatar, this.onProfileSave, this.onProfileSaveError);
+      this.setState({ savingStarted: true });
     }
   }
   onBlur = (e) => {
