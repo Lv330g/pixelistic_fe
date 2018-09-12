@@ -15,7 +15,10 @@ export class FbAuth extends Component {
     />
   }
 
-  responseFacebook = res => this.props.handleFb(res);
+  responseFacebook = res => {
+    if (!res.status) return;
+    return this.props.handleFb(res);
+  }
 };
 
 FbAuth.propTypes = {

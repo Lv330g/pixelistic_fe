@@ -21,6 +21,7 @@ describe('FbAuth component', () => {
 
   describe('when the component gets a respose from Facebook', () => {
     const res = {
+      status: 200,
       name: 'Andrew',
       age: 24
     };
