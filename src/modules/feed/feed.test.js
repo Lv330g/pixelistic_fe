@@ -9,9 +9,10 @@ describe('Feed component', () => {
   const props = {
     users: [],
     handleFavorite: jest.fn(),
-    user: {},
-    posts: [],
-    nickname: 'Andrew'
+    user: {
+      nickname: 'Andrew'
+    },
+    posts: []
   };
   const wrapper = shallow(<Feed {...props}/>);
 

@@ -503,17 +503,6 @@ a {
     margin: 15px 650px 15px 0;
     width: 170px; }
 
-.modal-windows {
-  position: relative;
-  top: 15%;
-  left: 25%;
-  width: 50%;
-  height: 60%;
-  background: white; }
-  .modal-windows .form-modal {
-    margin-left: 25px;
-    margin-right: 25px; }
-
 .modal-change-password {
   position: relative;
   top: 15%;
