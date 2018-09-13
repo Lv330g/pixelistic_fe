@@ -994,6 +994,8 @@ a {
     color: black; }
   .header .extension-icon {
     font-size: 36px; }
+  .header .menu-list {
+    position: absolute; }
 
 .search {
   position: absolute;

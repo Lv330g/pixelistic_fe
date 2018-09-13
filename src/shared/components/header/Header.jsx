@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Popper, Button, Paper, Grow, ClickAwayListener, MenuList, MenuItem } from '@material-ui/core';
+import { Grid, Button, Paper, ClickAwayListener, MenuList, MenuItem } from '@material-ui/core';
 import { Extension } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import Notification from '../../../modules/notification/Notification'
@@ -7,15 +7,11 @@ import { Search } from './components/search/Search';
 
 export class Header extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {
-      open: false,
-    };
+    super(props)
+    this.state = {open: false};
   }
 
   render() {
-    const { open } = this.state;
-
     return (
       <Grid container alignItems={"center"} justify={"center"} direction={"column"}>
           <Grid container className="header" item xs={12} alignItems = {"center"}>
@@ -30,27 +26,24 @@ export class Header extends React.Component {
                 <Search />
               </Grid>
               <Grid item xs={3} ></Grid>
-              <Notification/>
+              <Notification />
+              <ClickAwayListener onClickAway={this.handleClose}>
+              <div>
               <Grid item xs={1}>
                 <Button
-                buttonRef={node => {
-                  this.anchorEl = node;
-                }}
-                aria-owns={open ? "menu-list-grow" : null}
-                aria-haspopup="true"
-                onClick={this.handleToggle}
+                  className="menu-btn"
+                  onClick={this.openWindow}
                 >
                   <Extension className="extension-icon" fontSize={'inherit'} />
                 </Button>
-                <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
-                {({ TransitionProps, placement }) => (
-                  <Grow
-                    {...TransitionProps}
-                    id="menu-list-grow"
-                    style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                  >
-                    <Paper>
-                      <ClickAwayListener onClickAway={this.handleClose}>
+                </Grid>
+                
+
+                    <Paper 
+                      className='menu-list' 
+                      style={{display: this.state.open ? 'block' : 'none' }}
+                    >
+            
                           <MenuList onClick={this.handleClose}>
                             <Link to={`/profile/${this.props.user.nickname}`}>
                               <MenuItem>
@@ -77,25 +70,20 @@ export class Header extends React.Component {
                               Sign Out
                             </MenuItem>                        
                           </MenuList>
-                      </ClickAwayListener>
-                    </Paper>
-                  </Grow>
-                  )}
-                </Popper>            
+                      
+                    </Paper>  
+                    </div>
+                  </ClickAwayListener>              
               </Grid>
           </Grid>
-      </Grid>
+
     )
   }
-
-  handleToggle = () => {
-    this.setState(prevState => ({ open: !prevState.open }));
+  openWindow = () => {
+    this.setState({open : !this.state.open});
   };
 
-  handleClose = event => {
-    if (this.anchorEl.contains(event.target)) {
-      return;
-    }
+  handleClose = () => {
     this.setState({ open: false });
   };
 };
