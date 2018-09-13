@@ -3,9 +3,9 @@ import { Typography, Grid, Popper, Button, Paper, Grow, ClickAwayListener, MenuL
 import { Extension } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { authSignOut } from '../../../actions/auth';
+import { authSignOut } from './../../../../actions/auth';
 
-class DashboardHeader extends React.Component {
+export class AdminPageHeader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,9 +15,9 @@ class DashboardHeader extends React.Component {
   render() {
     const { open } = this.state;
     return (
-      <Grid container alignItems="center" justify="space-between" className="dashboard-header">
+      <Grid container alignItems="center" justify="space-between" className="admin-page-header">
         <Grid container item xs={5} direction="row">
-          <Typography variant="subheading" className="dashboard-heading" >
+          <Typography variant="subheading" className="admin-page-header_title" >
             Admin Dashboard 	
           </Typography>
         </Grid>
@@ -28,7 +28,7 @@ class DashboardHeader extends React.Component {
             aria-haspopup="true"
             onClick={this.handleToggle}
           >
-            <Extension className="dashboard-menu-icon"/>
+            <Extension className="admin-page-header_menu-icon"/>
           </Button>
           <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
             {({ TransitionProps, placement }) => (
@@ -82,4 +82,4 @@ export default connect(
   dispatch => ({
     authSignOut: ( ) => dispatch(authSignOut( ))
   })
-)(DashboardHeader)
+)(AdminPageHeader)

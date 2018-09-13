@@ -9,7 +9,7 @@ class DashboardPagination extends React.Component {
   render() {
     const { count, page, rowsPerPage } = this.props;
     return (
-      <div className="dashboard-pagination-arrows">
+      <div className="dashboard_pagination-arrows">
         <IconButton
           onClick={this.handleFirstPageButtonClick}
           disabled={page === 0}

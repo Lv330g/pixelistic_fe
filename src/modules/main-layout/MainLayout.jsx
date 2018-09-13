@@ -8,8 +8,9 @@ import { Route } from 'react-router-dom';
 import io from "socket.io-client";
 import { port, host } from "../../const/node-server-config";
 import Header from '../../shared/components/header/Header';
-import DashboardHeader from '../admin-dashboard/components/DasnboardHeader';
+import AdminPageHeader from '../admin-page/components/admin-page-header/AdminPageHeader';
 import LoadingSpinner from '../../shared/components/loading-spinner/LoadingSpinner';
+
 
 export class MainLayout extends Component {
   constructor(props) {
@@ -54,10 +55,15 @@ export class MainLayout extends Component {
       return <Redirect to='/sign-in'/>;
     }
 
+    if (this.props.isDisabled) {
+      window.localStorage.removeItem('authHeaders')
+      return <Redirect to='/disabled-account' />;
+    }
+
     if (this.state.accessToken && this.props.isAuthorized) {
       return <Route {...rest} render={matchProps => (
         <div className="main-layout">
-          {this.props.path === '/dashboard' ? <DashboardHeader onSignOut={this.signOut}/> : <Header user={this.props.user} onSignOut={this.signOut}/>}
+          {this.props.path === '/dashboard' ? <AdminPageHeader onSignOut={this.signOut}/> : <Header user={this.props.user} onSignOut={this.signOut}/>}
           <div className="content">
             <Component 
               {...matchProps} 
@@ -124,7 +130,8 @@ export default connect(
     currentSessionPosts: state.post.currentSessionPosts,
     wasLoadedFirstTime: state.post.wasLoadedFirstTime,
     users: state.users.users,
-    loading:  state.users.loading
+    loading:  state.users.loading,
+    isDisabled: state.auth.isDisabled
   }),
   dispatch => ({
     authValidate: (email, password) => dispatch(authValidate(email, password)),

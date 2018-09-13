@@ -42,7 +42,7 @@ export class ModalChangePassword extends React.Component {
               <FormError formErrors={this.state.formErrors.oldPassword} />
             </FormControl>
             <FormControl margin="normal" fullWidth>
-              <InputLabel htmlFor="inp-new-password">Password</InputLabel>
+              <InputLabel htmlFor="inp-new-password">New password</InputLabel>
               <Input required
                 id="inp-new-password"
                 type="password"

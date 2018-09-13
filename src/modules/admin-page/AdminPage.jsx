@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Grid } from '@material-ui/core';
-import { getUsers, updateUserStatus } from  './../../actions/dashboard';
-import DashboardTable from  './components/DashboardTable';
+import { getUsers, updateUserStatus, disableUser } from  './../../actions/admin-page';
+import DashboardFrame from  './components/DashboardFrame';
 import LoadingSpinner from '../../shared/components/loading-spinner/LoadingSpinner';
 import { Redirect } from 'react-router-dom';
 
-class AdminDashboard extends React.Component {
+class AdminPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      users: []  
+      users: []
     };
   };
 
@@ -30,7 +30,7 @@ class AdminDashboard extends React.Component {
     if (this.state.users.length) {
       return (
         <Grid>
-          <DashboardTable users={this.state.users} handleStatusChange={this.handleSwitchChange} />
+          <DashboardFrame users={this.state.users} handleStatusChange={this.handleSwitchChange} handleDisableUser={this.handleDisableUser} />
         </Grid>
       );
     };
@@ -41,7 +41,11 @@ class AdminDashboard extends React.Component {
     const id = e.target.value;
     const status = e.target.checked;
     this.props.updateUserStatus(id, status);
-  }; 
+  };
+  
+  handleDisableUser = (event, IDs) => {
+    this.props.disableUser(IDs);
+  };
 };
 
 export default connect(
@@ -49,8 +53,10 @@ export default connect(
     users: state.dashboard.users,
   }),
   dispatch => ({
-      getUsers: (callback) => dispatch(getUsers(callback)),
+      getUsers: () => dispatch(getUsers()),
       updateUserStatus: (id, status) =>
-          dispatch(updateUserStatus(id, status))
+        dispatch(updateUserStatus(id, status)),
+      disableUser: (IDs) =>
+        dispatch(disableUser(IDs))
   })
-)(AdminDashboard)
+)(AdminPage)

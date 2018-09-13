@@ -34,7 +34,7 @@ export class SignIn extends React.Component {
     this.setState({ accessToken });
   }
 
-  render() {
+  render() {  
     if (this.props.isAuthorized || this.state.accessToken) {
       return <Redirect to='/' />;
     }
@@ -157,7 +157,7 @@ export class SignIn extends React.Component {
 export default connect(
   state => ({
     isAuthorized: state.auth.isAuthorized,
-    errMsg: state.auth.errorMessage,
+    errMsg: state.auth.errorMessage
   }),
   dispatch => ({
     authSignIn: (email, password) => dispatch(authSignIn(email, password)),
