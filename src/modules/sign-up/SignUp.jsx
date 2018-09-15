@@ -42,7 +42,7 @@ export class SignUp extends Component {
 
     if(!this.state.accessToken && !this.props.isAuthorized){
       return <Grid container alignItems="center" justify="center" direction="column">
-        <Grid className="sign-up" item xs={5} container alignItems="center" justify="center" direction="column">
+        <div className="sign-up">
           <Grid className="signup-container" container justify="center">
             <Grid item xs={8} container justify="flex-start" direction="column">
               <h1>Pixel</h1>
@@ -114,10 +114,10 @@ export class SignUp extends Component {
           <Grid className="login-container_link" item xs={12} container justify="center">
             <Typography>
               Have an account?
-              <Link to="/sign-in"> Log in</Link>
+              <Link to="/sign-in" className="sign-in-link"> Sign in</Link>
             </Typography>
           </Grid>
-        </Grid>
+        </div>
       </Grid>
     }
   };
