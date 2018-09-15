@@ -53,8 +53,13 @@
     color: limegreen;
     height: 20px;
   }
+
   .err-msg{
     color: #f34b4b;
   }
-  
+
+  .sign-in-link {
+    color: $dark-blue;
+    font-weight: bold;
+  }
 }

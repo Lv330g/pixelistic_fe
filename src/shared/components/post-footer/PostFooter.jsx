@@ -43,7 +43,6 @@ export class PostFooter extends Component {
   static getDerivedStateFromProps(nextProps, state) {
     state.comments = nextProps.comments;
     state.liked = nextProps.liked;
-    state.moreComments = false;
     state.likesAmount = nextProps.likesAmount;
     state.postId = nextProps.postId;
     state.authorName = nextProps.authorName;
@@ -113,8 +112,8 @@ export class PostFooter extends Component {
           {this.state.authorComment}
         </span>
       </p> : null}
-
-      {this.state.moreComments || (comments.length <= initCmntsAmount) ? false :  load}
+         
+      {this.state.moreComments || (comments.length <= initCmntsAmount) ? null :  load}
 
       {mappedComments}
 
@@ -137,7 +136,7 @@ export class PostFooter extends Component {
 
   expandComments = () => {
     this.setState({
-      moreComments: !this.state.moreComments,
+      moreComments: true,
       commentsAmount: expandCmntsAmount
     });
   }

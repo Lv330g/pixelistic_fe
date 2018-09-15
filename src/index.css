@@ -64,6 +64,9 @@ a {
     text-align: center;
     color: #f34b4b;
     height: 20px; }
+  .sign-in .sign-up-link {
+    color: #0277BD;
+    font-weight: bold; }
 
 .sign-up {
   margin-top: 40px;
@@ -106,6 +109,9 @@ a {
     height: 20px; }
   .sign-up .err-msg {
     color: #f34b4b; }
+  .sign-up .sign-in-link {
+    color: #0277BD;
+    font-weight: bold; }
 
 .forgot {
   margin-top: 40px;

@@ -92,7 +92,7 @@ export class SignIn extends React.Component {
           <div className="signup-container_link">
             <Typography>
               Don't have an account?
-            <Link to="/sign-up"> Sign up</Link>
+            <Link to="/sign-up" className="sign-up-link"> Sign up</Link>
             </Typography>
           </div>
         </div>
