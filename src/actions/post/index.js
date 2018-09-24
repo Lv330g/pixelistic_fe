@@ -33,9 +33,9 @@ export const postLikeChange = (postId, userId, type) => {
   } 
 }
 
-export const postCommentAdd = (postId, userNickname, comment) => {
+export const postCommentAdd = (postId, userNickname, userAvatar, comment) => {
   return dispatch => {
-    return postApi.commentPost(postId, userNickname, comment).then( newComments => {
+    return postApi.commentPost(postId, userNickname, userAvatar, comment).then( newComments => {
         dispatch({ type: 'COMMENT_ADDED_SUCCESS', payload: newComments });
       }, err => {    
         dispatch({ type: 'COMMENT_ADDED_ERROR', payload: err });
