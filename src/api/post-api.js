@@ -27,9 +27,9 @@ export const postApi = {
     });
   },
 
-  commentPost: (postId, userNickname, comment) => {
+  commentPost: (postId, userNickname, userAvatar, comment) => {
     return new Promise((resolve, reject) => {
-      httpServise.patch(`${host}:${port}/comment-post`, { postId, userNickname, comment }).then(
+      httpServise.patch(`${host}:${port}/comment-post`, { postId, userNickname, userAvatar, comment }).then(
         res => {
           if (res.data.newComments) {
             resolve(res.data.newComments);

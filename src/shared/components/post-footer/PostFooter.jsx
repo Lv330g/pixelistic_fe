@@ -165,7 +165,7 @@ export class PostFooter extends Component {
         comment: val
       }
 
-      this.props.postCommentAdd(this.props.postId, this.props.nickname, val);
+      this.props.postCommentAdd(this.props.postId, this.props.nickname, this.props.user.avatar, val);
       e.target.value = '';
       
       this.setState((prev) => {
@@ -216,11 +216,12 @@ PostFooter.propTypes = {
 
 export default connect(
   state => ({
-    isLoading: state.post.isLoading
+    isLoading: state.post.isLoading,
+    user: state.auth.user
   }),
   dispatch => ({
     postLikeChange: (postId, userId, type) => dispatch(postLikeChange(postId, userId, type)),
-    postCommentAdd: (postId, userId, text) => dispatch(postCommentAdd(postId, userId, text)),
+    postCommentAdd: (postId, userNickname, userAvatar, text) => dispatch(postCommentAdd(postId, userNickname, userAvatar, text)),
     postRemovePost: (postId, userId, imagePath) => dispatch(postRemovePost(postId, userId, imagePath))
   })
 )(PostFooter);
